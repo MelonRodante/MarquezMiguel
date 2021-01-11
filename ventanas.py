@@ -1,8 +1,12 @@
+import sys
+
 import eventos
 import var
 
 from datetime import datetime
 from PyQt5 import QtWidgets, QtCore
+
+from dialogSalir import Ui_dialogSalir
 from venPrincipal import Ui_venPrincipal
 from dialogCalendario import Ui_dialogCalendario
 
@@ -28,12 +32,25 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         ''' Conexion Eventos '''
 
         # Comprobar que el DNI sea valido y informar de ello
-        var.ui.editDNI.editingFinished.connect(eventos.Eventos.DNIValido)
+        var.ui.editDNI.editingFinished.connect(eventos.EventosVarios.DNIValido)
 
-        # Botones
-        var.ui.btnCalendario.clicked.connect(eventos.Eventos.abrirCalendario)
+        # Cargar los valores de las provincias
+        eventos.EventosVarios.cargarProvincias()
 
-        var.ui.btnClienteAlta.clicked.connect(eventos.Eventos.prueba)
+        # Cerrar al pulsar la X de la ventana
+        QtWidgets.QAction(self).triggered.connect(self.close)
+
+        # Botones menubar
+        var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
+
+        # Botones formulario
+        var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
+
+        var.ui.btnClienteSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
+
+    def closeEvent(self, event):
+        eventos.EventosVentanas.abrirDialogSalir()
+        event.ignore()
 
 
 class DialogCalendario(QtWidgets.QDialog):
@@ -55,3 +72,14 @@ class DialogCalendario(QtWidgets.QDialog):
             self.close()
         except Exception as error:
             print('Error: %s' % str(error))
+
+
+class DialogSalir(QtWidgets.QDialog):
+    def __init__(self):
+        super(DialogSalir, self).__init__()
+        self.ventana = Ui_dialogSalir()
+        self.ventana.setupUi(self)
+        self.ventana.botones.accepted.connect(self.Salir)
+
+    def Salir(self):
+        sys.exit(0)

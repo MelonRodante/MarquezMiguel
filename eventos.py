@@ -3,7 +3,7 @@ import ventanas
 from cliente import Cliente
 
 
-class Eventos:
+class EventosVarios:
 
     @staticmethod
     def DNIValido():
@@ -24,25 +24,33 @@ class Eventos:
             print('Error: %s ' % str(error))
 
     @staticmethod
-    def abrirCalendario():
+    def cargarProvincias():
+        try:
+            for i in var.prov:
+                var.ui.cmbProvincia.addItem(i)
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+
+class EventosVentanas:
+
+    @staticmethod
+    def abrirDialogCalendario():
         try:
             dlgCalendar = ventanas.DialogCalendario()
             dlgCalendar.exec_()
         except Exception as error:
             print('Error: %s ' % str(error))
 
-
     @staticmethod
-    def prueba():
-        c = Cliente()
+    def abrirDialogSalir():
+        try:
+            dialog = ventanas.DialogSalir()
+            dialog.show()
+            dialog.exec_()
+        except Exception as error:
+            print('El error es %s' % str(error))
 
-        print('DNI:', c.dni)
-        print('Nombre:', c.nombre)
-        print('Apellidos:', c.apellidos)
-        print('Edad:', c.edad)
-        print('Fecha Alta:', c.fechaAlta)
-        print('Direccion:', c.direccion)
-        print('Provincia:', c.provincia)
-        print('Sexo:', c.sexo)
-        print('Pago:', c.pago)
+
+
 

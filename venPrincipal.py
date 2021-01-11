@@ -414,10 +414,23 @@ class Ui_venPrincipal(object):
         self.menubar = QtWidgets.QMenuBar(venPrincipal)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
+        self.menuArchivo = QtWidgets.QMenu(self.menubar)
+        self.menuArchivo.setObjectName("menuArchivo")
         venPrincipal.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(venPrincipal)
         self.statusbar.setObjectName("statusbar")
         venPrincipal.setStatusBar(self.statusbar)
+        self.actionAbrir = QtWidgets.QAction(venPrincipal)
+        self.actionAbrir.setObjectName("actionAbrir")
+        self.actionImprimir = QtWidgets.QAction(venPrincipal)
+        self.actionImprimir.setObjectName("actionImprimir")
+        self.actionSalir = QtWidgets.QAction(venPrincipal)
+        self.actionSalir.setObjectName("actionSalir")
+        self.menuArchivo.addAction(self.actionAbrir)
+        self.menuArchivo.addAction(self.actionImprimir)
+        self.menuArchivo.addSeparator()
+        self.menuArchivo.addAction(self.actionSalir)
+        self.menubar.addAction(self.menuArchivo.menuAction())
 
         self.retranslateUi(venPrincipal)
         self.panel.setCurrentIndex(0)
@@ -425,7 +438,7 @@ class Ui_venPrincipal(object):
 
     def retranslateUi(self, venPrincipal):
         _translate = QtCore.QCoreApplication.translate
-        venPrincipal.setWindowTitle(_translate("venPrincipal", "MainWindow"))
+        venPrincipal.setWindowTitle(_translate("venPrincipal", "Gestion Miguel Marquez"))
         self.lblDNI.setText(_translate("venPrincipal", "DNI:"))
         self.lblFechaAlta.setText(_translate("venPrincipal", "Fecha de Alta:"))
         self.lblApellidos.setText(_translate("venPrincipal", "Apellidos:"))
@@ -454,4 +467,8 @@ class Ui_venPrincipal(object):
         self.panel.setTabText(self.panel.indexOf(self.panelCliente), _translate("venPrincipal", "Clientes"))
         self.panel.setTabText(self.panel.indexOf(self.panelFacturacion), _translate("venPrincipal", "Facturacion"))
         self.panel.setTabText(self.panel.indexOf(self.panelProductos), _translate("venPrincipal", "Productos"))
-import botonesInterfaz_rc
+        self.menuArchivo.setTitle(_translate("venPrincipal", "Archivo"))
+        self.actionAbrir.setText(_translate("venPrincipal", "Abrir..."))
+        self.actionImprimir.setText(_translate("venPrincipal", "Imprimir..."))
+        self.actionSalir.setText(_translate("venPrincipal", "Salir"))
+import rc_botonesInterfaz_rc
