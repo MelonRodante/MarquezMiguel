@@ -197,7 +197,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="space_1">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -210,7 +210,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblFecha">
+           <widget class="QLabel" name="lblFechaAlta">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -235,7 +235,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="editFecha">
+           <widget class="QLineEdit" name="editFechaAlta">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -266,7 +266,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="btnCalendario">
             <property name="minimumSize">
              <size>
               <width>32</width>
@@ -349,7 +349,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_3">
+           <spacer name="space_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -472,7 +472,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_4">
+           <spacer name="space_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -599,7 +599,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_7">
+           <spacer name="space_4">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -640,10 +640,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinEdad"/>
+           <widget class="QSpinBox" name="spinEdad">
+            <property name="minimum">
+             <number>18</number>
+            </property>
+           </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="space_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -726,7 +730,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_8">
+           <spacer name="space_6">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -783,7 +787,7 @@
            <number>0</number>
           </property>
           <item>
-           <spacer name="horizontalSpacer_5">
+           <spacer name="space_7">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -861,7 +865,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_6">
+           <spacer name="space_8">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -909,6 +913,10 @@
  <connections/>
  <buttongroups>
   <buttongroup name="grpSexo"/>
-  <buttongroup name="grpPago"/>
+  <buttongroup name="grpPago">
+   <property name="exclusive">
+    <bool>false</bool>
+   </property>
+  </buttongroup>
  </buttongroups>
 </ui>
