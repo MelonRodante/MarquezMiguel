@@ -1,4 +1,5 @@
 import var
+import ventanas
 from cliente import Cliente
 
 
@@ -22,6 +23,13 @@ class Eventos:
         except Exception as error:
             print('Error: %s ' % str(error))
 
+    @staticmethod
+    def abrirCalendario():
+        try:
+            dlgCalendar = ventanas.DialogCalendario()
+            dlgCalendar.exec_()
+        except Exception as error:
+            print('Error: %s ' % str(error))
 
 
     @staticmethod

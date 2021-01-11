@@ -84,6 +84,12 @@
               <height>20</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -254,6 +260,12 @@
               <height>20</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -343,6 +355,12 @@
               <height>20</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -409,6 +427,12 @@
               <height>20</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -465,6 +489,12 @@
               <width>16777215</width>
               <height>20</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
             </property>
             <property name="text">
              <string/>
