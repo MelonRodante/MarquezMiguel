@@ -20,7 +20,22 @@
    <string>Gestion Miguel Marquez</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QTabWidget" name="panel">
       <property name="font">
@@ -946,24 +961,61 @@
    <addaction name="menuArchivo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAbrir"/>
+   <addaction name="actionImprimir"/>
+   <addaction name="separator"/>
+   <addaction name="actionSalir"/>
+  </widget>
   <action name="actionAbrir">
+   <property name="icon">
+    <iconset resource="img/rc_toolbar.qrc">
+     <normaloff>:/abrir/abrir.png</normaloff>:/abrir/abrir.png</iconset>
+   </property>
    <property name="text">
     <string>Abrir...</string>
    </property>
   </action>
   <action name="actionImprimir">
+   <property name="icon">
+    <iconset resource="img/rc_toolbar.qrc">
+     <normaloff>:/imprimir/imprimir.png</normaloff>:/imprimir/imprimir.png</iconset>
+   </property>
    <property name="text">
     <string>Imprimir...</string>
    </property>
   </action>
   <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="img/rc_toolbar.qrc">
+     <normaloff>:/salir/salir.png</normaloff>:/salir/salir.png</iconset>
+   </property>
    <property name="text">
     <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
  <resources>
   <include location="img/rc_botonesInterfaz.qrc"/>
+  <include location="img/rc_toolbar.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

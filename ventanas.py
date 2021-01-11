@@ -6,6 +6,7 @@ import var
 from datetime import datetime
 from PyQt5 import QtWidgets, QtCore
 
+from dialogAviso import Ui_dialogAviso
 from dialogSalir import Ui_dialogSalir
 from venPrincipal import Ui_venPrincipal
 from dialogCalendario import Ui_dialogCalendario
@@ -43,14 +44,20 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         # Botones menubar
         var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
 
+        ''' Botones cliente '''
         # Botones formulario
         var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
 
+        # Botones inferiores
+        var.ui.btnClienteBaja.clicked.connect(self.prueba)
         var.ui.btnClienteSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
 
     def closeEvent(self, event):
         eventos.EventosVentanas.abrirDialogSalir()
         event.ignore()
+
+    def prueba(self):
+        eventos.EventosVentanas.abrirDialogAviso("Esto es una prueba con un texto lasgo de pelotas")
 
 
 class DialogCalendario(QtWidgets.QDialog):
@@ -83,3 +90,11 @@ class DialogSalir(QtWidgets.QDialog):
 
     def Salir(self):
         sys.exit(0)
+
+
+class DialogAviso(QtWidgets.QDialog):
+    def __init__(self, msg):
+        super(DialogAviso, self).__init__()
+        self.ventana = Ui_dialogAviso()
+        self.ventana.setupUi(self)
+        self.ventana.lblAviso.setText(msg)

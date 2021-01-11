@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="abrir">
+    <file>abrir.png</file>
+  </qresource>
+  <qresource prefix="imprimir">
+    <file>imprimir.png</file>
+  </qresource>
+  <qresource prefix="salir">
+    <file>salir.png</file>
+  </qresource>
+</RCC>

@@ -51,6 +51,16 @@ class EventosVentanas:
         except Exception as error:
             print('El error es %s' % str(error))
 
+    @staticmethod
+    def abrirDialogAviso(msg):
+        try:
+            dialog = ventanas.DialogAviso(msg)
+            dialog.show()
+            dialog.setFixedSize(dialog.size())
+            dialog.exec_()
+        except Exception as error:
+            print('El error es %s' % str(error))
+
 
 
 
