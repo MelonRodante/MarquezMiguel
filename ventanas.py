@@ -56,9 +56,6 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         eventos.EventosVentanas.abrirDialogSalir()
         event.ignore()
 
-    def prueba(self):
-        eventos.EventosVentanas.abrirDialogAviso("Esto es una prueba con un texto lasgo de pelotas")
-
 
 class DialogCalendario(QtWidgets.QDialog):
     def __init__(self):
