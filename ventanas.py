@@ -43,10 +43,10 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         ''' Conexion Eventos Cliente '''
         # Comprobar que el DNI sea valido y informar de ello
-        var.ui.editDNI.editingFinished.connect(eventos.EventosVarios.DNIValido)
+        var.ui.editDNI.editingFinished.connect(eventos.EventosCliente.DNIValido)
 
         # Cargar los valores de las provincias
-        eventos.EventosVarios.cargarProvincias()
+        eventos.EventosCliente.cargarProvincias()
 
         # Evento tabla clientes
         var.ui.tablaClientes.clicked.connect(eventos.EventosCliente.cargarDatosCliente)
@@ -54,7 +54,8 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         # Botones cliente
         var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
-        var.ui.btnBuscar.clicked.connect(conexion.ConexionCliente.altaPrueba)
+        var.ui.btnClienteBuscar.clicked.connect(eventos.EventosCliente.buscarCliente)
+        var.ui.btnClienteRecargar.clicked.connect(conexion.ConexionCliente.mostrarClientesTabla)
 
         var.ui.btnClienteAlta.clicked.connect(eventos.EventosCliente.altaCliente)
         var.ui.btnClienteBaja.clicked.connect(eventos.EventosCliente.bajaCliente)

@@ -1,39 +1,9 @@
+from PyQt5 import QtWidgets
+
 import var
 import ventanas
 import conexion
 from cliente import Cliente
-
-
-class EventosVarios:
-
-    @staticmethod
-    def DNIValido():
-        try:
-            dni = var.ui.editDNI.text()
-            if dni != '':
-                if Cliente.comprobarDNI():
-                    var.ui.lblValido.setStyleSheet('QLabel {color: green}')
-                    var.ui.lblValido.setText('V')
-                    var.ui.editDNI.setText(dni.upper())
-                else:
-                    var.ui.lblValido.setStyleSheet('QLabel {color: red}')
-                    var.ui.lblValido.setText('X')
-                    var.ui.editDNI.setText(dni.upper())
-            else:
-                var.ui.lblValido.setText('')
-        except Exception as error:
-            print('Error: %s ' % str(error))
-
-    @staticmethod
-    def cargarProvincias():
-        try:
-            for i in var.prov:
-                var.ui.cmbProvincia.addItem(i)
-        except Exception as error:
-            print('Error: %s' % str(error))
-
-
-
 
 class EventosVentanas:
 
@@ -70,6 +40,32 @@ class EventosVentanas:
 class EventosCliente:
 
     @staticmethod
+    def cargarProvincias():
+        try:
+            for i in var.prov:
+                var.ui.cmbProvincia.addItem(i)
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+    @staticmethod
+    def DNIValido():
+        try:
+            dni = var.ui.editDNI.text()
+            if dni != '':
+                if Cliente.comprobarDNI():
+                    var.ui.lblValido.setStyleSheet('QLabel {color: green}')
+                    var.ui.lblValido.setText('V')
+                    var.ui.editDNI.setText(dni.upper())
+                else:
+                    var.ui.lblValido.setStyleSheet('QLabel {color: red}')
+                    var.ui.lblValido.setText('X')
+                    var.ui.editDNI.setText(dni.upper())
+            else:
+                var.ui.lblValido.setText('')
+        except Exception as error:
+            print('Error: %s ' % str(error))
+
+    @staticmethod
     def cargarDatosCliente():
         try:
             fila = var.ui.tablaClientes.selectedItems()
@@ -79,6 +75,24 @@ class EventosCliente:
                 cliente.rellenarDatosFormulario()
             else:
                 EventosVentanas.abrirDialogAviso("ERROR: No se han podido cargar los datos")
+
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+    @staticmethod
+    def buscarCliente():
+        try:
+            cliente = conexion.ConexionCliente.buscarCliente(var.ui.editDNI.text())
+
+            if cliente is not None:
+                index = 0
+                var.ui.tablaClientes.setRowCount(0)
+                var.ui.tablaClientes.setRowCount(index + 1)
+                var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(cliente.dni))
+                var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(cliente.apellidos))
+                var.ui.tablaClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(cliente.nombre))
+                index += 1
+
 
         except Exception as error:
             print('Error: %s' % str(error))
@@ -138,7 +152,7 @@ class EventosCliente:
             dni = var.ui.editDNI.text()
 
             if dni:
-                if conexion.ConexionCliente.clienteExiste(dni):
+                if conexion.ConexionCliente.buscarCliente(dni) is not None:
                     if conexion.ConexionCliente.bajaCliente(dni):
                         var.ui.statusbar.showMessage("Cliente con DNI " + dni + " dado de baja.")
                         EventosCliente.limpiarCliente()
@@ -160,7 +174,7 @@ class EventosCliente:
 
             if cliente.comprobarDNI():
                 if cliente.datosValidos():
-                    if conexion.ConexionCliente.clienteExiste(cliente.dni):
+                    if conexion.ConexionCliente.buscarCliente(cliente.dni) is not None:
                         if conexion.ConexionCliente.modificarCliente(cliente):
                             var.ui.statusbar.showMessage("Datos del cliente " + cliente.dni + " actualizados con exito.")
                             conexion.ConexionCliente.mostrarClientesTabla()
