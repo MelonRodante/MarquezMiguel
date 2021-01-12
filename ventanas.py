@@ -49,7 +49,6 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
 
         # Botones inferiores
-        var.ui.btnClienteBaja.clicked.connect(self.prueba)
         var.ui.btnClienteSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
 
     def closeEvent(self, event):
