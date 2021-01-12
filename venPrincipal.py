@@ -339,6 +339,7 @@ class Ui_venPrincipal(object):
         self.layout4.addItem(spacerItem5)
         self.verticalLayout.addLayout(self.layout4)
         self.tablaClientes = QtWidgets.QTableWidget(self.panelCliente)
+        self.tablaClientes.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tablaClientes.setObjectName("tablaClientes")
         self.tablaClientes.setColumnCount(3)
         self.tablaClientes.setRowCount(0)

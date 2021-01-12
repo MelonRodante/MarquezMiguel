@@ -1,5 +1,6 @@
 import sys
 
+import conexion
 import eventos
 import var
 
@@ -19,7 +20,13 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui = Ui_venPrincipal()
         var.ui.setupUi(self)
 
-        ''' Label de fecha en el statusbar'''
+        ''' Evento de cerrado de la aplicacion '''
+        QtWidgets.QAction(self).triggered.connect(self.close)
+
+        ''' Eventos acciones '''
+        var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
+
+        ''' Label de fecha en el statusbar '''
         lblStatusFecha = QtWidgets.QLabel(datetime.now().strftime("%d %B %Y"))
         var.ui.statusbar.addPermanentWidget(lblStatusFecha)
 
@@ -30,26 +37,32 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
 
-        ''' Conexion Eventos '''
+        ''' Conexion con la base de datos '''
+        conexion.Conexion.conectardb(var.filedb)
+        conexion.ConexionCliente.mostrarClientesTabla()
 
+        ''' Conexion Eventos Cliente '''
         # Comprobar que el DNI sea valido y informar de ello
         var.ui.editDNI.editingFinished.connect(eventos.EventosVarios.DNIValido)
 
         # Cargar los valores de las provincias
         eventos.EventosVarios.cargarProvincias()
 
-        # Cerrar al pulsar la X de la ventana
-        QtWidgets.QAction(self).triggered.connect(self.close)
+        # Evento tabla clientes
+        var.ui.tablaClientes.clicked.connect(eventos.EventosCliente.cargarDatosCliente)
+        var.ui.tablaClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
-        # Botones menubar
-        var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
-
-        ''' Botones cliente '''
-        # Botones formulario
+        # Botones cliente
         var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
+        var.ui.btnBuscar.clicked.connect(conexion.ConexionCliente.altaPrueba)
 
-        # Botones inferiores
+        var.ui.btnClienteAlta.clicked.connect(eventos.EventosCliente.altaCliente)
+        var.ui.btnClienteBaja.clicked.connect(eventos.EventosCliente.bajaCliente)
+        var.ui.btnClienteModificar.clicked.connect(eventos.EventosCliente.modificarCliente)
+        var.ui.btnClienteLimpiar.clicked.connect(eventos.EventosCliente.limpiarCliente)
         var.ui.btnClienteSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
+
+
 
     def closeEvent(self, event):
         eventos.EventosVentanas.abrirDialogSalir()

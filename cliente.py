@@ -1,10 +1,23 @@
-import eventos
 import var
 
 
 class Cliente:
 
     def __init__(self):
+        self.dni = ""
+        self.nombre = ""
+        self.apellidos = ""
+
+        self.edad = 18
+        self.fechaAlta = ""
+
+        self.direccion = ""
+        self.provincia = ""
+
+        self.sexo = ""
+        self.formaspago = ""
+
+    def rellenarDatosCliente(self):
         self.dni = var.ui.editDNI.text()
         self.nombre = var.ui.editNombre.text()
         self.apellidos = var.ui.editApellidos.text()
@@ -15,8 +28,28 @@ class Cliente:
         self.direccion = var.ui.editDireccion.text()
         self.provincia = var.ui.cmbProvincia.currentText()
 
-        self.sexo = self.selSexo()
-        self.pago = self.selPago()
+        self.sexo = self.__selSexo()
+        self.formaspago = self.__selPago()
+
+    def rellenarDatosFormulario(self):
+        var.ui.editDNI.setText(self.dni)
+        var.ui.editNombre.setText(self.nombre)
+        var.ui.editApellidos.setText(self.apellidos)
+
+        var.ui.spinEdad.setValue(self.edad)
+        var.ui.editFechaAlta.setText(self.fechaAlta)
+
+        var.ui.editDireccion.setText(self.direccion)
+        var.ui.cmbProvincia.setCurrentIndex(var.prov.index(self.provincia))
+
+        if self.sexo == 'Hombre':
+            var.ui.rbtMasculino.setChecked(True)
+        else:
+            var.ui.rbtFemenino.setChecked(True)
+
+        var.ui.chkTransferencia.setChecked(self.formaspago.__contains__("Transferencia"))
+        var.ui.chkTarjeta.setChecked(self.formaspago.__contains__("Tarjeta"))
+        var.ui.chkEfectivo.setChecked(self.formaspago.__contains__("Efectivo"))
 
     def datosValidos(self):
 
@@ -35,7 +68,7 @@ class Cliente:
 
         if self.sexo == '':
             return False
-        if self.pago == '':
+        if self.formaspago == '':
             return False
 
         return True
@@ -64,7 +97,7 @@ class Cliente:
             return None
 
     @staticmethod
-    def selSexo():
+    def __selSexo():
         try:
             if var.ui.rbtFemenino.isChecked():
                 return 'Mujer'
@@ -76,7 +109,7 @@ class Cliente:
             print('Error: %s' % str(error))
 
     @staticmethod
-    def selPago():
+    def __selPago():
         try:
             pay = ""
             if var.ui.chkTransferencia.isChecked():
