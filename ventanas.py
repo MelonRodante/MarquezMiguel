@@ -36,10 +36,17 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        # Tabla productos
+        header = var.ui.tablaProductos.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Fixed)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.Fixed)
 
         ''' Conexion con la base de datos '''
         conexion.Conexion.conectardb(var.filedb)
         conexion.ConexionCliente.mostrarClientesTabla()
+        conexion.ConexionProducto.mostrarProductosTabla()
 
         ''' Conexion Eventos Cliente '''
         # Comprobar que el DNI sea valido y informar de ello
@@ -63,6 +70,20 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.btnClienteLimpiar.clicked.connect(eventos.EventosCliente.limpiarCliente)
         var.ui.btnClienteSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
 
+        ''' Conexion Eventos Producto '''
+        # Evento tabla clientes
+        var.ui.tablaProductos.clicked.connect(eventos.EventosProducto.cargarDatosProducto)
+        var.ui.tablaProductos.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+
+        # Botones producto
+        var.ui.btnProductoBuscar.clicked.connect(eventos.EventosProducto.buscarProducto)
+        var.ui.btnProductoRecargar.clicked.connect(conexion.ConexionProducto.mostrarProductosTabla)
+
+        var.ui.btnProductoAlta.clicked.connect(eventos.EventosProducto.altaProducto)
+        var.ui.btnProductoBaja.clicked.connect(eventos.EventosProducto.bajaProducto)
+        var.ui.btnProductoModificar.clicked.connect(eventos.EventosProducto.modificarProducto)
+        var.ui.btnProductoLimpiar.clicked.connect(eventos.EventosProducto.limpiarProducto)
+        var.ui.btnProductoSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
 
 
     def closeEvent(self, event):

@@ -1,7 +1,8 @@
 import var
 
 from cliente import Cliente
-from PyQt5 import QtSql, QtWidgets
+from producto import Producto
+from PyQt5 import QtSql, QtWidgets, QtCore
 
 from eventos import EventosCliente
 
@@ -46,7 +47,7 @@ class ConexionCliente:
             print("Error mostrar clientes: ", query.lastError().text())
 
     @staticmethod
-    def cargarDatosCliente(dni):
+    def buscarCliente(dni):
 
         query = QtSql.QSqlQuery()
         query.prepare(
@@ -73,23 +74,6 @@ class ConexionCliente:
             return None
 
     @staticmethod
-    def buscarCliente(dni):
-        query = QtSql.QSqlQuery()
-        query.prepare('select dni, apellidos, nombre from clientes where dni = :dni')
-        query.bindValue(':dni', dni)
-        if query.exec_():
-            if query.next():
-                cliente = Cliente()
-                cliente.dni = query.value(0)
-                cliente.apellidos = query.value(1)
-                cliente.nombre = query.value(2)
-                return cliente
-            else:
-                return None
-        else:
-            return None
-
-    @staticmethod
     def altaCliente(cliente):
 
         query = QtSql.QSqlQuery()
@@ -109,7 +93,7 @@ class ConexionCliente:
         if query.exec_():
             return True
         else:
-            return  False
+            return False
 
     @staticmethod
     def bajaCliente(dni):
@@ -127,7 +111,8 @@ class ConexionCliente:
     def modificarCliente(cliente):
 
         query = QtSql.QSqlQuery()
-        query.prepare('update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni')
+        query.prepare(
+            'update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni')
         query.bindValue(':dni', cliente.dni)
         query.bindValue(':nombre', cliente.nombre)
         query.bindValue(':apellidos', cliente.apellidos)
@@ -166,3 +151,93 @@ class ConexionCliente:
             ConexionCliente.mostrarClientesTabla()
         else:
             print('No altaaa')
+
+
+class ConexionProducto:
+
+    @staticmethod
+    def mostrarProductosTabla():
+        index = 0
+        query = QtSql.QSqlQuery()
+        query.prepare('select codigoproducto, producto, stock, precio from productos')
+        if query.exec_():
+            var.ui.tablaProductos.setRowCount(0)
+            while query.next():
+                codigoproducto = str(query.value(0))
+                producto = query.value(1)
+                stock = str(query.value(2))
+                precio = "{:.2f}".format(query.value(3)) + " €"
+                var.ui.tablaProductos.setRowCount(index + 1)
+                var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(codigoproducto))
+                var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(producto))
+                var.ui.tablaProductos.setItem(index, 2, QtWidgets.QTableWidgetItem(stock))
+                var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem(precio))
+                var.ui.tablaProductos.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaProductos.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaProductos.item(index, 3).setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+                index += 1
+        else:
+            print("Error mostrar productos: ", query.lastError().text())
+
+    @staticmethod
+    def buscarProducto(producto):
+
+        query = QtSql.QSqlQuery()
+        query.prepare('select codigoproducto, producto, stock, precio from productos where producto = :producto')
+        query.bindValue(':producto', producto)
+        if query.exec_():
+            if query.next():
+                p = Producto()
+
+                p.codigoProducto = query.value(0)
+                p.producto = query.value(1)
+                p.stock = query.value(2)
+                p.precio = query.value(3)
+
+                return p
+            else:
+                return None
+        else:
+            return None
+
+    @staticmethod
+    def altaProducto(producto):
+
+        query = QtSql.QSqlQuery()
+        query.prepare(
+            'insert into productos (producto, stock, precio)'
+            'VALUES (:producto, :stock, :precio)')
+        query.bindValue(':producto', producto.producto)
+        query.bindValue(':stock', producto.stock)
+        query.bindValue(':precio', producto.precio)
+
+        if query.exec_():
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def bajaProducto(producto):
+
+        query = QtSql.QSqlQuery()
+        query.prepare('delete from productos where producto = :producto')
+        query.bindValue(':producto', producto)
+
+        if query.exec_():
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def modificarProducto(producto):
+
+        query = QtSql.QSqlQuery()
+        query.prepare('update productos set stock=:stock, precio=:precio where producto = :producto')
+        query.bindValue(':producto', producto.producto)
+        query.bindValue(':stock', producto.stock)
+        query.bindValue(':precio', producto.precio)
+
+        if query.exec_():
+            return True
+        else:
+            return False

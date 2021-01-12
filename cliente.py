@@ -31,7 +31,7 @@ class Cliente:
         self.sexo = self.__selSexo()
         self.formaspago = self.__selPago()
 
-    def rellenarDatosFormulario(self):
+    def rellenarFormularioCliente(self):
         var.ui.editDNI.setText(self.dni)
         var.ui.editNombre.setText(self.nombre)
         var.ui.editApellidos.setText(self.apellidos)
