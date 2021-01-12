@@ -1,8 +1,14 @@
-from PyQt5 import QtWidgets, QtCore
-
+import datetime
+import os
+import shutil
+import sys
+import zipfile
 import var
 import ventanas
 import conexion
+
+from PyQt5 import QtWidgets, QtCore
+
 from cliente import Cliente
 from producto import Producto
 
@@ -20,9 +26,11 @@ class EventosVentanas:
     @staticmethod
     def abrirDialogSalir():
         try:
-            dialog = ventanas.DialogSalir()
+            dialog = ventanas.DialogConfirmacion('¿Esta seguro que desea salir de la aplicacion?')
             dialog.show()
-            dialog.exec_()
+            dialog.setFixedSize(dialog.size())
+            if dialog.exec_():
+                sys.exit(0)
         except Exception as error:
             print('El error es %s' % str(error))
 
@@ -35,6 +43,33 @@ class EventosVentanas:
             dialog.show()
             dialog.setFixedSize(dialog.size())
             dialog.exec_()
+        except Exception as error:
+            print('El error es %s' % str(error))
+
+    @staticmethod
+    def abrirDialogConfimacion(msg):
+        try:
+            dialog = ventanas.DialogConfirmacion(msg)
+            dialog.show()
+            dialog.setFixedSize(dialog.size())
+            return dialog.exec_()
+        except Exception as error:
+            print('El error es %s' % str(error))
+
+    @staticmethod
+    def backup():
+        try:
+            fecha = datetime.datetime.today()
+            fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
+            copia = (str(fecha) + '_backup.zip')
+            option = QtWidgets.QFileDialog.Options()
+            directorio, filename = QtWidgets.QFileDialog().getSaveFileName(None, 'Backup', copia, '.zip', options=option)
+            if filename != '':
+                fichzip = zipfile.ZipFile(copia, 'w')
+                fichzip.write(var.filedb, os.path.basename(var.filedb), zipfile.ZIP_DEFLATED)
+                fichzip.close()
+                var.ui.statusbar.showMessage('Backup creado con exito')
+                shutil.move(str(copia), str(directorio))
         except Exception as error:
             print('El error es %s' % str(error))
 
@@ -155,12 +190,13 @@ class EventosCliente:
 
             if dni:
                 if conexion.ConexionCliente.buscarCliente(dni) is not None:
-                    if conexion.ConexionCliente.bajaCliente(dni):
-                        var.ui.statusbar.showMessage('Cliente con DNI \'' + dni + '\' dado de baja.')
-                        EventosCliente.limpiarCliente()
-                        conexion.ConexionCliente.mostrarClientesTabla()
-                    else:
-                        EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja al cliente con DNI \'' + dni +'\'.')
+                    if EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea dar de baja al cliente con DNI \'' + dni + '\'?'):
+                        if conexion.ConexionCliente.bajaCliente(dni):
+                            var.ui.statusbar.showMessage('Cliente con DNI \'' + dni + '\' dado de baja.')
+                            EventosCliente.limpiarCliente()
+                            conexion.ConexionCliente.mostrarClientesTabla()
+                        else:
+                            EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja al cliente con DNI \'' + dni +'\'.')
                 else:
                     EventosVentanas.abrirDialogAviso('ERROR: No existe ningun cliente con el DNI \'' + dni + '\'.')
             else:
@@ -177,11 +213,12 @@ class EventosCliente:
             if cliente.comprobarDNI():
                 if cliente.datosValidos():
                     if conexion.ConexionCliente.buscarCliente(cliente.dni) is not None:
-                        if conexion.ConexionCliente.modificarCliente(cliente):
-                            var.ui.statusbar.showMessage('Datos del cliente con DNI \'' + cliente.dni + '\' actualizados con exito.')
-                            conexion.ConexionCliente.mostrarClientesTabla()
-                        else:
-                            EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar los datos del cliente con DNI \'' + cliente.dni + '\'.')
+                        if EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea dar de modificar los datos del cliente con DNI \'' + cliente.dni + '\'?'):
+                            if conexion.ConexionCliente.modificarCliente(cliente):
+                                var.ui.statusbar.showMessage('Datos del cliente con DNI \'' + cliente.dni + '\' actualizados con exito.')
+                                conexion.ConexionCliente.mostrarClientesTabla()
+                            else:
+                                EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar los datos del cliente con DNI \'' + cliente.dni + '\'.')
                     else:
                         EventosVentanas.abrirDialogAviso('ERROR: No existe ningun cliente con el DNI \'' + cliente.dni + '\'.')
                 else:
@@ -267,12 +304,13 @@ class EventosProducto:
 
             if var.ui.editProducto.text():
                 if p is not None:
-                    if conexion.ConexionProducto.bajaProducto(producto):
-                        var.ui.statusbar.showMessage('Producto \'' + p.producto + '\' dado de baja.')
-                        EventosProducto.limpiarProducto()
-                        conexion.ConexionProducto.mostrarProductosTabla()
-                    else:
-                        EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja el producto \'' + producto + '\'.')
+                    if EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea dar de baja el producto \'' + producto + '\'?'):
+                        if conexion.ConexionProducto.bajaProducto(producto):
+                            var.ui.statusbar.showMessage('Producto \'' + p.producto + '\' dado de baja.')
+                            EventosProducto.limpiarProducto()
+                            conexion.ConexionProducto.mostrarProductosTabla()
+                        else:
+                            EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja el producto \'' + producto + '\'.')
                 else:
                     EventosVentanas.abrirDialogAviso('ERROR: No existe ningun producto llamado \'' + producto + '\'.')
             else:
@@ -288,11 +326,12 @@ class EventosProducto:
 
             if producto.producto:
                 if conexion.ConexionProducto.buscarProducto(producto.producto) is not None:
-                    if conexion.ConexionProducto.modificarProducto(producto):
-                        var.ui.statusbar.showMessage('Producto \'' + producto.producto + '\' actualizado con exito.')
-                        conexion.ConexionProducto.mostrarProductosTabla()
-                    else:
-                        EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar el producto \'' + producto.producto + '\'.')
+                    if EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea modificar el producto \'' + producto.producto + '\'?'):
+                        if conexion.ConexionProducto.modificarProducto(producto):
+                            var.ui.statusbar.showMessage('Producto \'' + producto.producto + '\' actualizado con exito.')
+                            conexion.ConexionProducto.mostrarProductosTabla()
+                        else:
+                            EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar el producto \'' + producto.producto + '\'.')
                 else:
                     EventosVentanas.abrirDialogAviso('ERROR: No existe ningun producto llamado \'' + producto.producto + '\'.')
             else:

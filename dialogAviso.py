@@ -21,7 +21,7 @@ class Ui_dialogAviso(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(dialogAviso.sizePolicy().hasHeightForWidth())
         dialogAviso.setSizePolicy(sizePolicy)
-        dialogAviso.setMinimumSize(QtCore.QSize(0, 80))
+        dialogAviso.setMinimumSize(QtCore.QSize(0, 97))
         dialogAviso.setMaximumSize(QtCore.QSize(16777215, 97))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/iconoWarning/aviso.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -47,7 +47,7 @@ class Ui_dialogAviso(object):
         self.verticalLayout.addLayout(self.layout)
         self.botones = QtWidgets.QDialogButtonBox(dialogAviso)
         self.botones.setOrientation(QtCore.Qt.Horizontal)
-        self.botones.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
+        self.botones.setStandardButtons(QtWidgets.QDialogButtonBox.NoButton)
         self.botones.setObjectName("botones")
         self.verticalLayout.addWidget(self.botones)
 

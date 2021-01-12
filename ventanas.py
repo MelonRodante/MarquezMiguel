@@ -1,14 +1,12 @@
-import sys
-
 import conexion
 import eventos
 import var
 
 from datetime import datetime
-from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtWidgets import QDialogButtonBox
+from PyQt5 import QtWidgets, QtCore, QtPrintSupport
 
 from dialogAviso import Ui_dialogAviso
-from dialogSalir import Ui_dialogSalir
 from venPrincipal import Ui_venPrincipal
 from dialogCalendario import Ui_dialogCalendario
 
@@ -24,6 +22,9 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         QtWidgets.QAction(self).triggered.connect(self.close)
 
         ''' Eventos acciones '''
+        var.ui.actionAbrir.triggered.connect(QtWidgets.QFileDialog.getSaveFileName)
+        var.ui.actionImprimir.triggered.connect(eventos.EventosVentanas.abrirDialogConfimacion)
+        var.ui.actionCrear_Backup.triggered.connect(eventos.EventosVentanas.backup)
         var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
 
         ''' Label de fecha en el statusbar '''
@@ -112,20 +113,21 @@ class DialogCalendario(QtWidgets.QDialog):
             print('Error: %s' % str(error))
 
 
-class DialogSalir(QtWidgets.QDialog):
-    def __init__(self):
-        super(DialogSalir, self).__init__()
-        self.ventana = Ui_dialogSalir()
-        self.ventana.setupUi(self)
-        self.ventana.botones.accepted.connect(self.Salir)
-
-    def Salir(self):
-        sys.exit(0)
-
-
 class DialogAviso(QtWidgets.QDialog):
     def __init__(self, msg):
         super(DialogAviso, self).__init__()
         self.ventana = Ui_dialogAviso()
         self.ventana.setupUi(self)
+        self.ventana.botones.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
+        self.ventana.botones.button(QDialogButtonBox.Ok).setText("Aceptar")
+        self.ventana.lblAviso.setText(msg)
+
+
+class DialogConfirmacion(QtWidgets.QDialog):
+    def __init__(self, msg):
+        super(DialogConfirmacion, self).__init__()
+        self.ventana = Ui_dialogAviso()
+        self.ventana.setupUi(self)
+        self.ventana.botones.setStandardButtons(QtWidgets.QDialogButtonBox.Yes | QtWidgets.QDialogButtonBox.No)
+        self.ventana.botones.button(QDialogButtonBox.Yes).setText("Si")
         self.ventana.lblAviso.setText(msg)

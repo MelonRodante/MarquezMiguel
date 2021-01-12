@@ -2,6 +2,9 @@
   <qresource prefix="abrir">
     <file>abrir.png</file>
   </qresource>
+  <qresource prefix="crearbackup">
+    <file>crearbackup.png</file>
+  </qresource>
   <qresource prefix="imprimir">
     <file>imprimir.png</file>
   </qresource>
