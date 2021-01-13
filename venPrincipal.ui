@@ -1746,7 +1746,15 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuInformes">
+    <property name="title">
+     <string>Informes</string>
+    </property>
+    <addaction name="actionInforme_Clientes"/>
+    <addaction name="actionInforme_Productos"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuInformes"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -1809,6 +1817,16 @@ border-color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>Crear Backup</string>
+   </property>
+  </action>
+  <action name="actionInforme_Clientes">
+   <property name="text">
+    <string>Informe Clientes</string>
+   </property>
+  </action>
+  <action name="actionInforme_Productos">
+   <property name="text">
+    <string>Informe Productos</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,6 @@
 import conexion
 import eventos
+import informes
 import var
 
 from datetime import datetime
@@ -24,7 +25,11 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         ''' Eventos acciones '''
         var.ui.actionAbrir.triggered.connect(QtWidgets.QFileDialog.getSaveFileName)
         var.ui.actionImprimir.triggered.connect(eventos.EventosVentanas.abrirDialogConfimacion)
+
         var.ui.actionCrear_Backup.triggered.connect(eventos.EventosVentanas.backup)
+
+        var.ui.actionInforme_Clientes.triggered.connect(informes.Informes.informeClientes)
+
         var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
 
         ''' Label de fecha en el statusbar '''
