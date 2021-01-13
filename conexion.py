@@ -111,8 +111,7 @@ class ConexionCliente:
     def modificarCliente(cliente):
 
         query = QtSql.QSqlQuery()
-        query.prepare(
-            'update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni')
+        query.prepare('update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni')
         query.bindValue(':dni', cliente.dni)
         query.bindValue(':nombre', cliente.nombre)
         query.bindValue(':apellidos', cliente.apellidos)
@@ -129,28 +128,30 @@ class ConexionCliente:
             return False
 
     @staticmethod
-    def altaPrueba():
+    def listarClientes():
+        clientes = []
 
         query = QtSql.QSqlQuery()
-        query.prepare(
-            'insert into clientes (dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago)'
-            'VALUES (:dni, :nombre, :apellidos, :edad, :fechaalta, :direccion, :provincia, :sexo, :formaspago)')
-        query.bindValue(':dni', '00000000T')
-        query.bindValue(':nombre', 'Miguel')
-        query.bindValue(':apellidos', 'Marquez')
-        query.bindValue(':edad', 23)
-        query.bindValue(':fechaalta', '22/5/2020')
-        query.bindValue(':direccion', 'Camino Lamela nº 13')
-        query.bindValue(':provincia', 'Pontevedra')
-        query.bindValue(':sexo', 'Hombre')
-        query.bindValue(':formaspago', ',Tarjeta,')
+        query.prepare('select dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago from clientes order by apellidos, nombre')
 
         if query.exec_():
-            print('Altaaa')
-            EventosCliente.limpiarCliente()
-            ConexionCliente.mostrarClientesTabla()
+            while query.next():
+                cliente = Cliente()
+                cliente.dni = query.value(0)
+                cliente.nombre = query.value(1)
+                cliente.apellidos = query.value(2)
+                cliente.edad = query.value(3)
+                cliente.fechaAlta = query.value(4)
+                cliente.direccion = query.value(5)
+                cliente.provincia = query.value(6)
+                cliente.sexo = query.value(7)
+                cliente.formaspago = query.value(8)
+                clientes.append(cliente)
+            return clientes
         else:
-            print('No altaaa')
+            print('No se ha podido listar los clientes')
+
+
 
 
 class ConexionProducto:

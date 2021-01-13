@@ -210,9 +210,9 @@ class EventosCliente:
             cliente = Cliente()
             cliente.rellenarDatosCliente()
 
-            if cliente.comprobarDNI():
-                if cliente.datosValidos():
-                    if conexion.ConexionCliente.buscarCliente(cliente.dni) is not None:
+            if cliente.dni:
+                if conexion.ConexionCliente.buscarCliente(cliente.dni) is not None:
+                    if cliente.datosValidos():
                         if EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea dar de modificar los datos del cliente con DNI \'' + cliente.dni + '\'?'):
                             if conexion.ConexionCliente.modificarCliente(cliente):
                                 var.ui.statusbar.showMessage('Datos del cliente con DNI \'' + cliente.dni + '\' actualizados con exito.')
@@ -220,11 +220,13 @@ class EventosCliente:
                             else:
                                 EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar los datos del cliente con DNI \'' + cliente.dni + '\'.')
                     else:
-                        EventosVentanas.abrirDialogAviso('ERROR: No existe ningun cliente con el DNI \'' + cliente.dni + '\'.')
+                        EventosVentanas.abrirDialogAviso('ERROR: Faltan datos.')
                 else:
-                    EventosVentanas.abrirDialogAviso('ERROR: Faltan datos')
+                    EventosVentanas.abrirDialogAviso('ERROR: No existe ningun cliente con el DNI \'' + cliente.dni + '\'.')
             else:
-                EventosVentanas.abrirDialogAviso('ERROR: Formato DNI no valido o vacio')
+                EventosVentanas.abrirDialogAviso('ERROR: Introduzca un DNI para modificar.')
+
+
         except Exception as error:
             print('Error: %s' % str(error))
 
