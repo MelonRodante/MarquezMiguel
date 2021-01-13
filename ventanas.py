@@ -29,6 +29,7 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.actionCrear_Backup.triggered.connect(eventos.EventosVentanas.backup)
 
         var.ui.actionInforme_Clientes.triggered.connect(informes.Informes.informeClientes)
+        var.ui.actionInforme_Productos.triggered.connect(informes.Informes.informeProductos)
 
         var.ui.actionSalir.triggered.connect(eventos.EventosVentanas.abrirDialogSalir)
 

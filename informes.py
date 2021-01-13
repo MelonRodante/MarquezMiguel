@@ -92,37 +92,41 @@ class Informes():
             print('Error: %s ' % str(error))
 
     @staticmethod
-    def cuerpoClientes(c):
+    def informeProductos():
+        try:
+            c = canvas.Canvas('informes/listadoproductos.pdf')
 
+            Informes.basePaginaClientes(c, 'LISTADO PRODUCTOS')
+            productos = conexion.ConexionProducto.listarProductos()
 
+            index = 0
+            i = 80
+            j = 680
+            for producto in productos:
+                if index == 35:
+                    c.showPage()
+                    Informes.basePaginaClientes(c, 'LISTADO PRODUCTOS')
+                    j = 680
+                    index = 0
 
-        c.showPage()
+                c.setFont('Helvetica', size=9)
+                c.drawCentredString(i, j, str(producto.codigoProducto))
+                c.drawString(i + 50, j, producto.producto)
+                c.drawCentredString(i + 320, j, str(producto.stock))
+                c.drawCentredString(i + 420, j, str(producto.precio))
 
-        for cliente in clientes:
-            c.drawCentredString(i, j, cliente.dni)
-            c.drawString(i + 50, j, cliente.apellidos)
-            c.drawString(i + 190, j, cliente.nombre)
-            c.drawCentredString(i + 320, j, cliente.provincia)
-            c.drawCentredString(i + 420, j, cliente.fechaAlta)
-            j-=18
+                j -= 18
+                index += 1
 
-        '''c.drawCentredString(i, j, '54230060Q')
-        c.drawString(i + 50, j, 'Dominguez Martin Farre')
-        c.drawString(i + 190, j, 'Eva Katerina')
-        c.drawCentredString(i + 320, j, 'Lugo')
-        c.drawCentredString(i + 420, j, '5/5/2020')
-
-        c.drawCentredString(i, j-18, '54230060Q')
-        c.drawString(i + 50, j-18, 'Marquez Gutierrez')
-        c.drawString(i + 190, j-18, 'Miguel')
-        c.drawCentredString(i + 320, j-18, 'Pontevedra')
-        c.drawCentredString(i + 420, j-18, '22/5/2020')
-
-        c.drawCentredString(i, j-36, '54230060Q')
-        c.drawString(i + 50, j-36, 'Dominguez Martin Farre')
-        c.drawString(i + 190, j-36, 'Eva Katerina')
-        c.drawCentredString(i + 320, j-36, 'Lugo')
-        c.drawCentredString(i + 420, j-36, '5/5/2020')'''
+            c.save()
+            rootPath = ".\\informes"
+            cont = 0
+            for file in os.listdir(rootPath):
+                if file.endswith('.pdf'):
+                    os.startfile('%s/%s' % (rootPath, file))
+                cont = cont + 1
+        except Exception as error:
+            print('Error: %s ' % str(error))
 
     @staticmethod
     def drawLine(c, y):
@@ -130,6 +134,18 @@ class Informes():
 
     @staticmethod
     def basePaginaClientes(c, textlistado):
+        Informes.cabecera(c, textlistado)
+        c.setFont('Helvetica-Bold', size=9)
+        c.drawCentredString(80, 710, 'DNI')
+        c.drawCentredString(190, 710, 'APELLIDOS')
+        c.drawCentredString(310, 710, 'NOMBRE')
+        c.drawCentredString(400, 710, 'PROVINCIA')
+        c.drawCentredString(500, 710, 'FECHA ALTA')
+        Informes.drawLine(c, 697)
+        Informes.pie(c, textlistado)
+
+    @staticmethod
+    def basePaginaProductos(c, textlistado):
         Informes.cabecera(c, textlistado)
         c.setFont('Helvetica-Bold', size=9)
         c.drawCentredString(80, 710, 'DNI')

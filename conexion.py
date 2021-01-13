@@ -242,3 +242,22 @@ class ConexionProducto:
             return True
         else:
             return False
+
+    @staticmethod
+    def listarProductos():
+        productos = []
+
+        query = QtSql.QSqlQuery()
+        query.prepare('select codigoproducto, producto, stock, precio from productos order by stock')
+
+        if query.exec_():
+            while query.next():
+                producto = Producto()
+                producto.codigoProducto = query.value(0)
+                producto.producto = query.value(1)
+                producto.stock = query.value(2)
+                producto.precio = query.value(3)
+                productos.append(producto)
+            return productos
+        else:
+            print('No se ha podido listar los productos')
