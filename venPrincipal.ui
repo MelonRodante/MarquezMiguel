@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>801</width>
     <height>600</height>
    </rect>
   </property>
@@ -1097,7 +1097,7 @@ border-color: rgb(0, 0, 0);</string>
         <item>
          <layout class="QHBoxLayout" name="layoutProductos_3">
           <item>
-           <spacer name="horizontalSpacer_12">
+           <spacer name="space_9">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -1110,7 +1110,7 @@ border-color: rgb(0, 0, 0);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblProductos_2">
+           <widget class="QLabel" name="lblFacturas">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1153,7 +1153,7 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_13">
+           <spacer name="space_10">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -1235,7 +1235,19 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="btnFacturacionNueva">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1243,20 +1255,17 @@ border-color: rgb(0, 0, 0);</string>
              </font>
             </property>
             <property name="text">
-             <string>Crear</string>
+             <string/>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
+            <property name="icon">
+             <iconset resource="img/rc_botonesInterfaz.qrc">
+              <normaloff>:/nuevo/nuevo.png</normaloff>:/nuevo/nuevo.png</iconset>
             </property>
-            <property name="text">
-             <string>Anular</string>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1635,35 +1644,95 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QTableWidget" name="tablaVentas"/>
+           <widget class="QTableWidget" name="tablaVentas">
+            <attribute name="horizontalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderHighlightSections">
+             <bool>true</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>Codigo Venta</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Producto</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Cantidad</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Precio</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Total</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+           </widget>
           </item>
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="topMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QRadioButton" name="radioButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="minimumSize">
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>141</width>
-              <height>17</height>
+              <width>12</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>14</width>
-              <height>17</height>
-             </size>
-            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="brnAnular">
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1671,14 +1740,21 @@ border-color: rgb(0, 0, 0);</string>
              </font>
             </property>
             <property name="text">
-             <string>Facturas validas</string>
+             <string>Anular</string>
             </property>
-            <property name="checked">
-             <bool>true</bool>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnRestaurar">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
             </property>
-            <attribute name="buttonGroup">
-             <string notr="true">grpFacturas</string>
-            </attribute>
+            <property name="text">
+             <string>Restaurar</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -1695,7 +1771,7 @@ border-color: rgb(0, 0, 0);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="btnFacturaNuevoElemento">
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1708,7 +1784,7 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="btnFacturaBorrarElemento">
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1804,7 +1880,23 @@ border-color: rgb(0, 0, 0);</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>32</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbtFacturasValidas">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1830,7 +1922,10 @@ border-color: rgb(0, 0, 0);</string>
              </font>
             </property>
             <property name="text">
-             <string>Facturas anuladas</string>
+             <string>Facturas validas</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">grpFacturas</string>
@@ -1920,6 +2015,56 @@ border-color: rgb(0, 0, 0);</string>
           <property name="topMargin">
            <number>0</number>
           </property>
+          <item>
+           <spacer name="horizontalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>32</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbtFacturasAnuladas">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>141</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>14</width>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Facturas anuladas</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">grpFacturas</string>
+            </attribute>
+           </widget>
+          </item>
           <item>
            <spacer name="horizontalSpacer_7">
             <property name="orientation">
@@ -2636,7 +2781,7 @@ border-color: rgb(0, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>801</width>
      <height>21</height>
     </rect>
    </property>
@@ -2742,11 +2887,11 @@ border-color: rgb(0, 0, 0);</string>
  <connections/>
  <buttongroups>
   <buttongroup name="grpSexo"/>
+  <buttongroup name="grpFacturas"/>
   <buttongroup name="grpPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="grpFacturas"/>
  </buttongroups>
 </ui>
