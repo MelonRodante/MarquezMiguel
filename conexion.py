@@ -31,7 +31,7 @@ class ConexionCliente:
     def mostrarClientesTabla():
         index = 0
         query = QtSql.QSqlQuery()
-        query.prepare('select dni, apellidos, nombre from clientes')
+        query.prepare('select dni, apellidos, nombre from clientes order by apellidos, nombre')
         if query.exec_():
             var.ui.tablaClientes.setRowCount(0)
             while query.next():
@@ -42,6 +42,7 @@ class ConexionCliente:
                 var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(dni))
                 var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(apellidos))
                 var.ui.tablaClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(nombre))
+                var.ui.tablaClientes.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                 index += 1
         else:
             print("Error mostrar clientes: ", query.lastError().text())
@@ -167,7 +168,7 @@ class ConexionProducto:
                 codigoproducto = str(query.value(0))
                 producto = query.value(1)
                 stock = str(query.value(2))
-                precio = "{:.2f}".format(query.value(3)) + " €"
+                precio = "{:.2f}".format(query.value(3)) + " € "
                 var.ui.tablaProductos.setRowCount(index + 1)
                 var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(codigoproducto))
                 var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(producto))
