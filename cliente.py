@@ -97,6 +97,29 @@ class Cliente:
             return None
 
     @staticmethod
+    def comprobarDNI2(dni):
+        try:
+
+
+            if dni:
+                tabla = "TRWAGMYFDPXBNJZSQVHLCKE"
+                dig_ext = "XYZ"
+                reemp_dig_ext = {'X': '0', 'Y': '1', 'Z': '2'}
+                numeros = "1234567890"
+
+                dni = dni.upper()
+                if len(dni) == 9:
+                    dig_control = dni[8]
+                    dni = dni[:8]
+                    if dni[0] in dig_ext:
+                        dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
+                    return len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) % 23] == dig_control
+                return False
+        except:
+            print('error en la aplicacion')
+            return None
+
+    @staticmethod
     def __selSexo():
         try:
             if var.ui.rbtFemenino.isChecked():
@@ -113,11 +136,11 @@ class Cliente:
         try:
             pay = ""
             if var.ui.chkTransferencia.isChecked():
-                pay = pay + ',Transferencia,'
+                pay = pay + '|Transferencia|'
             if var.ui.chkTarjeta.isChecked():
-                pay = pay + ',Tarjeta,'
+                pay = pay + '|Tarjeta|'
             if var.ui.chkEfectivo.isChecked():
-                pay = pay + ',Efectivo,'
+                pay = pay + '|Efectivo|'
             return pay
         except Exception as error:
             print('Error: %s' % str(error))

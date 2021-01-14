@@ -48,9 +48,9 @@ class Informes():
         c.setFont('Helvetica-Oblique', size=7)
 
         Informes.drawLine(c, 50)
-        c.drawString(50, 30, str(textlistado))
+        c.drawString(65, 30, str(textlistado))
         c.drawCentredString(A4[0] / 2, 30, str('Pagina %s' % c.getPageNumber()))
-        c.drawRightString(A4[0] - 50, 30, str(fecha))
+        c.drawRightString(A4[0] - 65, 30, str(fecha))
 
     @staticmethod
     def informeClientes():
@@ -71,8 +71,8 @@ class Informes():
                     index=0
 
                 c.setFont('Helvetica', size=9)
-                c.drawCentredString(i, j, cliente.dni)
-                c.drawString(i + 50, j, cliente.apellidos)
+                c.drawCentredString(i + 10, j, cliente.dni)
+                c.drawString(i + 65, j, cliente.apellidos)
                 c.drawString(i + 190, j, cliente.nombre)
                 c.drawCentredString(i + 320, j, cliente.provincia)
                 c.drawCentredString(i + 420, j, cliente.fechaAlta)
@@ -136,9 +136,9 @@ class Informes():
     def basePaginaClientes(c, textlistado):
         Informes.cabecera(c, textlistado)
         c.setFont('Helvetica-Bold', size=9)
-        c.drawCentredString(80, 710, 'DNI')
-        c.drawCentredString(190, 710, 'APELLIDOS')
-        c.drawCentredString(310, 710, 'NOMBRE')
+        c.drawCentredString(90, 710, 'DNI')
+        c.drawCentredString(180, 710, 'APELLIDOS')
+        c.drawCentredString(295, 710, 'NOMBRE')
         c.drawCentredString(400, 710, 'PROVINCIA')
         c.drawCentredString(500, 710, 'FECHA ALTA')
         Informes.drawLine(c, 697)

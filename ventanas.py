@@ -1,3 +1,5 @@
+import json
+
 import conexion
 import eventos
 import informes
@@ -7,6 +9,7 @@ from datetime import datetime
 from PyQt5.QtWidgets import QDialogButtonBox
 from PyQt5 import QtWidgets, QtCore, QtPrintSupport
 
+from cliente import Cliente
 from dialogAviso import Ui_dialogAviso
 from venPrincipal import Ui_venPrincipal
 from dialogCalendario import Ui_dialogCalendario

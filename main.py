@@ -1,5 +1,6 @@
 import locale
 import sys
+
 from PyQt5 import QtWidgets
 from ventanas import VentanaPrincipal
 
@@ -11,5 +12,12 @@ if __name__ == '__main__':
     # window.showMaximized()
     window.show()
     sys.exit(app.exec_())
+
+
+
+
+
+
+
 
 

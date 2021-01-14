@@ -128,6 +128,7 @@ class EventosCliente:
                 var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(cliente.dni))
                 var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(cliente.apellidos))
                 var.ui.tablaClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(cliente.nombre))
+                var.ui.tablaClientes.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                 index += 1
 
 
