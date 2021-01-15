@@ -2,7 +2,7 @@ import locale
 import sys
 
 from PyQt5 import QtWidgets
-from ventanas import VentanaPrincipal
+from ventanaPrincipal import VentanaPrincipal
 
 #locale.setlocale(locale.LC_ALL, 'es-ES')
 
