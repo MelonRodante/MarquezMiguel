@@ -70,7 +70,7 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.tablaClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
 
         # Botones cliente
-        var.ui.btnCalendario.clicked.connect(eventos.EventosVentanas.abrirDialogCalendario)
+        var.ui.btnCalendario.clicked.connect(eventos.EventosCliente.calendarioFechaAlta)
         var.ui.btnClienteBuscar.clicked.connect(eventos.EventosCliente.buscarCliente)
         var.ui.btnClienteRecargar.clicked.connect(conexion.ConexionCliente.mostrarClientesTabla)
 
@@ -95,6 +95,15 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.btnProductoLimpiar.clicked.connect(eventos.EventosProducto.limpiarProducto)
         var.ui.btnProductoSalir.clicked.connect(eventos.EventosVentanas.abrirDialogSalir)
 
+        ''' Conexion Eventos Facturas '''
+
+        # Cargar los valores del combobox de estado de la factura
+        eventos.EventosFactura.cargarTipoFactura()
+
+        # Botones producto
+        var.ui.btnCalendarioFacturacion.clicked.connect(eventos.EventosFactura.calendarioFechaFactura)
+        var.ui.btnFacturacionLimpiar.clicked.connect(eventos.EventosFactura.limpiarFactura)
+
 
     def closeEvent(self, event):
         eventos.EventosVentanas.abrirDialogSalir()
@@ -102,10 +111,11 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
 
 class DialogCalendario(QtWidgets.QDialog):
-    def __init__(self):
+    def __init__(self, edit):
         super(DialogCalendario, self).__init__()
         self.dialogCalendario = Ui_dialogCalendario()
         self.dialogCalendario.setupUi(self)
+        self.edit = edit
         diaactual = datetime.now().day
         mesactual = datetime.now().month
         anoactual = datetime.now().year
@@ -116,7 +126,7 @@ class DialogCalendario(QtWidgets.QDialog):
         try:
             date = self.dialogCalendario.widgetCalendario.selectedDate()
             data = ('{0}/{1}/{2}'.format(date.day(),date.month(),date.year()))
-            var.ui.editFechaAlta.setText(str(data))
+            self.edit.setText(str(data))
             self.close()
         except Exception as error:
             print('Error: %s' % str(error))

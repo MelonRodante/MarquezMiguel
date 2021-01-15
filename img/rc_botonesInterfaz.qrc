@@ -2,6 +2,9 @@
   <qresource prefix="lupa">
     <file>lupa.png</file>
   </qresource>
+  <qresource prefix="limpiar">
+    <file>limpiar.png</file>
+  </qresource>
   <qresource prefix="nuevo">
     <file>nuevo.png</file>
   </qresource>

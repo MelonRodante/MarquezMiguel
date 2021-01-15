@@ -16,9 +16,9 @@ from producto import Producto
 class EventosVentanas:
 
     @staticmethod
-    def abrirDialogCalendario():
+    def abrirDialogCalendario(edit):
         try:
-            dlgCalendar = ventanas.DialogCalendario()
+            dlgCalendar = ventanas.DialogCalendario(edit=edit)
             dlgCalendar.exec_()
         except Exception as error:
             print('Error: %s ' % str(error))
@@ -77,6 +77,10 @@ class EventosVentanas:
 class EventosCliente:
 
     @staticmethod
+    def calendarioFechaAlta():
+        EventosVentanas.abrirDialogCalendario(var.ui.editFechaAlta)
+
+    @staticmethod
     def cargarProvincias():
         try:
             for i in var.prov:
@@ -110,6 +114,7 @@ class EventosCliente:
 
             if cliente:
                 cliente.rellenarFormularioCliente()
+                EventosFactura.cargarDatosCliente(cliente)
             else:
                 EventosVentanas.abrirDialogAviso("ERROR: No se han podido cargar los datos")
 
@@ -339,5 +344,49 @@ class EventosProducto:
                     EventosVentanas.abrirDialogAviso('ERROR: No existe ningun producto llamado \'' + producto.producto + '\'.')
             else:
                 EventosVentanas.abrirDialogAviso('ERROR: Introduzca un producto a modificar.')
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+
+class EventosFactura:
+
+    @staticmethod
+    def calendarioFechaFactura():
+        EventosVentanas.abrirDialogCalendario(var.ui.editFechaFactura)
+
+    @staticmethod
+    def cargarTipoFactura():
+        try:
+            for i in var.estadoFactura:
+                var.ui.cmbTipoFacturas.addItem(i)
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+    @staticmethod
+    def cargarDatosCliente(cliente):
+        try:
+            var.ui.editDNIFacturacion.setText(cliente.dni)
+            var.ui.editApellidosNombreFacturacion.setText(cliente.apellidos + ", " + cliente.nombre)
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+    @staticmethod
+    def buscarFacturas():
+        try:
+            pass
+        except Exception as error:
+            print('Error: %s' % str(error))
+
+    @staticmethod
+    def limpiarFactura():
+        try:
+            var.ui.editNFactura.setText("")
+            var.ui.editFechaFactura.setText("")
+            var.ui.editDNIFacturacion.setText("")
+            var.ui.editApellidosNombreFacturacion.setText("")
+
+            var.ui.editSubtotal.setText("")
+            var.ui.editIVA.setText("")
+            var.ui.editTotal.setText("")
         except Exception as error:
             print('Error: %s' % str(error))
