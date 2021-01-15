@@ -7,8 +7,8 @@ import var
 from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialogButtonBox
-from dialogAviso import Ui_dialogAviso
-from dialogCalendario import Ui_dialogCalendario
+from PYQT5_dialogAviso import Ui_dialogAviso
+from PYQT5_dialogCalendario import Ui_dialogCalendario
 
 
 class EventosVentanas:

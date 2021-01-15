@@ -1,14 +1,15 @@
+import panelInformes
 import var
 
-import cliente
-import producto
-import factura
+import panelCliente
+import panelProducto
+import panelFactura
 import informes
 import ventanasDialogo
 
 from datetime import datetime
 from PyQt5 import QtWidgets, QtSql
-from venPrincipal import Ui_venPrincipal
+from PYQT5_venPrincipal import Ui_venPrincipal
 
 
 class VentanaPrincipal(QtWidgets.QMainWindow):
@@ -24,8 +25,8 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         var.ui.actionCrear_Backup.triggered.connect(ventanasDialogo.EventosVentanas.backup)
 
-        var.ui.actionInforme_Clientes.triggered.connect(informes.Informes.informeClientes)
-        var.ui.actionInforme_Productos.triggered.connect(informes.Informes.informeProductos)
+        var.ui.actionInforme_Clientes.triggered.connect(panelInformes.Informes.informeClientes)
+        var.ui.actionInforme_Productos.triggered.connect(panelInformes.Informes.informeProductos)
 
         var.ui.actionSalir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogSalir)
 
@@ -37,13 +38,13 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         Conexion.conectardb(var.filedb)
 
         ''' Conexion Eventos Cliente'''
-        cliente.EventosCliente.conectarEventosCliente()
+        panelCliente.EventosCliente.conectarEventosCliente()
 
         ''' Conexion Eventos Producto '''
-        producto.EventosProducto.conectarEventosProducto()
+        panelProducto.EventosProducto.conectarEventosProducto()
 
         ''' Conexion Eventos Facturas '''
-        factura.EventosFactura.conectarEventosFactura()
+        panelFactura.EventosFactura.conectarEventosFactura()
 
         ''' Evento de cerrado de la aplicacion '''
         QtWidgets.QAction(self).triggered.connect(self.close)
