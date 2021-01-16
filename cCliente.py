@@ -47,7 +47,7 @@ class Cliente:
             var.ui.editFechaAlta.setText(self.fechaAlta)
 
             var.ui.editDireccion.setText(self.direccion)
-            var.ui.cmbProvincia.setCurrentIndex(var.prov.index(self.provincia))
+            var.ui.cmbProvincia.setCurrentIndex(Cliente.provincias.index(self.provincia))
 
             if self.sexo == 'Hombre':
                 var.ui.rbtMasculino.setChecked(True)
@@ -82,6 +82,8 @@ class Cliente:
             return False
 
         return True
+
+    provincias = ['', 'A Coruña', 'Lugo', 'Ourense', 'Pontevedra']
 
     @staticmethod
     def comprobarDNI():
@@ -200,7 +202,7 @@ class EventosCliente:
     @staticmethod
     def comboboxCliente():
         try:
-            for i in var.prov:
+            for i in Cliente.provincias:
                 var.ui.cmbProvincia.addItem(i)
         except Exception as error:
             print('Error comboboxCliente: %s' % str(error))
@@ -209,10 +211,9 @@ class EventosCliente:
     def cargarTablaClientes(clientes):
         try:
             index = 0
-            var.ui.tablaClientes.setRowCount(0)
+            var.ui.tablaClientes.setRowCount(len(clientes))
 
             for cliente in clientes:
-                var.ui.tablaClientes.setRowCount(index + 1)
                 var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(cliente.dni))
                 var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(cliente.apellidos))
                 var.ui.tablaClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(cliente.nombre))
@@ -230,7 +231,6 @@ class EventosCliente:
             fila = var.ui.tablaClientes.selectedItems()
             cliente = ConexionCliente.buscarClienteDB(fila[0].text()).pop()
             cliente.rellenarFormularioCliente()
-
         except Exception as error:
             print('Error cargarDatosCliente: %s' % str(error))
 
@@ -312,7 +312,7 @@ class EventosCliente:
                             EventosCliente.limpiarCliente()
                             EventosCliente.recargarCliente()
                         else:
-                            ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja al cliente con DNI \'' + dni +'\'.')
+                            ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja al cliente con DNI \'' + dni + '\'.')
                 else:
                     ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No existe ningun cliente con el DNI \'' + dni + '\'.')
             else:
@@ -354,11 +354,11 @@ class ConexionCliente:
             clientes = []
             query = QtSql.QSqlQuery()
 
-            bdni = 'dni'
+            b_dni = 'dni'
             if dni:
-                bdni = ':dni'
+                b_dni = ':dni'
 
-            query.prepare('select dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago from clientes where dni = ' + bdni)
+            query.prepare('select dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago from clientes where dni = ' + b_dni + ' order by apellidos, nombre')
             query.bindValue(':dni', dni)
 
             if query.exec_():
@@ -447,4 +447,3 @@ class ConexionCliente:
 
         except Exception as error:
             print('Error modificarClienteDB: %s' % str(error))
-

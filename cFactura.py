@@ -64,7 +64,7 @@ class EventosFactura:
     @staticmethod
     def cargarTipoFactura():
         try:
-            for i in var.estadoFactura:
+            for i in ['Pendiente', 'Pagada', 'Anulada', 'Todas']:
                 var.ui.cmbTipoFacturas.addItem(i)
         except Exception as error:
             print('Error cargarTipoFactura: %s' % str(error))

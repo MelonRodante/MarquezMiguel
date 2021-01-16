@@ -7,25 +7,31 @@ from PyQt5 import QtWidgets, QtCore, QtSql
 class Producto:
 
     def __init__(self):
-        self.codigoProducto = ""
+        self.codigoProducto = 0
         self.producto = ""
 
         self.stock = 0
         self.precio = 0
 
     def rellenarDatosProducto(self):
-        self.codigoProducto = var.ui.editCodigoProducto.text()
-        self.producto = var.ui.editProducto.text()
+        try:
+            self.codigoProducto = var.ui.editCodigoProducto.text()
+            self.producto = var.ui.editProducto.text()
 
-        self.stock = var.ui.spinStock.value()
-        self.precio = var.ui.spinPrecio.value()
+            self.stock = var.ui.spinStock.value()
+            self.precio = var.ui.spinPrecio.value()
+        except Exception as error:
+            print('Error rellenarDatosProducto: %s' % str(error))
 
     def rellenarFormularioProducto(self):
-        var.ui.editCodigoProducto.setText(str(self.codigoProducto))
-        var.ui.editProducto.setText(self.producto)
+        try:
+            var.ui.editCodigoProducto.setText(str(self.codigoProducto))
+            var.ui.editProducto.setText(self.producto)
 
-        var.ui.spinStock.setValue(self.stock)
-        var.ui.spinPrecio.setValue(self.precio)
+            var.ui.spinStock.setValue(self.stock)
+            var.ui.spinPrecio.setValue(self.precio)
+        except Exception as error:
+            print('Error rellenarFormularioProducto: %s' % str(error))
 
     def datosValidos(self):
         return self.producto != ""
@@ -48,7 +54,7 @@ class EventosProducto:
 
         # Botones producto
         var.ui.btnProductoBuscar.clicked.connect(EventosProducto.buscarProducto)
-        var.ui.btnProductoRecargar.clicked.connect(ConexionProducto.mostrarProductosTabla)
+        var.ui.btnProductoRecargar.clicked.connect(EventosProducto.recargarProducto)
         var.ui.btnProductoLimpiar.clicked.connect(EventosProducto.limpiarProducto)
 
         var.ui.btnProductoAlta.clicked.connect(EventosProducto.altaProducto)
@@ -56,42 +62,37 @@ class EventosProducto:
         var.ui.btnProductoBaja.clicked.connect(EventosProducto.bajaProducto)
 
         # Cargar productos en la tabla
-        ConexionProducto.mostrarProductosTabla()
+        EventosProducto.recargarProducto()
+
+    @staticmethod
+    def cargarTablaProductos(productos):
+        try:
+            index = 0
+            var.ui.tablaProductos.setRowCount(len(productos))
+
+            for producto in productos:
+                var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(str(producto.codigoProducto)))
+                var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(producto.producto))
+                var.ui.tablaProductos.setItem(index, 2, QtWidgets.QTableWidgetItem(str(producto.stock)))
+                var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem("{:.2f}".format(producto.precio) + " € "))
+
+                var.ui.tablaProductos.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaProductos.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+                var.ui.tablaProductos.item(index, 3).setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+
+                index += 1
+
+        except Exception as error:
+            print('Error cargarTablaProductos: %s' % str(error))
 
     @staticmethod
     def cargarDatosProducto():
         try:
             fila = var.ui.tablaProductos.selectedItems()
-            producto = ConexionProducto.buscarProducto(fila[1].text())
-
-            if producto:
-                producto.rellenarFormularioProducto()
-            else:
-                ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: No se han podido cargar los datos")
+            producto = ConexionProducto.buscarProductoDB(fila[1].text()).pop()
+            producto.rellenarFormularioProducto()
         except Exception as error:
             print('Error cargarDatosProducto: %s' % str(error))
-
-    @staticmethod
-    def buscarProducto():
-        try:
-            producto = ConexionProducto.buscarProducto(var.ui.editProducto.text())
-
-            if producto is not None:
-                index = 0
-                var.ui.tablaProductos.setRowCount(0)
-                var.ui.tablaProductos.setRowCount(index + 1)
-                var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(str(producto.codigoProducto)))
-                var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(producto.producto))
-                var.ui.tablaProductos.setItem(index, 2, QtWidgets.QTableWidgetItem(str(producto.stock)))
-                var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem("{:.2f}".format(producto.precio) + " €"))
-                var.ui.tablaProductos.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
-                var.ui.tablaProductos.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
-                var.ui.tablaProductos.item(index, 3).setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-                index += 1
-
-
-        except Exception as error:
-            print('Error buscarProducto: %s' % str(error))
 
     @staticmethod
     def limpiarProducto():
@@ -105,18 +106,35 @@ class EventosProducto:
             print('Error limpiarProducto: %s' % str(error))
 
     @staticmethod
+    def recargarProducto():
+        try:
+            productos = ConexionProducto.buscarProductoDB("")
+            EventosProducto.cargarTablaProductos(productos)
+        except Exception as error:
+            print('Error recargarProducto: %s' % str(error))
+
+    @staticmethod
+    def buscarProducto():
+        try:
+            producto = var.ui.editProducto.text()
+            productos = ConexionProducto.buscarProductoDB(producto)
+            EventosProducto.cargarTablaProductos(productos)
+        except Exception as error:
+            print('Error buscarProducto: %s' % str(error))
+
+    @staticmethod
     def altaProducto():
         try:
             producto = Producto()
             producto.rellenarDatosProducto()
 
             if producto.datosValidos():
-                if ConexionProducto.altaProducto(producto):
-                    var.ui.statusbar.showMessage("Producto \'" + producto.producto +"\' dado de alta.")
+                if ConexionProducto.altaProductoDB(producto):
+                    var.ui.statusbar.showMessage("Producto \'" + producto.producto + "\' dado de alta.")
                     EventosProducto.limpiarProducto()
-                    ConexionProducto.mostrarProductosTabla()
+                    EventosProducto.recargarProducto()
                 else:
-                    ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: Ya existe ese producto \'" + producto.producto + "\'.")
+                    ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: Ya existe el producto \'" + producto.producto + "\'.")
             else:
                 ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: Faltan datos")
 
@@ -127,15 +145,14 @@ class EventosProducto:
     def bajaProducto():
         try:
             producto = var.ui.editProducto.text()
-            p = ConexionProducto.buscarProducto(producto)
 
-            if var.ui.editProducto.text():
-                if p is not None:
+            if producto:
+                if len(ConexionProducto.buscarProductoDB(producto)) != 0:
                     if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea dar de baja el producto \'' + producto + '\'?'):
-                        if ConexionProducto.bajaProducto(producto):
-                            var.ui.statusbar.showMessage('Producto \'' + p.producto + '\' dado de baja.')
+                        if ConexionProducto.bajaProductoDB(producto):
+                            var.ui.statusbar.showMessage('Producto \'' + producto + '\' dado de baja.')
                             EventosProducto.limpiarProducto()
-                            ConexionProducto.mostrarProductosTabla()
+                            EventosProducto.recargarProducto()
                         else:
                             ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No se ha podido dar de baja el producto \'' + producto + '\'.')
                 else:
@@ -152,17 +169,18 @@ class EventosProducto:
             producto.rellenarDatosProducto()
 
             if producto.producto:
-                if ConexionProducto.buscarProducto(producto.producto) is not None:
+                if len(ConexionProducto.buscarProductoDB(producto.producto)) != 0:
                     if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea modificar el producto \'' + producto.producto + '\'?'):
-                        if ConexionProducto.modificarProducto(producto):
+                        if ConexionProducto.modificarProductoDB(producto):
                             var.ui.statusbar.showMessage('Producto \'' + producto.producto + '\' actualizado con exito.')
-                            ConexionProducto.mostrarProductosTabla()
+                            EventosProducto.recargarProducto()
                         else:
                             ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No se han podido modificar el producto \'' + producto.producto + '\'.')
                 else:
                     ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No existe ningun producto llamado \'' + producto.producto + '\'.')
             else:
                 ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: Introduzca un producto a modificar.')
+
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))
 
@@ -170,57 +188,38 @@ class EventosProducto:
 class ConexionProducto:
 
     @staticmethod
-    def mostrarProductosTabla():
+    def buscarProductoDB(producto):
         try:
-            index = 0
+            productos = []
             query = QtSql.QSqlQuery()
-            query.prepare('select codigoproducto, producto, stock, precio from productos')
 
-            if query.exec_():
-                var.ui.tablaProductos.setRowCount(0)
-                while query.next():
-                    var.ui.tablaProductos.setRowCount(index + 1)
-                    var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
-                    var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(query.value(1)))
-                    var.ui.tablaProductos.setItem(index, 2, QtWidgets.QTableWidgetItem(str(query.value(2))))
-                    var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem("{:.2f}".format(query.value(3)) + " € "))
+            b_producto = 'producto'
+            if producto:
+                b_producto = ':producto'
 
-                    var.ui.tablaProductos.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
-                    var.ui.tablaProductos.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
-                    var.ui.tablaProductos.item(index, 3).setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-
-                    index += 1
-            else:
-                print("Error mostrar productos: ", query.lastError().text())
-
-        except Exception as error:
-            print('Error mostrarProductosTabla: %s' % str(error))
-
-    @staticmethod
-    def buscarProducto(producto):
-        try:
-            query = QtSql.QSqlQuery()
-            query.prepare('select codigoproducto, producto, stock, precio from productos where producto = :producto')
+            query.prepare('select codigoproducto, producto, stock, precio from productos where producto = ' + b_producto)
             query.bindValue(':producto', producto)
 
             if query.exec_():
-                if query.next():
+                while query.next():
                     p = Producto()
+
                     p.codigoProducto = query.value(0)
                     p.producto = query.value(1)
                     p.stock = query.value(2)
                     p.precio = query.value(3)
-                    return p
-                else:
-                    return None
+
+                    productos.append(p)
+
+                return productos
             else:
-                return None
+                return []
 
         except Exception as error:
             print('Error buscarProducto: %s' % str(error))
 
     @staticmethod
-    def altaProducto(producto):
+    def altaProductoDB(producto):
         try:
             query = QtSql.QSqlQuery()
             query.prepare('insert into productos (producto, stock, precio)'
@@ -239,7 +238,7 @@ class ConexionProducto:
             print('Error altaProducto: %s' % str(error))
 
     @staticmethod
-    def bajaProducto(producto):
+    def bajaProductoDB(producto):
         try:
             query = QtSql.QSqlQuery()
             query.prepare('delete from productos where producto = :producto')
@@ -254,7 +253,7 @@ class ConexionProducto:
             print('Error bajaProducto: %s' % str(error))
 
     @staticmethod
-    def modificarProducto(producto):
+    def modificarProductoDB(producto):
         try:
             query = QtSql.QSqlQuery()
             query.prepare('update productos set stock=:stock, precio=:precio where producto = :producto')
@@ -270,27 +269,3 @@ class ConexionProducto:
 
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))
-
-    @staticmethod
-    def listarProductos():
-        try:
-            productos = []
-            query = QtSql.QSqlQuery()
-            query.prepare('select codigoproducto, producto, stock, precio from productos order by stock')
-
-            if query.exec_():
-                while query.next():
-                    producto = Producto()
-                    producto.codigoProducto = query.value(0)
-                    producto.producto = query.value(1)
-                    producto.stock = query.value(2)
-                    producto.precio = query.value(3)
-                    productos.append(producto)
-                return productos
-            else:
-                print('No se ha podido listar los productos')
-
-        except Exception as error:
-            print('Error listarProductos: %s' % str(error))
-
-

@@ -1,6 +1,6 @@
 import os
-import panelCliente
-import panelProducto
+import cCliente
+import cProducto
 
 from datetime import datetime
 from reportlab.lib.pagesizes import A4
@@ -53,7 +53,7 @@ class Informes():
             c = canvas.Canvas('informes/listadoclientes.pdf')
 
             Informes.basePaginaClientes(c, 'LISTADO CLIENTES')
-            clientes = panelCliente.ConexionCliente.listarClientes()
+            clientes = cCliente.ConexionCliente.listarClientes()
 
             index=0
             i = 80
@@ -92,7 +92,7 @@ class Informes():
             c = canvas.Canvas('informes/listadoproductos.pdf')
 
             Informes.basePaginaClientes(c, 'LISTADO PRODUCTOS')
-            productos = panelProducto.ConexionProducto.listarProductos()
+            productos = cProducto.ConexionProducto.listarProductos()
 
             index = 0
             i = 80

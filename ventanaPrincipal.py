@@ -1,9 +1,9 @@
-import panelInformes
+import cInformes
 import var
 
-import panelCliente
-import panelProducto
-import panelFactura
+import cCliente
+import cProducto
+import cFactura
 import informes
 import ventanasDialogo
 
@@ -25,8 +25,8 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         var.ui.actionCrear_Backup.triggered.connect(ventanasDialogo.EventosVentanas.backup)
 
-        var.ui.actionInforme_Clientes.triggered.connect(panelInformes.Informes.informeClientes)
-        var.ui.actionInforme_Productos.triggered.connect(panelInformes.Informes.informeProductos)
+        var.ui.actionInforme_Clientes.triggered.connect(cInformes.Informes.informeClientes)
+        var.ui.actionInforme_Productos.triggered.connect(cInformes.Informes.informeProductos)
 
         var.ui.actionSalir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogSalir)
 
@@ -38,13 +38,13 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         Conexion.conectardb(var.filedb)
 
         ''' Conexion Eventos Cliente'''
-        panelCliente.EventosCliente.conectarEventosCliente()
+        cCliente.EventosCliente.conectarEventosCliente()
 
         ''' Conexion Eventos Producto '''
-        panelProducto.EventosProducto.conectarEventosProducto()
+        cProducto.EventosProducto.conectarEventosProducto()
 
         ''' Conexion Eventos Facturas '''
-        panelFactura.EventosFactura.conectarEventosFactura()
+        cFactura.EventosFactura.conectarEventosFactura()
 
         ''' Evento de cerrado de la aplicacion '''
         QtWidgets.QAction(self).triggered.connect(self.close)
