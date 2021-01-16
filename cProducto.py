@@ -49,8 +49,7 @@ class EventosProducto:
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.Fixed)
 
         # Evento tabla productos
-        var.ui.tablaProductos.itemSelectionChanged.connect(EventosProducto.cargarDatosProducto)
-        var.ui.tablaProductos.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tablaProductos.clicked.connect(EventosProducto.cargarDatosProducto)
 
         # Botones producto
         var.ui.btnProductoBuscar.clicked.connect(EventosProducto.buscarProducto)
@@ -229,10 +228,7 @@ class ConexionProducto:
             query.bindValue(':stock', producto.stock)
             query.bindValue(':precio', producto.precio)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error altaProducto: %s' % str(error))
@@ -244,10 +240,7 @@ class ConexionProducto:
             query.prepare('delete from productos where producto = :producto')
             query.bindValue(':producto', producto)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error bajaProducto: %s' % str(error))
@@ -262,10 +255,7 @@ class ConexionProducto:
             query.bindValue(':stock', producto.stock)
             query.bindValue(':precio', producto.precio)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))

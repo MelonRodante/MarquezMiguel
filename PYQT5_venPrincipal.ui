@@ -33,7 +33,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="panelCliente">
        <attribute name="title">
@@ -1316,7 +1316,10 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="brnPagar">
+           <widget class="QPushButton" name="btnFacturacionPagar">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1329,7 +1332,10 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnAnular">
+           <widget class="QPushButton" name="btnFacturacionEliAnuRes">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="font">
              <font>
               <weight>50</weight>
@@ -1337,7 +1343,7 @@ border-color: rgb(0, 0, 0);</string>
              </font>
             </property>
             <property name="text">
-             <string>Anular</string>
+             <string>Eliminar</string>
             </property>
            </widget>
           </item>
@@ -1418,7 +1424,7 @@ border-color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnCalendarioFacturacion">
+           <widget class="QPushButton" name="btnFacturacionCalendario">
             <property name="minimumSize">
              <size>
               <width>32</width>
@@ -1727,7 +1733,7 @@ border-color: rgb(0, 0, 0);</string>
                <number>72</number>
               </attribute>
               <attribute name="horizontalHeaderMinimumSectionSize">
-               <number>30</number>
+               <number>0</number>
               </attribute>
               <attribute name="horizontalHeaderStretchLastSection">
                <bool>false</bool>
@@ -1913,6 +1919,41 @@ border-color: rgb(0, 0, 0);</string>
              <number>0</number>
             </property>
             <item>
+             <widget class="QPushButton" name="btnFacturacionRecargar">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>32</horstretch>
+                <verstretch>32</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="img/rc_botonesInterfaz.qrc">
+                <normaloff>:/recargar/recargar.png</normaloff>:/recargar/recargar.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLabel" name="lblTipoFacturas">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1947,7 +1988,7 @@ border-color: rgb(0, 0, 0);</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>157</width>
+                <width>119</width>
                 <height>20</height>
                </size>
               </property>
@@ -1992,7 +2033,7 @@ border-color: rgb(0, 0, 0);</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="btnFacturaNuevoElemento">
+             <widget class="QPushButton" name="btnFacturacionNuevoElemento">
               <property name="font">
                <font>
                 <weight>50</weight>
@@ -2005,7 +2046,7 @@ border-color: rgb(0, 0, 0);</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="btnFacturaBorrarElemento">
+             <widget class="QPushButton" name="btnFacturacionBorrarElemento">
               <property name="font">
                <font>
                 <weight>50</weight>

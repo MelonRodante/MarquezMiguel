@@ -1,3 +1,4 @@
+import cFactura
 import var
 import ventanasDialogo
 
@@ -39,7 +40,7 @@ class Cliente:
 
     def rellenarFormularioCliente(self):
         try:
-            var.ui.editDNI.setText(self.dni)
+
             var.ui.editNombre.setText(self.nombre)
             var.ui.editApellidos.setText(self.apellidos)
 
@@ -48,6 +49,8 @@ class Cliente:
 
             var.ui.editDireccion.setText(self.direccion)
             var.ui.cmbProvincia.setCurrentIndex(Cliente.provincias.index(self.provincia))
+
+            var.ui.editDNI.setText(self.dni)
 
             if self.sexo == 'Hombre':
                 var.ui.rbtMasculino.setChecked(True)
@@ -144,9 +147,12 @@ class EventosCliente:
     @staticmethod
     def conectarEventosCliente():
         # Comprobar que el DNI sea valido y informar de ello
-        var.ui.editDNI.editingFinished.connect(EventosCliente.DNIValido)
+        #var.ui.editDNI.editingFinished.connect(EventosCliente.DNIValido)
 
-        # Cargar los valores de las provincias
+        # Rellenar los datos al acabar de escribir el dni si existe 1 usuario con ese dni
+        var.ui.editDNI.textChanged.connect(EventosCliente.editDNIChange)
+
+        # Cargar los valores del combobox de provincia
         EventosCliente.comboboxCliente()
 
         # Formato tabla clientes
@@ -156,8 +162,7 @@ class EventosCliente:
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
 
         # Evento tabla clientes
-        var.ui.tablaClientes.itemSelectionChanged.connect(EventosCliente.cargarDatosCliente)
-        var.ui.tablaClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tablaClientes.clicked.connect(EventosCliente.cargarDatosCliente)
 
         # Botones cliente
         var.ui.btnCalendario.clicked.connect(EventosCliente.calendarioCliente)
@@ -191,6 +196,29 @@ class EventosCliente:
 
         except Exception as error:
             print('Error DNIValido: %s ' % str(error))
+
+    @staticmethod
+    def editDNIChange():
+        try:
+            dni = var.ui.editDNI.text()
+            dni = dni.upper()
+            var.ui.editDNI.setText(dni)
+
+            if len(dni) == 9:
+                cliente = ConexionCliente.buscarClienteDB(dni)
+                if len(cliente) != 0:
+                    cliente[0].rellenarFormularioCliente()
+                if Cliente.comprobarDNI():
+                    var.ui.lblValido.setStyleSheet('QLabel {color: green}')
+                    var.ui.lblValido.setText('V')
+                else:
+                    var.ui.lblValido.setStyleSheet('QLabel {color: red}')
+                    var.ui.lblValido.setText('X')
+            else:
+                var.ui.lblValido.setText('')
+
+        except Exception as error:
+            print('Error editDNIChange: %s' % str(error))
 
     @staticmethod
     def calendarioCliente():
@@ -229,8 +257,11 @@ class EventosCliente:
     def cargarDatosCliente():
         try:
             fila = var.ui.tablaClientes.selectedItems()
-            cliente = ConexionCliente.buscarClienteDB(fila[0].text()).pop()
+            cliente = ConexionCliente.buscarClienteDB(fila[0].text())[0]
             cliente.rellenarFormularioCliente()
+
+            var.ui.editDNIFacturacion.setText("")
+            var.ui.editDNIFacturacion.setText(cliente.dni)
         except Exception as error:
             print('Error cargarDatosCliente: %s' % str(error))
 
@@ -239,7 +270,6 @@ class EventosCliente:
         try:
             var.ui.lblValido.setText('')
 
-            var.ui.editDNI.setText('')
             var.ui.editNombre.setText('')
             var.ui.editApellidos.setText('')
 
@@ -258,13 +288,15 @@ class EventosCliente:
             var.ui.chkTarjeta.setChecked(False)
             var.ui.chkEfectivo.setChecked(False)
 
+            var.ui.editDNI.setText('')
+
         except Exception as error:
             print('Error limpiarCliente: %s' % str(error))
 
     @staticmethod
     def recargarCliente():
         try:
-            clientes = ConexionCliente.buscarClienteDB("")
+            clientes = ConexionCliente.buscarClienteDB()
             EventosCliente.cargarTablaClientes(clientes)
         except Exception as error:
             print('Error recargarCliente: %s' % str(error))
@@ -349,7 +381,7 @@ class EventosCliente:
 class ConexionCliente:
 
     @staticmethod
-    def buscarClienteDB(dni):
+    def buscarClienteDB(dni=""):
         try:
             clientes = []
             query = QtSql.QSqlQuery()
@@ -401,10 +433,7 @@ class ConexionCliente:
             query.bindValue(':sexo', cliente.sexo)
             query.bindValue(':formaspago', cliente.formaspago)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error altaClienteDB: %s' % str(error))
@@ -416,10 +445,7 @@ class ConexionCliente:
             query.prepare('delete from clientes where dni = :dni')
             query.bindValue(':dni', dni)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error bajaClienteDB: %s' % str(error))
@@ -440,10 +466,7 @@ class ConexionCliente:
             query.bindValue(':sexo', cliente.sexo)
             query.bindValue(':formaspago', cliente.formaspago)
 
-            if query.exec_():
-                return True
-            else:
-                return False
+            return query.exec_()
 
         except Exception as error:
             print('Error modificarClienteDB: %s' % str(error))
