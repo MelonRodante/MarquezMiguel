@@ -1,70 +1,70 @@
 codigo;dni;nombre;apellidos;fechaalta;direccion;provincia;sexo;formaspago;edad
-439;72413914R;Jose Joaquin;Brito Bonilla;22/9/2020;Rua Principe nº 14, Vigo;Pontevedra;Hombre;|Tarjeta|;55
-440;94890227R;Angel;Santiago Plaza;19/9/2020;Rua Principe nº 23, Vigo;Pontevedra;Hombre;|Tarjeta|;56
-441;99813570X;Alejandro;Pons Juarez;19/3/2020;Rua Principe nº 12, Vigo;Pontevedra;Hombre;|Tarjeta|;57
-442;15701834X;Julen;Pascual Rueda;4/7/2020;Rua Principe nº 52, Vigo;Pontevedra;Hombre;|Tarjeta|;58
-443;17870147K;Valentina;Fernandez Ayala;8/6/2020;Avenida Galicia nº 1, Vigo;Pontevedra;Mujer;|Tarjeta|;26
-444;48455042E;Francisca;Alvarez Prado;3/8/2020;Avenida Galicia nº 73, Vigo;Pontevedra;Mujer;|Tarjeta|;60
-445;75881673G;Lola;Gallardo Morales;22/6/2020;Avenida Galicia nº 34, Vigo;Pontevedra;Mujer;|Tarjeta|;61
-446;41221796T;Jeronimo;Gracia Andres;19/9/2020;Avenida Galicia nº 12, Vigo;Pontevedra;Hombre;|Tarjeta|;62
-447;98507364C;Maria Encarnacion;Brito Contreras;14/6/2020;Rua Redomeira nº 62, Vigo;Pontevedra;Mujer;|Transferencia|;63
-448;59700659L;Eva;Velez Porras;1/2/2020;Rua Redomeira nº 12, Vigo;Pontevedra;Mujer;|Transferencia|;64
-449;88929858J;Mercedes;Valls Mosquera;17/11/2019;Camiñ Lamela nº 12, Mos;Pontevedra;Mujer;|Transferencia|;65
-450;13370559S;Arturo;Cordoba Cantero;22/6/2019;Camiñ Lamela nº 82, Mos;Pontevedra;Hombre;|Transferencia|;32
-451;86701653W;Luis Alberto;Escudero Pazos;15/10/2019;Camiñ Lamela nº 4, Mos;Pontevedra;Hombre;|Transferencia|;33
-452;99623471Y;Pablo;Martin Caceres;29/6/2019;Avenida Puxeiros nº 17, Mos;Pontevedra;Hombre;|Transferencia|;34
-453;58707805Y;Lucas;Miralles Agudo;5/2/2019;Avenida Puxeiros nº 12, Mos;Pontevedra;Hombre;|Transferencia|;35
-454;12403459L;Carlota;Rodriguez Riera;2/5/2019;Avenida Puxeiros nº 166, Mos;Pontevedra;Mujer;|Transferencia|;36
-455;79020018E;Nieves;Singh Navas;27/10/2019;Avenida Puxeiros nº 42, Mos;Pontevedra;Mujer;|Transferencia|;37
-456;55447278M;Daniel;Caballero Escudero;4/11/2019;Avenida Puxeiros nº 142, Mos;Pontevedra;Hombre;|Transferencia|;38
-457;18847493M;Teresa;Escobar Domingo;10/11/2019;Avenida Puxeiros nº 72, Mos;Pontevedra;Mujer;|Transferencia|;39
-458;78546584C;Francisca;Estrada Vila;4/12/2019;Avenida Puxeiros nº 83, Mos;Pontevedra;Mujer;|Transferencia|;40
-459;94116833M;Mario;Vaquero Egea;12/4/2019;Rua Nova nº 23, Santiago;A Coruña;Hombre;|Transferencia|;41
-460;52545816Q;Carlos Alberto;Mejias Madrid;19/6/2019;Rua Nova nº 23, Santiago;A Coruña;Hombre;|Efectivo|;42
-461;68601917R;Esther;Valencia Diez;22/9/2019;Rua Nova nº 45, Santiago;A Coruña;Mujer;|Efectivo|;43
-462;78319268J;Florentino;Velez Pazos;16/4/2018;Rua Entremuros nº 93, Santiago;A Coruña;Hombre;|Efectivo|;44
-463;91827005B;Jose Enrique;Fernandez Collado;12/3/2018;Rua Entremuros nº 2, Santiago;A Coruña;Hombre;|Efectivo|;45
-464;00746475X;Claudio;Andres Esteban;4/3/2018;Rua Entremuros nº 17, Santiago;A Coruña;Hombre;|Efectivo|;46
-465;50560158V;Israel;Garrido Belmonte;26/11/2018;Rua Orfas nº 58, Santiago;A Coruña;Hombre;|Efectivo|;20
-466;30949511K;Maria Remedios;Marti Sanz;2/10/2018;Rua Orfas nº 13, Santiago;A Coruña;Mujer;|Efectivo|;21
-467;11522186Z;Fermin;Martinez Quintana;10/10/2018;Rua Orfas nº 64, Santiago;A Coruña;Hombre;|Efectivo|;22
-468;57826588B;Marcos;Pineda Trujillo;26/9/2018;Rua Eugenio Carre Aldao nº 31, Coruña;A Coruña;Hombre;|Efectivo|;23
-469;77718321X;Manuela;Cerezo Calero;27/12/2018;Rua Eugenio Carre Aldao nº 45, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;24
-470;42523870K;Adrian;Guijarro Alba;28/6/2018;Rua Eugenio Carre Aldao nº 221, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;25
-471;21338459W;Mohammed;Montero Cabello;14/5/2018;Rua Eugenio Carre Aldao nº 23, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;26
-472;95152321X;Alberto;Gomez Montoya;14/8/2018;Rua Rafael Alberti nº 76, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;27
-473;66856476F;Diego;Alcaide Vaquero;6/8/2018;Rua Rafael Alberti nº 34, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;28
-474;97308858K;Maria Lourdes;Miguel Macias;20/11/2018;Rua Rafael Alberti nº 24, Coruña;A Coruña;Mujer;|Transferencia||Tarjeta|;29
-475;12997186R;Antonio Miguel;Estrada Acosta;20/11/2018;Rua Rafael Alberti nº 46, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;30
-476;83147206K;Juliana;Exposito Catalan;26/11/2018;Rua Rafael Alberti nº 24, Coruña;A Coruña;Mujer;|Transferencia||Tarjeta|;31
-477;89972207W;Israel;Robles Palma;25/9/2018;Avenida Deportes nº 34, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;32
-478;66660436L;Fermin;Calvo Del Rio;10/7/2018;Avenida Deportes nº 84, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;33
-479;45896998S;Victoriano;Lazaro Rodrigo;27/8/2018;Avenida Deportes nº 47, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;34
-480;19417484X;Maria;Romero Da Silva;3/12/2018;Avenida Deportes nº 39, Lugo;Lugo;Mujer;|Transferencia||Efectivo|;23
-481;90193189T;Miguel;Bartolome Mora;22/5/2018;Avenida Deportes nº 45, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;24
-482;99150469E;Alonso;Alfonso Gamez;6/3/2018;Avenida Americas nº 55, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;25
-483;60829589V;Nicolas;Izquierdo Alonso;12/4/2018;Avenida Americas nº 95, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;26
-484;17826651H;Barbara;Moral Plaza;9/1/2018;Avenida Americas nº 23, Lugo;Lugo;Mujer;|Transferencia||Efectivo|;27
-485;39337843T;Luis Angel;Moreno Alba;12/11/2018;Avenida Americas nº 43, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;28
-486;79436990G;Antonia Maria;Carrera Villa;1/8/2018;Avenida Americas nº 62, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;29
-487;58395724N;Alexander;Morcillo Calderon;10/8/2018;Avenida Americas nº 40, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;30
-488;84087523Y;Maria Esperanza;Simon Angulo;18/3/2018;Avenida Americas nº 17, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;31
-489;15965330H;Sandra;Saez Tena;10/1/2018;Avenida Americas nº 1, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;32
-490;36271375F;Bruno;Nicolas Escribano;31/9/2018;Rua Andoriñas nº 17, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;33
-491;68776846S;Eusebio;Rojas Oliva;25/9/2018;Rua Andoriñas nº 127, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;34
-492;09411064Q;Asuncion;Blanco Alcazar;24/7/2018;Rua Andoriñas nº 2, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;35
-493;88475556F;Sebastian;Torres Acosta;25/11/2018;Rua Andoriñas nº 8, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;36
-494;64160834B;Mariana;Santana Aragon;9/1/2017;Rua Andoriñas nº 24, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;37
-495;59666030M;Felicidad;Segovia Prado;17/4/2017;Rua Andoriñas nº 25, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;38
-496;66365810T;Mariana;Marquez Dorado;5/2/2017;Rua Andoriñas nº 67, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;39
-497;42468901E;Julian;Castaño Angulo;21/9/2017;Rua Andoriñas nº 23, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;40
-498;89771017Q;Isabel;Zapata Sosa;4/2/2017;Rua Ervedelo nº 35, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;41
-499;95384012E;Raquel;Carvajal Rojo;22/11/2017;Rua Ervedelo nº 9, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;42
-500;43159695B;Edgar;Corral Cano;11/9/2017;Rua Ervedelo nº 23, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;43
-501;19397454J;Cristina;Campos Gutierrez;2/4/2017;Rua Ervedelo nº 56, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;44
-502;23738080X;Araceli;Ahmed Salguero;24/5/2017;Rua Ervedelo nº 68, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;45
-503;06519866X;Maria Dolors;Bello Llorente;16/10/2017;Rua Ervedelo nº 37, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;46
-504;70119164F;Pilar;Chamorro Fraile;17/7/2017;Rua Ervedelo nº 4, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;47
-505;57445260T;Aroa;Lopez Bravo;22/7/2017;Avenida Portugal nº 17, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;48
-506;14639999Q;Juan Pedro;Luque Calleja;4/5/2017;Avenida Portugal nº 39, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;49
-507;57461901N;Santiago;Mejias Acosta;17/12/2017;Avenida Portugal nº 21, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;50
+1;72413914R;Jose Joaquin;Brito Bonilla;22/9/2020;Rua Principe nº 14, Vigo;Pontevedra;Hombre;|Tarjeta|;55
+2;94890227R;Angel;Santiago Plaza;19/9/2020;Rua Principe nº 23, Vigo;Pontevedra;Hombre;|Tarjeta|;56
+3;99813570X;Alejandro;Pons Juarez;19/3/2020;Rua Principe nº 12, Vigo;Pontevedra;Hombre;|Tarjeta|;57
+4;15701834X;Julen;Pascual Rueda;4/7/2020;Rua Principe nº 52, Vigo;Pontevedra;Hombre;|Tarjeta|;58
+5;17870147K;Valentina;Fernandez Ayala;8/6/2020;Avenida Galicia nº 1, Vigo;Pontevedra;Mujer;|Tarjeta|;26
+6;48455042E;Francisca;Alvarez Prado;3/8/2020;Avenida Galicia nº 73, Vigo;Pontevedra;Mujer;|Tarjeta|;60
+7;75881673G;Lola;Gallardo Morales;22/6/2020;Avenida Galicia nº 34, Vigo;Pontevedra;Mujer;|Tarjeta|;61
+8;41221796T;Jeronimo;Gracia Andres;19/9/2020;Avenida Galicia nº 12, Vigo;Pontevedra;Hombre;|Tarjeta|;62
+9;98507364C;Maria Encarnacion;Brito Contreras;14/6/2020;Rua Redomeira nº 62, Vigo;Pontevedra;Mujer;|Transferencia|;63
+10;59700659L;Eva;Velez Porras;1/2/2020;Rua Redomeira nº 12, Vigo;Pontevedra;Mujer;|Transferencia|;64
+11;88929858J;Mercedes;Valls Mosquera;17/11/2019;Camiñ Lamela nº 12, Mos;Pontevedra;Mujer;|Transferencia|;65
+12;13370559S;Arturo;Cordoba Cantero;22/6/2019;Camiñ Lamela nº 82, Mos;Pontevedra;Hombre;|Transferencia|;32
+13;86701653W;Luis Alberto;Escudero Pazos;15/10/2019;Camiñ Lamela nº 4, Mos;Pontevedra;Hombre;|Transferencia|;33
+14;99623471Y;Pablo;Martin Caceres;29/6/2019;Avenida Puxeiros nº 17, Mos;Pontevedra;Hombre;|Transferencia|;34
+15;58707805Y;Lucas;Miralles Agudo;5/2/2019;Avenida Puxeiros nº 12, Mos;Pontevedra;Hombre;|Transferencia|;35
+16;12403459L;Carlota;Rodriguez Riera;2/5/2019;Avenida Puxeiros nº 166, Mos;Pontevedra;Mujer;|Transferencia|;36
+17;79020018E;Nieves;Singh Navas;27/10/2019;Avenida Puxeiros nº 42, Mos;Pontevedra;Mujer;|Transferencia|;37
+18;55447278M;Daniel;Caballero Escudero;4/11/2019;Avenida Puxeiros nº 142, Mos;Pontevedra;Hombre;|Transferencia|;38
+19;18847493M;Teresa;Escobar Domingo;10/11/2019;Avenida Puxeiros nº 72, Mos;Pontevedra;Mujer;|Transferencia|;39
+20;78546584C;Francisca;Estrada Vila;4/12/2019;Avenida Puxeiros nº 83, Mos;Pontevedra;Mujer;|Transferencia|;40
+21;94116833M;Mario;Vaquero Egea;12/4/2019;Rua Nova nº 23, Santiago;A Coruña;Hombre;|Transferencia|;41
+22;52545816Q;Carlos Alberto;Mejias Madrid;19/6/2019;Rua Nova nº 23, Santiago;A Coruña;Hombre;|Efectivo|;42
+23;68601917R;Esther;Valencia Diez;22/9/2019;Rua Nova nº 45, Santiago;A Coruña;Mujer;|Efectivo|;43
+24;78319268J;Florentino;Velez Pazos;16/4/2018;Rua Entremuros nº 93, Santiago;A Coruña;Hombre;|Efectivo|;44
+25;91827005B;Jose Enrique;Fernandez Collado;12/3/2018;Rua Entremuros nº 2, Santiago;A Coruña;Hombre;|Efectivo|;45
+26;00746475X;Claudio;Andres Esteban;4/3/2018;Rua Entremuros nº 17, Santiago;A Coruña;Hombre;|Efectivo|;46
+27;50560158V;Israel;Garrido Belmonte;26/11/2018;Rua Orfas nº 58, Santiago;A Coruña;Hombre;|Efectivo|;20
+28;30949511K;Maria Remedios;Marti Sanz;2/10/2018;Rua Orfas nº 13, Santiago;A Coruña;Mujer;|Efectivo|;21
+29;11522186Z;Fermin;Martinez Quintana;10/10/2018;Rua Orfas nº 64, Santiago;A Coruña;Hombre;|Efectivo|;22
+30;57826588B;Marcos;Pineda Trujillo;26/9/2018;Rua Eugenio Carre Aldao nº 31, Coruña;A Coruña;Hombre;|Efectivo|;23
+31;77718321X;Manuela;Cerezo Calero;27/12/2018;Rua Eugenio Carre Aldao nº 45, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;24
+32;42523870K;Adrian;Guijarro Alba;28/6/2018;Rua Eugenio Carre Aldao nº 221, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;25
+33;21338459W;Mohammed;Montero Cabello;14/5/2018;Rua Eugenio Carre Aldao nº 23, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;26
+34;95152321X;Alberto;Gomez Montoya;14/8/2018;Rua Rafael Alberti nº 76, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;27
+35;66856476F;Diego;Alcaide Vaquero;6/8/2018;Rua Rafael Alberti nº 34, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;28
+36;97308858K;Maria Lourdes;Miguel Macias;20/11/2018;Rua Rafael Alberti nº 24, Coruña;A Coruña;Mujer;|Transferencia||Tarjeta|;29
+37;12997186R;Antonio Miguel;Estrada Acosta;20/11/2018;Rua Rafael Alberti nº 46, Coruña;A Coruña;Hombre;|Transferencia||Tarjeta|;30
+38;83147206K;Juliana;Exposito Catalan;26/11/2018;Rua Rafael Alberti nº 24, Coruña;A Coruña;Mujer;|Transferencia||Tarjeta|;31
+39;89972207W;Israel;Robles Palma;25/9/2018;Avenida Deportes nº 34, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;32
+40;66660436L;Fermin;Calvo Del Rio;10/7/2018;Avenida Deportes nº 84, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;33
+41;45896998S;Victoriano;Lazaro Rodrigo;27/8/2018;Avenida Deportes nº 47, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;34
+42;19417484X;Maria;Romero Da Silva;3/12/2018;Avenida Deportes nº 39, Lugo;Lugo;Mujer;|Transferencia||Efectivo|;23
+43;90193189T;Miguel;Bartolome Mora;22/5/2018;Avenida Deportes nº 45, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;24
+44;99150469E;Alonso;Alfonso Gamez;6/3/2018;Avenida Americas nº 55, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;25
+45;60829589V;Nicolas;Izquierdo Alonso;12/4/2018;Avenida Americas nº 95, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;26
+46;17826651H;Barbara;Moral Plaza;9/1/2018;Avenida Americas nº 23, Lugo;Lugo;Mujer;|Transferencia||Efectivo|;27
+47;39337843T;Luis Angel;Moreno Alba;12/11/2018;Avenida Americas nº 43, Lugo;Lugo;Hombre;|Transferencia||Efectivo|;28
+48;79436990G;Antonia Maria;Carrera Villa;1/8/2018;Avenida Americas nº 62, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;29
+49;58395724N;Alexander;Morcillo Calderon;10/8/2018;Avenida Americas nº 40, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;30
+50;84087523Y;Maria Esperanza;Simon Angulo;18/3/2018;Avenida Americas nº 17, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;31
+51;15965330H;Sandra;Saez Tena;10/1/2018;Avenida Americas nº 1, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;32
+52;36271375F;Bruno;Nicolas Escribano;31/9/2018;Rua Andoriñas nº 17, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;33
+53;68776846S;Eusebio;Rojas Oliva;25/9/2018;Rua Andoriñas nº 127, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;34
+54;09411064Q;Asuncion;Blanco Alcazar;24/7/2018;Rua Andoriñas nº 2, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;35
+55;88475556F;Sebastian;Torres Acosta;25/11/2018;Rua Andoriñas nº 8, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;36
+56;64160834B;Mariana;Santana Aragon;9/1/2017;Rua Andoriñas nº 24, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;37
+57;59666030M;Felicidad;Segovia Prado;17/4/2017;Rua Andoriñas nº 25, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;38
+58;66365810T;Mariana;Marquez Dorado;5/2/2017;Rua Andoriñas nº 67, Lugo;Lugo;Mujer;|Tarjeta||Efectivo|;39
+59;42468901E;Julian;Castaño Angulo;21/9/2017;Rua Andoriñas nº 23, Lugo;Lugo;Hombre;|Tarjeta||Efectivo|;40
+60;89771017Q;Isabel;Zapata Sosa;4/2/2017;Rua Ervedelo nº 35, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;41
+61;95384012E;Raquel;Carvajal Rojo;22/11/2017;Rua Ervedelo nº 9, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;42
+62;43159695B;Edgar;Corral Cano;11/9/2017;Rua Ervedelo nº 23, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;43
+63;19397454J;Cristina;Campos Gutierrez;2/4/2017;Rua Ervedelo nº 56, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;44
+64;23738080X;Araceli;Ahmed Salguero;24/5/2017;Rua Ervedelo nº 68, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;45
+65;06519866X;Maria Dolors;Bello Llorente;13/1/2021;Rua Ervedelo nº 37, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;46
+66;70119164F;Pilar;Chamorro Fraile;17/7/2017;Rua Ervedelo nº 4, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;47
+67;57445260T;Aroa;Lopez Bravo;22/7/2017;Avenida Portugal nº 17, Ourense;Ourense;Mujer;|Transferencia||Tarjeta||Efectivo|;48
+68;14639999Q;Juan Pedro;Luque Calleja;4/5/2017;Avenida Portugal nº 39, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;49
+69;57461901N;Santiago;Mejias Acosta;17/12/2017;Avenida Portugal nº 21, Ourense;Ourense;Hombre;|Transferencia||Tarjeta||Efectivo|;50

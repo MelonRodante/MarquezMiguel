@@ -19,7 +19,6 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui = Ui_venPrincipal()
         var.ui.setupUi(self)
 
-        ''' Eventos menubar y toolbar '''
         var.ui.actionAbrir.triggered.connect(QtWidgets.QFileDialog.getSaveFileName)
         #var.ui.actionImprimir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogConfimacion)
 

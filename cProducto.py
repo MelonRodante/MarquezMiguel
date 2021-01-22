@@ -73,7 +73,7 @@ class EventosProducto:
                 var.ui.tablaProductos.setItem(index, 0, QtWidgets.QTableWidgetItem(str(producto.codigoProducto)))
                 var.ui.tablaProductos.setItem(index, 1, QtWidgets.QTableWidgetItem(producto.producto))
                 var.ui.tablaProductos.setItem(index, 2, QtWidgets.QTableWidgetItem(str(producto.stock)))
-                var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem("{:.2f}".format(producto.precio) + " € "))
+                var.ui.tablaProductos.setItem(index, 3, QtWidgets.QTableWidgetItem("{:,.2f}".format(producto.precio) + " € "))
 
                 var.ui.tablaProductos.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                 var.ui.tablaProductos.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
