@@ -8,6 +8,8 @@ from PyQt5 import QtWidgets, QtCore, QtSql
 
 class Factura:
 
+    facturas = None
+
     def __init__(self):
         self.nfactura = None
         self.fechafactura = ""
@@ -65,7 +67,7 @@ class EventosFactura:
         EventosFactura.comboboxFactura()
 
         # Evento al cambiar el valor del combobox de estado de la factura
-        var.ui.cmbTipoFacturas.currentIndexChanged.connect(EventosFactura.buscarFactura)
+        var.ui.cmbTipoFacturas.currentIndexChanged.connect(EventosFactura.cargarTablaFactura)
 
         # Formato tabla facturas
         header = var.ui.tablaFacturas.horizontalHeader()
@@ -184,27 +186,37 @@ class EventosFactura:
             print('Error comboboxFactura: %s' % str(error))
 
     @staticmethod
-    def cargarTablaFactura(facturas):
+    def cargarTablaFactura():
         try:
-            index = 0
-            var.ui.tablaFacturas.setRowCount(len(facturas))
-
-            for factura in facturas:
-                var.ui.tablaFacturas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(factura.nfactura)))
-                var.ui.tablaFacturas.setItem(index, 1, QtWidgets.QTableWidgetItem(factura.fechafactura))
-                var.ui.tablaFacturas.setItem(index, 2, QtWidgets.QTableWidgetItem(factura.dni))
-                var.ui.tablaFacturas.setItem(index, 3, QtWidgets.QTableWidgetItem(factura.cliente))
-                var.ui.tablaFacturas.setItem(index, 4, QtWidgets.QTableWidgetItem(factura.estado))
-
-                var.ui.tablaFacturas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
-                var.ui.tablaFacturas.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
-                var.ui.tablaFacturas.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
-                var.ui.tablaFacturas.item(index, 4).setTextAlignment(QtCore.Qt.AlignCenter)
-
-                index += 1
-
+            var.ui.tablaFacturas.setRowCount(0)
+            for factura in Factura.facturas:
+                if var.ui.cmbTipoFacturas.currentText() == 'Todas':
+                    EventosFactura.cargarLineaTablaFactura(factura)
+                elif var.ui.cmbTipoFacturas.currentText() == factura.estado:
+                    EventosFactura.cargarLineaTablaFactura(factura)
         except Exception as error:
             print('Error cargarTablaFacturas: %s' % str(error))
+
+    @staticmethod
+    def cargarLineaTablaFactura(factura):
+        try:
+            index = var.ui.tablaFacturas.rowCount()
+
+            var.ui.tablaFacturas.setRowCount(index + 1)
+
+            var.ui.tablaFacturas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(factura.nfactura)))
+            var.ui.tablaFacturas.setItem(index, 1, QtWidgets.QTableWidgetItem(factura.fechafactura))
+            var.ui.tablaFacturas.setItem(index, 2, QtWidgets.QTableWidgetItem(factura.dni))
+            var.ui.tablaFacturas.setItem(index, 3, QtWidgets.QTableWidgetItem(factura.cliente))
+            var.ui.tablaFacturas.setItem(index, 4, QtWidgets.QTableWidgetItem(factura.estado))
+
+            var.ui.tablaFacturas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+            var.ui.tablaFacturas.item(index, 1).setTextAlignment(QtCore.Qt.AlignCenter)
+            var.ui.tablaFacturas.item(index, 2).setTextAlignment(QtCore.Qt.AlignCenter)
+            var.ui.tablaFacturas.item(index, 4).setTextAlignment(QtCore.Qt.AlignCenter)
+
+        except Exception as error:
+            print('Error cargarLineaTablaFactura: %s' % str(error))
 
     @staticmethod
     def cargarDatosFactura():
@@ -244,9 +256,9 @@ class EventosFactura:
     @staticmethod
     def recargarFactura():
         try:
-            facturas = ConexionFactura.buscarFacturaDB(Factura())
+            Factura.facturas = ConexionFactura.buscarFacturaDB(Factura())
             var.ui.tablaFacturas.clearSelection()
-            EventosFactura.cargarTablaFactura(facturas)
+            EventosFactura.cargarTablaFactura()
         except Exception as error:
             print('Error recargarFactura: %s' % str(error))
 
@@ -256,9 +268,10 @@ class EventosFactura:
             factura = Factura()
             factura.rellenarDatosFactura()
             factura.nfactura = None
-            facturas = ConexionFactura.buscarFacturaDB(factura)
+
+            Factura.facturas = ConexionFactura.buscarFacturaDB(factura)
             var.ui.tablaFacturas.clearSelection()
-            EventosFactura.cargarTablaFactura(facturas)
+            EventosFactura.cargarTablaFactura()
         except Exception as error:
             print('Error buscarCliente: %s' % str(error))
 
@@ -271,8 +284,9 @@ class EventosFactura:
             if factura.datosValidos():
                 if ConexionFactura.altaFacturaDB(factura):
                     var.ui.statusbar.showMessage('Factura creada con exito.')
-                    EventosFactura.limpiarFactura()
-                    EventosFactura.recargarFactura()
+                    var.ui.editNFactura.setText(ConexionFactura.buscarUltimaFacturaDB(factura.dni, factura.fechafactura))
+                    var.ui.cmbTipoFacturas.setCurrentIndex(0)
+                    EventosFactura.buscarFactura()
                 else:
                     ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: No se ha podido crear la factura.')
             else:
@@ -291,9 +305,9 @@ class EventosFactura:
                 factura.nfactura = nfactura
                 factura.estado = 'Pagada'
 
-                if ventanasDialogo.EventosVentanas.abrirDialogConfimacion(
-                        '¿Esta seguro de que desea marcar la factura como pagada?'):
+                if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro de que desea marcar la factura como pagada?'):
                     ConexionFactura.cambiarEstadoFacturaDB(factura)
+                    var.ui.cmbTipoFacturas.setCurrentIndex(1)
                     EventosFactura.buscarFactura()
             else:
                 ventanasDialogo.EventosVentanas.abrirDialogAviso("Error: No puede pagarse una factura sin productos")
@@ -310,9 +324,9 @@ class EventosFactura:
             factura.nfactura = nfactura
             factura.estado = 'Anulada'
 
-            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion(
-                    '¿Esta seguro de que desea anular la factura pagada?'):
+            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro de que desea anular la factura pagada?'):
                 ConexionFactura.cambiarEstadoFacturaDB(factura)
+                var.ui.cmbTipoFacturas.setCurrentIndex(2)
                 EventosFactura.buscarFactura()
 
         except Exception as error:
@@ -327,9 +341,9 @@ class EventosFactura:
             factura.nfactura = nfactura
             factura.estado = 'Pagada'
 
-            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion(
-                    '¿Esta seguro de que desea restaurar la factura anulada?'):
+            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro de que desea restaurar la factura anulada?'):
                 ConexionFactura.cambiarEstadoFacturaDB(factura)
+                var.ui.cmbTipoFacturas.setCurrentIndex(1)
                 EventosFactura.buscarFactura()
 
         except Exception as error:
@@ -340,8 +354,7 @@ class EventosFactura:
         try:
             nfactura = var.ui.editNFactura.text()
 
-            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion(
-                    '¿Esta seguro de que desea eliminar la factura pendiente?'):
+            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro de que desea eliminar la factura pendiente?'):
                 ConexionFactura.eliminarFacturaDB(nfactura)
                 var.ui.editNFactura.setText("")
                 EventosFactura.buscarFactura()
@@ -361,7 +374,6 @@ class ConexionFactura:
             b_nfactura = 'nfactura'
             b_fechafactura = 'fechafactura'
             b_dni = 'dni'
-            b_estado = 'estado'
 
             if factura.nfactura is not None:
                 b_nfactura = ':nfactura'
@@ -370,17 +382,13 @@ class ConexionFactura:
                     b_fechafactura = ':fechafactura'
                 if factura.dni:
                     b_dni = ':dni'
-                if factura.estado != 'Todas':
-                    b_estado = ':estado'
 
-            busqueda = 'nfactura = ' + b_nfactura + ' and fechafactura = ' + b_fechafactura + ' and dni = ' + b_dni + ' and estado = ' + b_estado
+            busqueda = 'nfactura = ' + b_nfactura + ' and fechafactura = ' + b_fechafactura + ' and dni = ' + b_dni
 
-            query.prepare(
-                'select nfactura, fechafactura, dni, cliente, estado from facturas where ' + busqueda + ' order by nfactura')
+            query.prepare('select nfactura, fechafactura, dni, cliente, estado from facturas where ' + busqueda + ' order by nfactura')
             query.bindValue(':nfactura', factura.nfactura)
             query.bindValue(':fechafactura', factura.fechafactura)
             query.bindValue(':dni', factura.dni)
-            query.bindValue(':estado', factura.estado)
 
             if query.exec_():
                 while query.next():
@@ -397,6 +405,26 @@ class ConexionFactura:
                 return facturas
             else:
                 return []
+
+        except Exception as error:
+            print('Error buscarFacturaDB: %s' % str(error))
+
+    @staticmethod
+    def buscarUltimaFacturaDB(dni, fechafactura):
+        try:
+            query = QtSql.QSqlQuery()
+
+            query.prepare('select nfactura from facturas where dni=:dni and fechafactura=:fechafactura order by nfactura desc')
+            query.bindValue(':dni', dni)
+            query.bindValue(':fechafactura', fechafactura)
+
+            if query.exec_():
+                if query.next():
+                    return str(query.value(0))
+                else:
+                    return None
+            else:
+                return None
 
         except Exception as error:
             print('Error buscarFacturaDB: %s' % str(error))
