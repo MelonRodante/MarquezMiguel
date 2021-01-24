@@ -33,7 +33,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="panelCliente">
        <attribute name="title">
@@ -954,6 +954,9 @@ border-color: rgb(0, 0, 0);</string>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
+          <property name="defaultDropAction">
+           <enum>Qt::IgnoreAction</enum>
+          </property>
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
@@ -997,6 +1000,28 @@ border-color: rgb(0, 0, 0);</string>
           <column>
            <property name="text">
             <string>Nombre</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Direccion</string>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Provincia</string>
            </property>
            <property name="font">
             <font>
@@ -3105,11 +3130,11 @@ border-color: rgb(0, 0, 0);</string>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="grpSexo"/>
   <buttongroup name="grpPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="grpSexo"/>
  </buttongroups>
 </ui>

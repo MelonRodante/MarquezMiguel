@@ -86,7 +86,6 @@ class Cliente:
 
         return True
 
-    provincias = ['', 'A Coruña', 'Lugo', 'Ourense', 'Pontevedra']
     provincias = ['',
                   'Álava',
                   'Albacete ',
@@ -112,7 +111,7 @@ class Cliente:
                   'Huesca',
                   'Islas Baleares ',
                   'Jaén',
-                  'La Coruña',
+                  'A Coruña',
                   'La Rioja',
                   'Las Palmas',
                   'León',
@@ -122,7 +121,7 @@ class Cliente:
                   'Málaga',
                   'Murcia',
                   'Navarra',
-                  'Orense',
+                  'Ourense',
                   'Palencia',
                   'Pontevedra',
                   'Salamanca',
@@ -199,7 +198,7 @@ class EventosCliente:
     @staticmethod
     def conectarEventosCliente():
         # Comprobar que el DNI sea valido y informar de ello
-        #var.ui.editDNI.editingFinished.connect(EventosCliente.DNIValido)
+        var.ui.editDNI.editingFinished.connect(EventosCliente.DNIValido)
 
         # Rellenar los datos al acabar de escribir el dni si existe 1 usuario con ese dni
         var.ui.editDNI.textChanged.connect(EventosCliente.editDNIChange)
@@ -210,8 +209,10 @@ class EventosCliente:
         # Formato tabla clientes
         header = var.ui.tablaClientes.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
 
         # Evento tabla clientes
         var.ui.tablaClientes.clicked.connect(EventosCliente.cargarDatosCliente)
@@ -297,6 +298,8 @@ class EventosCliente:
                 var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(cliente.dni))
                 var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(cliente.apellidos))
                 var.ui.tablaClientes.setItem(index, 2, QtWidgets.QTableWidgetItem(cliente.nombre))
+                var.ui.tablaClientes.setItem(index, 3, QtWidgets.QTableWidgetItem(cliente.direccion))
+                var.ui.tablaClientes.setItem(index, 4, QtWidgets.QTableWidgetItem(cliente.provincia))
 
                 var.ui.tablaClientes.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
 
