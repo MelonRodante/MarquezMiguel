@@ -33,7 +33,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="panelCliente">
        <attribute name="title">
@@ -3046,6 +3046,8 @@ border-color: rgb(0, 0, 0);</string>
     </property>
     <addaction name="actionInforme_Clientes"/>
     <addaction name="actionInforme_Productos"/>
+    <addaction name="separator"/>
+    <addaction name="actionImprimir_factura"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuInformes"/>
@@ -3121,6 +3123,11 @@ border-color: rgb(0, 0, 0);</string>
   <action name="actionInforme_Productos">
    <property name="text">
     <string>Informe Productos</string>
+   </property>
+  </action>
+  <action name="actionImprimir_factura">
+   <property name="text">
+    <string>Imprimir factura</string>
    </property>
   </action>
  </widget>

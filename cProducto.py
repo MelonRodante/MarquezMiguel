@@ -7,6 +7,16 @@ from PyQt5 import QtWidgets, QtCore, QtSql
 class Producto:
 
     def __init__(self):
+        """
+
+        Constructor del objeto cliente.
+
+        :return: None
+        :rtype: None
+
+        Constructor del objeto producto que almacena todos los datos de un producto
+
+        """
         self.codigoProducto = 0
         self.producto = ""
 
@@ -14,6 +24,16 @@ class Producto:
         self.precio = 0
 
     def rellenarDatosProducto(self):
+        """
+
+        Metodo que rellena los campos del objeto producto.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del objeto producto con los datos almacenados en el formulario de producto.
+
+        """
         try:
             self.codigoProducto = var.ui.editCodigoProducto.text()
             self.producto = var.ui.editProducto.text()
@@ -24,6 +44,16 @@ class Producto:
             print('Error rellenarDatosProducto: %s' % str(error))
 
     def rellenarFormularioProducto(self):
+        """
+
+        Metodo que rellena los campos del formulario de producto.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del formulario de producto con los datos almacenados en el objeto producto.
+
+        """
         try:
             var.ui.editCodigoProducto.setText(str(self.codigoProducto))
             var.ui.editProducto.setText(self.producto)
@@ -34,6 +64,16 @@ class Producto:
             print('Error rellenarFormularioProducto: %s' % str(error))
 
     def datosValidos(self):
+        """
+
+        Metodo que comprueba la validez de los datos almacenados en el objeto producto.
+
+        :return: Retorna si los datos son validos para dar de alta un producto.
+        :rtype: bool
+
+        Metodo que comprueba que el nombre del producto no sea una cadena vacia.
+
+        """
         return self.producto != ""
 
 
@@ -41,17 +81,25 @@ class EventosProducto:
 
     @staticmethod
     def conectarEventosProducto():
-        # Formato tabla productos
+        """
+
+        Módulo que conecta los eventos de la pestaña productos y da formato a la tabla.
+
+        :return: None
+        :rtype: None
+
+        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de productos
+        asi como ajustar el tamaño de las columnas de la tabla.
+
+        """
         header = var.ui.tablaProductos.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Fixed)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.Fixed)
 
-        # Evento tabla productos
         var.ui.tablaProductos.clicked.connect(EventosProducto.cargarDatosProducto)
 
-        # Botones producto
         var.ui.btnProductoBuscar.clicked.connect(EventosProducto.buscarProducto)
         var.ui.btnProductoRecargar.clicked.connect(EventosProducto.recargarProducto)
         var.ui.btnProductoLimpiar.clicked.connect(EventosProducto.limpiarProducto)
@@ -60,11 +108,23 @@ class EventosProducto:
         var.ui.btnProductoModificar.clicked.connect(EventosProducto.modificarProducto)
         var.ui.btnProductoBaja.clicked.connect(EventosProducto.bajaProducto)
 
-        # Cargar productos en la tabla
         EventosProducto.recargarProducto()
 
     @staticmethod
     def cargarTablaProductos(productos):
+        """
+
+        Módulo actualiza los valores de la tabla de productos.
+
+        :param productos: Lista de productos para cargar en la tabla
+        :type productos: tuple
+
+        :return: None
+        :rtype: None
+
+        Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.
+
+        """
         try:
             index = 0
             var.ui.tablaProductos.setRowCount(len(productos))
@@ -86,6 +146,17 @@ class EventosProducto:
 
     @staticmethod
     def cargarDatosProducto():
+        """
+
+        Módulo carga un producto de la tabla en el formulario de producto.
+
+        :return: None
+        :rtype: None
+
+        Al hacer click en un producto de la tabla recoge el nombre del producto y carga todos sus datos en el formulario
+        de producto.
+
+        """
         try:
             fila = var.ui.tablaProductos.selectedItems()
             producto = ConexionProducto.buscarProductoDB(fila[1].text()).pop()
@@ -95,6 +166,16 @@ class EventosProducto:
 
     @staticmethod
     def limpiarProducto():
+        """
+
+        Módulo limpia el formulario de producto.
+
+        :return: None
+        :rtype: None
+
+        Vacia todos los datos del formulario producto, y pone a 0 el spinner de precio.
+
+        """
         try:
             var.ui.editCodigoProducto.setText('')
             var.ui.editProducto.setText('')
@@ -106,6 +187,16 @@ class EventosProducto:
 
     @staticmethod
     def recargarProducto():
+        """
+
+        Módulo que recarga la tabla de productos.
+
+        :return: None
+        :rtype: None
+
+        Recarga la tabla de productos.
+
+        """
         try:
             productos = ConexionProducto.buscarProductoDB("")
             EventosProducto.cargarTablaProductos(productos)
@@ -114,6 +205,17 @@ class EventosProducto:
 
     @staticmethod
     def buscarProducto():
+        """
+
+        Módulo para buscar un producto concreto en la tabla de productos.
+
+        :return: None
+        :rtype: None
+
+        Recoge el nombre del producto del formulario de producto y lo busca en la base de datos para luego pasarselo al
+        modulo que carga la tabla de productos.
+
+        """
         try:
             producto = var.ui.editProducto.text()
             productos = ConexionProducto.buscarProductoDB(producto)
@@ -123,6 +225,20 @@ class EventosProducto:
 
     @staticmethod
     def altaProducto():
+        """
+
+        Módulo que da de alta un producto.
+
+        :return: None
+        :rtype: None
+
+        Recoge los datos del formulario de producto y los vuelca en un objeto producto y lo envia al metodo de alta en
+        la base de datos.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten
+        datos, o da un mensaje de confirmacion en la status bar.
+
+        """
         try:
             producto = Producto()
             producto.rellenarDatosProducto()
@@ -142,6 +258,20 @@ class EventosProducto:
 
     @staticmethod
     def bajaProducto():
+        """
+
+        Módulo que da de baja un producto.
+
+        :return: None
+        :rtype: None
+
+        Recoge el nombre del producto del formulario de producto y lo envia al metodo de baja en la base de datos
+        pidiendo antes confirmacion.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit
+        text de nombre de producto, no existe ningun producto con ese nombre o no fue posible darlo de baja.
+
+        """
         try:
             producto = var.ui.editProducto.text()
 
@@ -163,6 +293,20 @@ class EventosProducto:
 
     @staticmethod
     def modificarProducto():
+        """
+
+        Módulo que modifica los datos de un producto.
+
+        :return: None
+        :rtype: None
+
+        Recoge el nombre del producto del formulario de producto y lo envia al metodo de modificar datos en la base de
+        datos pidiendo antes confirmacion.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit
+        text de nombre de producto, no existe ningun producto con ese nombre o no fue posible modificar sus datos.
+
+        """
         try:
             producto = Producto()
             producto.rellenarDatosProducto()
@@ -187,7 +331,22 @@ class EventosProducto:
 class ConexionProducto:
 
     @staticmethod
-    def buscarProductoDB(producto):
+    def buscarProductoDB(producto=''):
+        """
+
+        Módulo busca en la base de datos un cliente o todos los clientes.
+
+        :param producto: Nombre del producto a buscar, si no se recibe ningun nombre o esta vacio devuelve la lista de todos los productos
+        :type producto: str
+
+        :return: Devuelve una lista con todos los productos o el producto cuyo nombre recibe como parametro
+        :rtype: tuple
+
+        En caso de que el parametro contenga una cadena que no este vacia busca en la BD un producto cuyo nombre
+        recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos
+        los productos.
+
+        """
         try:
             productos = []
             query = QtSql.QSqlQuery()
@@ -219,6 +378,19 @@ class ConexionProducto:
 
     @staticmethod
     def altaProductoDB(producto):
+        """
+
+        Módulo que da de alta un producto en la BD.
+
+        :param producto: Objeto de tipo Producto para darlo de alta
+        :type producto: Producto
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Da de alta un producto en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('insert into productos (producto, stock, precio)'
@@ -235,6 +407,19 @@ class ConexionProducto:
 
     @staticmethod
     def bajaProductoDB(producto):
+        """
+
+        Módulo da de baja un producto en la BD.
+
+        :param producto: Nombre del producto a dar de baja
+        :type producto: str
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Elimina de la base de datos el producto con el nombre que recibe como parametro.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('delete from productos where producto = :producto')
@@ -247,6 +432,19 @@ class ConexionProducto:
 
     @staticmethod
     def modificarProductoDB(producto):
+        """
+
+        Módulo modifica los datos de un producto en la BD.
+
+        :param producto: Objeto de tipo Producto con los nuevos datos
+        :type producto: Producto
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Actualiza la informacion del producto en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('update productos set stock=:stock, precio=:precio where producto = :producto')

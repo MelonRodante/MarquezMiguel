@@ -427,6 +427,7 @@ class Ui_venPrincipal(object):
 "    background-color: rgb(12, 93, 255);\n"
 "}")
         self.tablaClientes.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tablaClientes.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.tablaClientes.setAlternatingRowColors(True)
         self.tablaClientes.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.tablaClientes.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
@@ -1353,6 +1354,8 @@ class Ui_venPrincipal(object):
         self.actionInforme_Clientes.setObjectName("actionInforme_Clientes")
         self.actionInforme_Productos = QtWidgets.QAction(venPrincipal)
         self.actionInforme_Productos.setObjectName("actionInforme_Productos")
+        self.actionImprimir_factura = QtWidgets.QAction(venPrincipal)
+        self.actionImprimir_factura.setObjectName("actionImprimir_factura")
         self.menuArchivo.addAction(self.actionAbrir)
         self.menuArchivo.addAction(self.actionImprimir)
         self.menuArchivo.addSeparator()
@@ -1361,6 +1364,8 @@ class Ui_venPrincipal(object):
         self.menuArchivo.addAction(self.actionSalir)
         self.menuInformes.addAction(self.actionInforme_Clientes)
         self.menuInformes.addAction(self.actionInforme_Productos)
+        self.menuInformes.addSeparator()
+        self.menuInformes.addAction(self.actionImprimir_factura)
         self.menubar.addAction(self.menuArchivo.menuAction())
         self.menubar.addAction(self.menuInformes.menuAction())
         self.toolBar.addAction(self.actionAbrir)
@@ -1371,7 +1376,7 @@ class Ui_venPrincipal(object):
         self.toolBar.addAction(self.actionSalir)
 
         self.retranslateUi(venPrincipal)
-        self.panel.setCurrentIndex(0)
+        self.panel.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(venPrincipal)
 
     def retranslateUi(self, venPrincipal):
@@ -1468,5 +1473,6 @@ class Ui_venPrincipal(object):
         self.actionCrear_Backup.setText(_translate("venPrincipal", "Crear Backup"))
         self.actionInforme_Clientes.setText(_translate("venPrincipal", "Informe Clientes"))
         self.actionInforme_Productos.setText(_translate("venPrincipal", "Informe Productos"))
+        self.actionImprimir_factura.setText(_translate("venPrincipal", "Imprimir factura"))
 import rc_botonesInterfaz_rc
 import rc_toolbar_rc

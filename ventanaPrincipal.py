@@ -15,6 +15,17 @@ from PYQT5_venPrincipal import Ui_venPrincipal
 class VentanaPrincipal(QtWidgets.QMainWindow):
 
     def __init__(self):
+        """
+
+        Constructor de la ventana principal del programa.
+
+        :return: None
+        :rtype: None
+
+        Constructor de la ventana principal del programa, en el constructor se llama a los diferentes metodos de conexion
+        de los eventos de los diferentes widgets de la aplicacion.
+
+        """
         super(VentanaPrincipal, self).__init__()
         var.ui = Ui_venPrincipal()
         var.ui.setupUi(self)
@@ -24,8 +35,7 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         var.ui.actionCrear_Backup.triggered.connect(ventanasDialogo.EventosVentanas.backup)
 
-        var.ui.actionInforme_Clientes.triggered.connect(cInformes.Informes.informeClientes)
-        var.ui.actionInforme_Productos.triggered.connect(cInformes.Informes.informeProductos)
+
 
         var.ui.actionSalir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogSalir)
 
@@ -45,18 +55,45 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         ''' Conexion Eventos Facturas '''
         cFactura.EventosFactura.conectarEventosFactura()
 
+        ''' Conexion Eventos Informes '''
+        cInformes.Informes.conectarEventosFactura()
+
         ''' Evento de cerrado de la aplicacion '''
         QtWidgets.QAction(self).triggered.connect(self.close)
 
     def closeEvent(self, event):
+        """
+
+        Módulo que abre una ventana de dialogo para cerrar el programa cuando se pulsa la cruz de la ventana.
+
+        :return: None
+        :rtype: None
+
+        Muestra una ventana de confirmacion para que el usuario elija si salir del programa o cancelar.
+
+        """
         ventanasDialogo.EventosVentanas.abrirDialogSalir()
         event.ignore()
+
 
 class Conexion:
 
     @staticmethod
     def conectardb(filename):
+        """
 
+        Módulo que realiza la conexión de la aplicación con la BBDD
+
+        :param filename: nombre del archivo de la BBDD
+        :type filename: str
+
+        :return: True o False
+        :rtype: bool
+
+        Utiliza la librería de QtSql y el gestor de la BBDD es QSQlite. En caso de error muestra pantalla
+        de aviso.
+
+        """
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
         db.setDatabaseName(filename)
 

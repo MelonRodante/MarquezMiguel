@@ -8,6 +8,16 @@ from PyQt5 import QtWidgets, QtCore, QtSql
 class Cliente:
 
     def __init__(self):
+        """
+
+        Constructor del objeto cliente.
+
+        :return: None
+        :rtype: None
+
+        Constructor del objeto cliente que almacena todos los datos de un cliente
+
+        """
         self.dni = ""
         self.nombre = ""
         self.apellidos = ""
@@ -22,6 +32,16 @@ class Cliente:
         self.formaspago = ""
 
     def rellenarDatosCliente(self):
+        """
+
+        Metodo que rellena los campos del objeto cliente.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del objeto cliente con los datos almacenados en el formulario de cliente.
+
+        """
         try:
             self.dni = var.ui.editDNI.text()
             self.nombre = var.ui.editNombre.text()
@@ -33,12 +53,22 @@ class Cliente:
             self.direccion = var.ui.editDireccion.text()
             self.provincia = var.ui.cmbProvincia.currentText()
 
-            self.sexo = self.__selSexo()
-            self.formaspago = self.__selPago()
+            self.__selSexo()
+            self.__selPago()
         except Exception as error:
             print('Error rellenarDatosCliente: %s' % str(error))
 
     def rellenarFormularioCliente(self):
+        """
+
+        Metodo que rellena los campos del formulario de cliente.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del formulario de cliente con los datos almacenados en el objeto cliente.
+
+        """
         try:
 
             var.ui.editNombre.setText(self.nombre)
@@ -65,7 +95,16 @@ class Cliente:
             print('Error rellenarFormularioCliente: %s' % str(error))
 
     def datosValidos(self):
+        """
 
+        Metodo que comprueba la validez de los datos almacenados en el objeto cliente.
+
+        :return: Retorna si los datos son validos para dar de alta o modificar un cliente.
+        :rtype: bool
+
+        Metodo que comprueba que ningun dato este vacio en el objeto cliente.
+
+        """
         if self.nombre == '':
             return False
         if self.apellidos == '':
@@ -141,6 +180,16 @@ class Cliente:
 
     @staticmethod
     def comprobarDNI():
+        """
+
+        Módulo que comprueba la validez de un DNI.
+
+        :return: Devuelve verdadero si el DNI es valido y falso si no lo es
+        :rtype: bool
+
+        Comprueba si el DNI en el edit text dni es un DNI valido.
+
+        """
         try:
             dni = var.ui.editDNI.text()
 
@@ -166,20 +215,39 @@ class Cliente:
             print('Error comprobarDNI: %s' % str(error))
             return None
 
-    @staticmethod
-    def __selSexo():
+    def __selSexo(self):
+        """
+
+        Metodo que estable el sexo en el objeto cliente.
+
+        :return: None
+        :rtype: None
+
+        Almacena el valor del sexo del cliente en el objeto Cliente en base a los radio button del formulario de cliente.
+
+        """
         try:
             if var.ui.rbtFemenino.isChecked():
-                return 'Mujer'
+                self.sexo = 'Mujer'
             elif var.ui.rbtMasculino.isChecked():
-                return 'Hombre'
+                self.sexo = 'Hombre'
             else:
-                return ''
+                self.sexo = ''
         except Exception as error:
             print('Error __selSexo: %s' % str(error))
 
-    @staticmethod
-    def __selPago():
+    def __selPago(self):
+        """
+
+        Metodo que estable los metodos de pago en el objeto cliente.
+
+        :return: None
+        :rtype: None
+
+        Construye una cadena que almacena los valores de los checkbox del formulario cliente y lo almacena en el
+        campo metodospago del objeto cliente
+
+        """
         try:
             pay = ""
             if var.ui.chkTransferencia.isChecked():
@@ -188,7 +256,7 @@ class Cliente:
                 pay = pay + '|Tarjeta|'
             if var.ui.chkEfectivo.isChecked():
                 pay = pay + '|Efectivo|'
-            return pay
+            self.formaspago = pay
         except Exception as error:
             print('Error __selPago: %s' % str(error))
 
@@ -197,16 +265,21 @@ class EventosCliente:
 
     @staticmethod
     def conectarEventosCliente():
-        # Comprobar que el DNI sea valido y informar de ello
-        var.ui.editDNI.editingFinished.connect(EventosCliente.DNIValido)
+        """
 
-        # Rellenar los datos al acabar de escribir el dni si existe 1 usuario con ese dni
+        Módulo que conecta los eventos de la pestaña clientes y da formato a la tabla.
+
+        :return: None
+        :rtype: None
+
+        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes
+        asi como ajustar el tamaño de las columnas de la tabla.
+
+        """
         var.ui.editDNI.textChanged.connect(EventosCliente.editDNIChange)
 
-        # Cargar los valores del combobox de provincia
         EventosCliente.comboboxCliente()
 
-        # Formato tabla clientes
         header = var.ui.tablaClientes.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Fixed)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
@@ -214,10 +287,9 @@ class EventosCliente:
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
 
-        # Evento tabla clientes
         var.ui.tablaClientes.clicked.connect(EventosCliente.cargarDatosCliente)
 
-        # Botones cliente
+
         var.ui.btnCalendario.clicked.connect(EventosCliente.calendarioCliente)
 
         var.ui.btnClienteBuscar.clicked.connect(EventosCliente.buscarCliente)
@@ -228,30 +300,25 @@ class EventosCliente:
         var.ui.btnClienteBaja.clicked.connect(EventosCliente.bajaCliente)
         var.ui.btnClienteModificar.clicked.connect(EventosCliente.modificarCliente)
 
-        # Cargar clientes en la tabla
         EventosCliente.recargarCliente()
 
     @staticmethod
-    def DNIValido():
-        try:
-            dni = var.ui.editDNI.text()
-            if dni != '':
-                if Cliente.comprobarDNI():
-                    var.ui.lblValido.setStyleSheet('QLabel {color: green}')
-                    var.ui.lblValido.setText('V')
-                    var.ui.editDNI.setText(dni.upper())
-                else:
-                    var.ui.lblValido.setStyleSheet('QLabel {color: red}')
-                    var.ui.lblValido.setText('X')
-                    var.ui.editDNI.setText(dni.upper())
-            else:
-                var.ui.lblValido.setText('')
-
-        except Exception as error:
-            print('Error DNIValido: %s ' % str(error))
-
-    @staticmethod
     def editDNIChange():
+        """
+
+        Módulo que comprueba la validez del DNI y carga los datos del cliente cuando el edit text de DNI cambia.
+
+        :return: None
+        :rtype: None
+
+        Cuando el edit text de DNI cambia:
+
+        Recoge el valor del DNI y comprueba que este sea valido, en caso de ser valido dibuja un check verde o una cruz
+        roja en caso de no ser valido.
+
+        Carga todos los datos del cliente en el formulario si hay un cliente con ese DNI.
+
+        """
         try:
             dni = var.ui.editDNI.text()
             dni = dni.upper()
@@ -275,6 +342,17 @@ class EventosCliente:
 
     @staticmethod
     def calendarioCliente():
+        """
+
+        Módulo que abre una ventana de dialogo en la que seleccionar la fecha de alta del cliente.
+
+        :return: None
+        :rtype: None
+
+        Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como
+        argumento el edit text donde debe almacenar el valor.
+
+        """
         try:
             ventanasDialogo.EventosVentanas.abrirDialogCalendario(var.ui.editFechaAlta)
         except Exception as error:
@@ -282,6 +360,16 @@ class EventosCliente:
 
     @staticmethod
     def comboboxCliente():
+        """
+
+        Módulo carga los valores de las provincias en el combo box.
+
+        :return: None
+        :rtype: None
+
+        Carga las provincias en el combo box de la pestaña clientes.
+
+        """
         try:
             for i in Cliente.provincias:
                 var.ui.cmbProvincia.addItem(i)
@@ -290,6 +378,19 @@ class EventosCliente:
 
     @staticmethod
     def cargarTablaClientes(clientes):
+        """
+
+        Módulo actualiza los valores de la tabla de clientes.
+
+        :param clientes: Lista de clientes para cargar en la tabla
+        :type clientes: tuple
+
+        :return: None
+        :rtype: None
+
+        Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.
+
+        """
         try:
             index = 0
             var.ui.tablaClientes.setRowCount(len(clientes))
@@ -310,10 +411,23 @@ class EventosCliente:
 
     @staticmethod
     def cargarDatosCliente():
+        """
+
+        Módulo que carga un cliente de la tabla en el formulario de cliente.
+
+        :return: None
+        :rtype: None
+
+        Al hacer click en un cliente de la tabla recoge su dni y carga todos sus datos en el formulario de cliente y
+        los datos de cliente en el formulario de facturacion.
+
+        """
         try:
             fila = var.ui.tablaClientes.selectedItems()
             cliente = ConexionCliente.buscarClienteDB(fila[0].text())[0]
-            cliente.rellenarFormularioCliente()
+
+            var.ui.editDNI.setText("")
+            var.ui.editDNI.setText(cliente.dni)
 
             var.ui.editDNIFacturacion.setText("")
             var.ui.editDNIFacturacion.setText(cliente.dni)
@@ -322,6 +436,16 @@ class EventosCliente:
 
     @staticmethod
     def limpiarCliente():
+        """
+
+        Módulo limpia el formulario de cliente.
+
+        :return: None
+        :rtype: None
+
+        Vacia todos los datos del formulario cliente, desmarca los checkbox y los radio button.
+
+        """
         try:
             var.ui.lblValido.setText('')
 
@@ -350,6 +474,16 @@ class EventosCliente:
 
     @staticmethod
     def recargarCliente():
+        """
+
+        Módulo que recarga la tabla de clientes.
+
+        :return: None
+        :rtype: None
+
+        Recarga la tabla de clientes.
+
+        """
         try:
             clientes = ConexionCliente.buscarClienteDB()
             EventosCliente.cargarTablaClientes(clientes)
@@ -358,6 +492,17 @@ class EventosCliente:
 
     @staticmethod
     def buscarCliente():
+        """
+
+        Módulo para buscar un cliente concreto en la tabla de clientes.
+
+        :return: None
+        :rtype: None
+
+        Recoge el dni del formulario de cliente y lo busca en la base de datos para luego pasarselo al modulo que carga
+        la tabla de clientes.
+
+        """
         try:
             dni = var.ui.editDNI.text()
             clientes = ConexionCliente.buscarClienteDB(dni)
@@ -367,6 +512,20 @@ class EventosCliente:
 
     @staticmethod
     def altaCliente():
+        """
+
+        Módulo que da de alta un cliente.
+
+        :return: None
+        :rtype: None
+
+        Recoge los datos del formulario de cliente y los vuelca en un objeto cliente y lo envia al metodo de alta en
+        la base de datos.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten
+        datos, el formato del DNI no sea valido o da un mensaje de confirmacion en la status bar.
+
+        """
         try:
             cliente = Cliente()
             cliente.rellenarDatosCliente()
@@ -388,6 +547,20 @@ class EventosCliente:
 
     @staticmethod
     def bajaCliente():
+        """
+
+        Módulo que da de baja un cliente.
+
+        :return: None
+        :rtype: None
+
+        Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes
+        confirmacion.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de
+        dni, no existe ningun cliente con ese DNI o no fue posible darlo de baja.
+
+        """
         try:
             dni = var.ui.editDNI.text()
 
@@ -409,6 +582,20 @@ class EventosCliente:
 
     @staticmethod
     def modificarCliente():
+        """
+
+        Módulo que modifica los datos de un cliente.
+
+        :return: None
+        :rtype: None
+
+        Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes
+        confirmacion.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de
+        dni, no existe ningun cliente con ese DNI o no fue posible modificar sus datos.
+
+        """
         try:
             cliente = Cliente()
             cliente.rellenarDatosCliente()
@@ -437,6 +624,21 @@ class ConexionCliente:
 
     @staticmethod
     def buscarClienteDB(dni=""):
+        """
+
+        Módulo busca en la base de datos un cliente concreto o todos los clientes.
+
+        :param dni: DNI del cliente a buscar, si no se recibe ningun DNI o el DNI esta vacio devuelve la lista de todos los clientes
+        :type dni: str
+
+        :return: Devuelve una lista con todos los clientes o el cliente cuyo dni recibe como paramtro
+        :rtype: tuple
+
+        En caso de que el parametro contenga una cadena que no este vacia busca en la BD un cliente cuyo dni
+        recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos
+        los clientes.
+
+        """
         try:
             clientes = []
             query = QtSql.QSqlQuery()
@@ -473,6 +675,19 @@ class ConexionCliente:
 
     @staticmethod
     def altaClienteDB(cliente):
+        """
+
+        Módulo que da de alta el cliente en la BD.
+
+        :param cliente: Objeto de tipo Cliente para darlo de alta
+        :type cliente: Cliente
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Da de alta un cliente en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('insert into clientes (dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago)'
@@ -495,6 +710,19 @@ class ConexionCliente:
 
     @staticmethod
     def bajaClienteDB(dni):
+        """
+
+        Módulo da de baja un cliente en la BD.
+
+        :param dni: DNI del cliente a dar de baja
+        :type dni: str
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Elimina de la base de datos al cliente con el dni que recibe como parametro.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('delete from clientes where dni = :dni')
@@ -507,6 +735,19 @@ class ConexionCliente:
 
     @staticmethod
     def modificarClienteDB(cliente):
+        """
+
+        Módulo modifica los datos de un cliente en la BD.
+
+        :param cliente: Objeto de tipo cliente con los nuevos datos
+        :type cliente: Cliente
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Actualiza la informacion del cliente en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni')

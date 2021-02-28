@@ -11,6 +11,16 @@ class Factura:
     facturas = None
 
     def __init__(self):
+        """
+
+        Constructor del objeto factura.
+
+        :return: None
+        :rtype: None
+
+        Constructor del objeto factura que almacena los datos de una factura.
+
+        """
         self.nfactura = None
         self.fechafactura = ""
         self.dni = ""
@@ -18,6 +28,16 @@ class Factura:
         self.estado = var.ui.cmbTipoFacturas.currentText()
 
     def rellenarDatosFactura(self):
+        """
+
+        Metodo que rellena los campos del objeto factura.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del objeto factura con los datos almacenados en el formulario de factura.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
 
@@ -32,6 +52,16 @@ class Factura:
             print('Error rellenarDatosCliente: %s' % str(error))
 
     def rellenarFormularioFactura(self):
+        """
+
+        Metodo que rellena los campos del formulario de factura.
+
+        :return: None
+        :rtype: None
+
+        Metodo que rellena los campos del formulario de factura con los datos almacenados en el objeto factura.
+
+        """
         try:
             var.ui.editFechaFactura.setText(self.fechafactura)
             var.ui.editDNIFacturacion.setText(self.dni)
@@ -41,7 +71,16 @@ class Factura:
             print('Error rellenarFormularioCliente: %s' % str(error))
 
     def datosValidos(self):
+        """
 
+        Metodo que comprueba la validez de los datos almacenados en el objeto factura.
+
+        :return: Retorna si los datos son validos para dar de alta una factura.
+        :rtype: bool
+
+        Metodo que comprueba que ningun dato este vacio en el objeto factura.
+
+        """
         if self.fechafactura == '':
             return False
         if self.dni == '':
@@ -56,20 +95,26 @@ class EventosFactura:
 
     @staticmethod
     def conectarEventosFactura():
-        # Cambiar el estado de los botones de pagar, borrar, anular, restaurar cuando editNFactura cambia
+        """
+
+        Módulo que conecta los eventos de la pestaña facturas y da formato a la tabla de facturas.
+
+        :return: None
+        :rtype: None
+
+        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes
+        asi como ajustar el tamaño de las columnas de la tabla.
+
+        """
         var.ui.editNFactura.textChanged.connect(EventosFactura.editNFacturaChange)
 
-        # Borrar el numero de factura cuando un dato cambia
         var.ui.editDNIFacturacion.textChanged.connect(EventosFactura.editDNIFacturaChange)
         var.ui.editFechaFactura.textChanged.connect(EventosFactura.limpiarEditNFactura)
 
-        # Cargar los valores del combobox de estado de la factura
         EventosFactura.comboboxFactura()
 
-        # Evento al cambiar el valor del combobox de estado de la factura
         var.ui.cmbTipoFacturas.currentIndexChanged.connect(EventosFactura.cargarTablaFactura)
 
-        # Formato tabla facturas
         header = var.ui.tablaFacturas.horizontalHeader()
         header.show()
 
@@ -83,10 +128,8 @@ class EventosFactura:
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.Custom)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
 
-        # Evento tabla facturas
         var.ui.tablaFacturas.clicked.connect(EventosFactura.cargarDatosFactura)
 
-        # Botones producto
         var.ui.btnFacturacionNueva.clicked.connect(EventosFactura.altaFactura)
         var.ui.btnFacturacionPagar.clicked.connect(EventosFactura.pagarFactura)
         var.ui.btnFacturacionPagar.clicked.connect(EventosFactura.editNFacturaChange)
@@ -99,11 +142,20 @@ class EventosFactura:
 
         EventosVenta.conectarEventosVenta()
 
-        # Cargar facturas en la tabla
         EventosFactura.recargarFactura()
 
     @staticmethod
     def limpiarEditNFactura():
+        """
+
+        Módulo que vacia el campo numero de factura del formulario de factura.
+
+        :return: None
+        :rtype: None
+
+        Vacia el edit text numero de factura del formulario de factura.
+
+        """
         try:
             var.ui.editNFactura.setText("")
         except Exception as error:
@@ -111,6 +163,17 @@ class EventosFactura:
 
     @staticmethod
     def editDNIFacturaChange():
+        """
+
+        Módulo rellena los datos del cliente en el formulario factura al escribir el DNI.
+
+        :return: None
+        :rtype: None
+
+        Cuando el campo DNI de factura cambia si existe un cliente asociado a ese DNI escribe su nombre y apellidos en
+        el formulario asi como borra el campo numero de factura.
+
+        """
         try:
             dni = var.ui.editDNIFacturacion.text()
             var.ui.editDNIFacturacion.setText(dni.upper())
@@ -126,6 +189,18 @@ class EventosFactura:
 
     @staticmethod
     def editNFacturaChange():
+        """
+
+        Módulo cambia el estado de los botones de la pestaña de facturas cuando cambia el edit text de numero de factura.
+
+        :return: None
+        :rtype: None
+
+        Cuando el contenido del edit text de numero de factura cambia se modifica el estado y los metodos que llaman los
+        botones del formulario de factura, actualiza la tabla de ventas de la factura y actualiza el estado de los botones
+        de venta de la factura.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
 
@@ -172,6 +247,17 @@ class EventosFactura:
 
     @staticmethod
     def calendarioFactura():
+        """
+
+        Módulo que abre una ventana de dialogo en la que seleccionar la fecha de la factura.
+
+        :return: None
+        :rtype: None
+
+        Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como
+        argumento el edit text donde debe almacenar el valor.
+
+        """
         try:
             ventanasDialogo.EventosVentanas.abrirDialogCalendario(var.ui.editFechaFactura)
         except Exception as error:
@@ -179,6 +265,16 @@ class EventosFactura:
 
     @staticmethod
     def comboboxFactura():
+        """
+
+        Módulo carga los valores de los estados de una factura en el combo box.
+
+        :return: None
+        :rtype: None
+
+        Carga los estados posibles de una factyra en el combo box de la pestaña facturas.
+
+        """
         try:
             for i in ['Pendiente', 'Pagada', 'Anulada', 'Todas']:
                 var.ui.cmbTipoFacturas.addItem(i)
@@ -187,6 +283,19 @@ class EventosFactura:
 
     @staticmethod
     def cargarTablaFactura():
+        """
+
+        Módulo actualiza los valores de la tabla de facturas.
+
+        :return: None
+        :rtype: None
+
+        Rellena la tabla de facturas con la lista de facturas que esta almacenada en una variable global en la clase
+        Factura.
+
+        Solo rellena la tabla con las facturas cuyo estado sea igual al del estado actual del combobox de facturas.
+
+        """
         try:
             var.ui.tablaFacturas.setRowCount(0)
             for factura in Factura.facturas:
@@ -199,6 +308,19 @@ class EventosFactura:
 
     @staticmethod
     def cargarLineaTablaFactura(factura):
+        """
+
+        Módulo que añade una factura como una nueva fila en la tabla de facturas.
+
+        :param factura: Lista de clientes para cargar en la tabla
+        :type factura: Factura
+
+        :return: None
+        :rtype: None
+
+        Rellena una fila de la tabla de facturas con una factura que recibe en los parametros.
+
+        """
         try:
             index = var.ui.tablaFacturas.rowCount()
 
@@ -220,6 +342,17 @@ class EventosFactura:
 
     @staticmethod
     def cargarDatosFactura():
+        """
+
+        Módulo que carga una factura de la tabla en el formulario de factura.
+
+        :return: None
+        :rtype: None
+
+        Al hacer click en una factura de la tabla recoge su numero de factura y carga todos sus datos en el formulario
+        de factura.
+
+        """
         try:
             fila = var.ui.tablaFacturas.selectedItems()
             factura = Factura()
@@ -232,6 +365,20 @@ class EventosFactura:
 
     @staticmethod
     def cargarDatosClienteFactura(cliente):
+        """
+
+        Módulo rellena los campos del cliente en la pestaña facturacion.
+
+        :param cliente: Objeto de cliente que contiene los datos a cargar en los edit text
+        :type cliente: Cliente
+
+        :return: None
+        :rtype: None
+
+        Recibe un objeto Cliente y escribe su DNI, nombre y apellidos en los edit text correspondientes de la pestaña
+        de facturacion.
+
+        """
         try:
             var.ui.editDNIFacturacion.setText(cliente.dni)
             var.ui.editApellidosNombreFacturacion.setText(cliente.apellidos + ", " + cliente.nombre)
@@ -240,6 +387,16 @@ class EventosFactura:
 
     @staticmethod
     def limpiarFactura():
+        """
+
+        Módulo limpia el formulario de factura.
+
+        :return: None
+        :rtype: None
+
+        Vacia todos los datos del formulario de factura.
+
+        """
         try:
             var.ui.editNFactura.setText("")
             var.ui.editFechaFactura.setText("")
@@ -255,6 +412,16 @@ class EventosFactura:
 
     @staticmethod
     def recargarFactura():
+        """
+
+        Módulo que recarga la tabla de facturas.
+
+        :return: None
+        :rtype: None
+
+        Recarga la tabla de facturas.
+
+        """
         try:
             Factura.facturas = ConexionFactura.buscarFacturaDB(Factura())
             var.ui.tablaFacturas.clearSelection()
@@ -264,6 +431,17 @@ class EventosFactura:
 
     @staticmethod
     def buscarFactura():
+        """
+
+        Módulo para buscar facturas y mostrarlas en la tabla.
+
+        :return: None
+        :rtype: None
+
+        Crea un objeto tipo factura con los datos del formulario y realiza una busqueda de las facturas que tengan la
+        misma fecha, el mismo DNI o ambos y carga todas las facturas encontradas en la tabla.
+
+        """
         try:
             factura = Factura()
             factura.rellenarDatosFactura()
@@ -277,6 +455,20 @@ class EventosFactura:
 
     @staticmethod
     def altaFactura():
+        """
+
+        Módulo que da de alta una factura.
+
+        :return: None
+        :rtype: None
+
+        Recoge los datos del formulario de factura y los vuelca en un objeto factura y lo envia al metodo de alta en
+        la base de datos.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que falten datos, no sea posible dar de alta
+        la factura o da un mensaje de confirmacion en la status bar.
+
+        """
         try:
             factura = Factura()
             factura.rellenarDatosFactura()
@@ -297,6 +489,19 @@ class EventosFactura:
 
     @staticmethod
     def pagarFactura():
+        """
+
+        Módulo que cambia el estado de una factura a pagada.
+
+        :return: None
+        :rtype: None
+
+        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+        de pendiente a pagada tras pedirnos confirmacion.
+
+        Solo permite cambiar el estado en caso de que tenga al menos una venta asociada a ese numero de factura.
+
+        """
         try:
             if var.ui.tablaVentas.rowCount() > 1:
                 nfactura = var.ui.editNFactura.text()
@@ -317,6 +522,17 @@ class EventosFactura:
 
     @staticmethod
     def anularFactura():
+        """
+
+        Módulo que cambia el estado de una factura a anulada.
+
+        :return: None
+        :rtype: None
+
+        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+        de pagada a anulada tras pedirnos confirmacion.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
             factura = Factura()
@@ -334,6 +550,17 @@ class EventosFactura:
 
     @staticmethod
     def restaurarFactura():
+        """
+
+        Módulo que cambia el estado de una factura a pagada.
+
+        :return: None
+        :rtype: None
+
+        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+        de anulada a pagada tras pedirnos confirmacion.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
             factura = Factura()
@@ -351,6 +578,17 @@ class EventosFactura:
 
     @staticmethod
     def eliminarFactura():
+        """
+
+        Módulo que cambia el estado de una factura a pagada cuando esta esta anulada.
+
+        :return: None
+        :rtype: None
+
+        Borra de la base de datos la factura actual, aquella cuyo numero de factura este en el edit text de numero de
+        factura, tras pedirnos confirmacion.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
 
@@ -367,6 +605,20 @@ class ConexionFactura:
 
     @staticmethod
     def buscarFacturaDB(factura):
+        """
+
+        Módulo busca en la base de datos una factura concreta o todas las facturas.
+
+        :param factura: Objeto de tipo factura que contiene los datos por los que se debe buscar
+        :type factura: Factura
+
+        :return: Devuelve una lista con todas las facturas que coinciden con los criterios a buscar
+        :rtype: tuple
+
+        Devuelve una lista con todas las facturas que cuadran con los criterios de busqueda que se reciben como un objeto
+        de tipo factura, se puede buscar por numero de factura, DNI o fecha de factura.
+
+        """
         try:
             facturas = []
             query = QtSql.QSqlQuery()
@@ -411,6 +663,23 @@ class ConexionFactura:
 
     @staticmethod
     def buscarUltimaFacturaDB(dni, fechafactura):
+        """
+
+        Módulo busca la ultima factura creada de un cliente.
+
+        :param dni: DNI del cliente a buscar
+        :type dni: str
+
+        :param fechafactura: Fecha de la factura a buscar
+        :type fechafactura: str
+
+        :return: Devuelve como string el numero de la ultima factura que figura con el dni y fecha de la busqueda
+        :rtype: str
+
+        Devuelve el numero de factura de la ultima factura que corresponde al cliente con el dni y fecha de factura
+        recibidos como parametro.
+
+        """
         try:
             query = QtSql.QSqlQuery()
 
@@ -431,6 +700,19 @@ class ConexionFactura:
 
     @staticmethod
     def altaFacturaDB(factura):
+        """
+
+        Módulo que da de alta una factura en la BD.
+
+        :param factura: Objeto de tipo Factura para darla de alta
+        :type factura: Factura
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Da de alta una factura en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('insert into facturas (fechafactura, dni, cliente, estado)'
@@ -447,6 +729,19 @@ class ConexionFactura:
 
     @staticmethod
     def eliminarFacturaDB(nfactura):
+        """
+
+        Módulo da de baja una factura en la BD.
+
+        :param nfactura: Numero de factura a dar de baja
+        :type nfactura: str
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Elimina de la base de datos la factura con el numero de factura que recibe como parametro.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('delete from facturas where nfactura = :nfactura')
@@ -457,6 +752,19 @@ class ConexionFactura:
 
     @staticmethod
     def cambiarEstadoFacturaDB(factura):
+        """
+
+        Módulo que cambia el estado de una factura en la BD.
+
+        :param factura: Objeto de tipo factura que contiene el numero de factura y estado a cambiar
+        :type factura: Factura
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Cambia el estado de una factura en la base de datos en base al numero de factura y estado del objeto que recibe.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('update facturas set estado=:estado where nfactura = :nfactura')
@@ -472,6 +780,16 @@ class ConexionFactura:
 class Venta:
 
     def __init__(self):
+        """
+
+        Constructor del objeto venta.
+
+        :return: None
+        :rtype: None
+
+        Constructor del objeto venta que almacena los datos de una venta asociada a una factura.
+
+        """
         self.nfactura = None
         self.producto = ""
         self.precio = 0
@@ -482,7 +800,17 @@ class EventosVenta:
 
     @staticmethod
     def conectarEventosVenta():
-        # Formato tabla ventas
+        """
+
+        Módulo que conecta los eventos asociados a las ventas de una factura.
+
+        :return: None
+        :rtype: None
+
+        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de facturas
+        referentes a las ventas de una factura.
+
+        """
         header = var.ui.tablaVentas.horizontalHeader()
         header.show()
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -495,6 +823,20 @@ class EventosVenta:
 
     @staticmethod
     def crearSpinVenta():
+        """
+
+        Módulo crea un widget de tipo spinner.
+
+        :return: Devuelve un objeto de tipo spinner que esta alineado al centro a la derecha y no tiene botones
+        :rtype: QtWidgets.QSpinBox
+
+        Crea y devuelve un spinner para la cantidad de producto, el cual esta alineado a la derecha al centro, no tiene
+        borde ni botones, tiene un maximo de 9999, un minimo de 1 y tiene un color de fondo correspondiente a la primera
+        fila de la tabla.
+
+        Tambien conecta a este spinner el metodo correspondiente al cambio del valor de la cantidad.
+
+        """
         try:
             spinCantidad = QtWidgets.QSpinBox()
             spinCantidad.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
@@ -513,6 +855,22 @@ class EventosVenta:
 
     @staticmethod
     def crearComboboxVenta(nfactura):
+        """
+
+        Módulo crea un widget de tipo combobox.
+
+        :param nfactura: Numero de la factura para comprobar los productos ya asociados a esta factura
+        :type nfactura: str
+
+        :return: Devuelve un objeto de tipo combobox que contiene todos los posibles productos a agregar a las ventas
+        :rtype: QtWidgets.QComboBox
+
+        Crea y devuelve un combobox que contiene todos los nombres de todos los productos que no esten ya asociados a
+        ese numero de factura, ademas de quitar el borde y poner un color de fondo acorde a la fila de la tabla.
+
+        Tambien conecta a este combobox con el metodo correspondiente al cambio de producto.
+
+        """
         try:
             cmbProducto = QtWidgets.QComboBox()
             cmbProducto.setFrame(False)
@@ -539,6 +897,17 @@ class EventosVenta:
 
     @staticmethod
     def comboboxVentaChange():
+        """
+
+        Módulo cambia los valores de precio de la fila al cambiar el producto del combobox de la tabla de venta.
+
+        :return: None
+        :rtype: None
+
+        Cambia el precio por unidad de la fila de la tabla de ventas al cambiar el producto del combobox de la tabla de
+        ventas.
+
+        """
         try:
             producto = var.ui.tablaVentas.cellWidget(0, 1).currentText()
             if producto != "":
@@ -553,6 +922,16 @@ class EventosVenta:
 
     @staticmethod
     def precio_cantidadChange():
+        """
+
+        Módulo cambia los valores de precio de la factura al cambiar el precio o la cantidad de producto.
+
+        :return: None
+        :rtype: None
+
+        Cambia el precio de los subtotales y totales de la factura cuando el precio o la cantidad del producto cambian.
+
+        """
         try:
             cantidad = var.ui.tablaVentas.cellWidget(0, 0).value()
             precio = float(var.ui.tablaVentas.item(0, 2).text()[:-3])
@@ -568,6 +947,16 @@ class EventosVenta:
 
     @staticmethod
     def updateTotalesFactura():
+        """
+
+        Módulo actualiza los valores de subtotal, impuestos y total de la factura.
+
+        :return: None
+        :rtype: None
+
+        Actualiza los valores de subtotal, impuestos y total de la factura.
+
+        """
         try:
             subtotal = 0
             for row in range(var.ui.tablaVentas.rowCount()):
@@ -584,6 +973,20 @@ class EventosVenta:
 
     @staticmethod
     def updateVentaButtons(estado):
+        """
+
+        Módulo cambia el estado de los botones de la pestaña de facturas asociados a las ventas.
+
+        :param estado: Estado de la factura actual
+        :type estado: str
+
+        :return: None
+        :rtype: None
+
+        Cambia el estado de los botones asociados a las ventas dependiendo del estado de la factura actual, teniendo en
+        cuenta el estado que recibe como parametro.
+
+        """
         try:
             if estado == 'Pendiente':
                 var.ui.btnFacturacionNuevoElemento.setEnabled(True)
@@ -596,6 +999,24 @@ class EventosVenta:
 
     @staticmethod
     def cargarTablaVenta(nfactura, estado):
+        """
+
+        Módulo actualiza los valores de la tabla de ventas de una factura.
+
+        :param nfactura: Numero de la factura actualmente seleccionada
+        :type nfactura: str
+
+        :param estado: Estado de la factura actualmente seleccionada
+        :type estado: str
+
+        :return: None
+        :rtype: None
+
+        Rellena la tabla de ventas de una factura con la lista de objetos venta que busca en la base de datos, ademas si
+        el estado de la factura fuese pendiente agrega como primera linea una en la que poder introducirse un nuevo
+        producto y su cantidad para agregar como venta de una factura.
+
+        """
         try:
             index = 0
             var.ui.tablaVentas.setRowCount(0)
@@ -618,13 +1039,10 @@ class EventosVenta:
 
                 index += 1
 
-                var.ui.btnFacturacionNuevoElemento.setEnabled(True)
-                var.ui.btnFacturacionBorrarElemento.setEnabled(True)
-
             else:
                 var.ui.tablaVentas.setRowCount(len(ventas))
-                var.ui.btnFacturacionNuevoElemento.setEnabled(False)
-                var.ui.btnFacturacionBorrarElemento.setEnabled(False)
+
+            EventosVenta.updateVentaButtons(estado)
 
             for venta in ventas:
                 var.ui.tablaVentas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(venta.unidades)))
@@ -645,6 +1063,20 @@ class EventosVenta:
 
     @staticmethod
     def altaVenta():
+        """
+
+        Módulo que da de alta una venta asociada a una factura.
+
+        :return: None
+        :rtype: None
+
+        Recoge los datos de la primera linea de la tabla de ventas, los vuelca en un objeto Venta y lo envia al metodo
+        de alta en la base de datos.
+
+        Tambien da un mensaje de error en una ventana de dialogo en caso de que no se seleccione ningun producto en el
+        combobox o da un mensaje de confirmacion en la status bar.
+
+        """
         try:
             venta = Venta()
             venta.nfactura = var.ui.editNFactura.text()
@@ -664,6 +1096,16 @@ class EventosVenta:
 
     @staticmethod
     def bajaVenta():
+        """
+
+        Módulo que da de baja un grupo de ventas asociadas a una factura.
+
+        :return: None
+        :rtype: None
+
+        Recoge las ventas seleccionadas en la tabla ventas y las elimina de las ventas asociadas a dicha factura.
+
+        """
         try:
             nfactura = var.ui.editNFactura.text()
             productos_eliminar = var.ui.tablaVentas.selectedItems()
@@ -683,6 +1125,20 @@ class ConexionVenta:
 
     @staticmethod
     def buscarVentaDB(nfactura):
+        """
+
+        Módulo busca en la base de datos todas las ventas asociadas a un numero de factura.
+
+        :param nfactura: Numero de factura de las ventas a listar
+        :type nfactura: str
+
+        :return: Devuelve una lista con todas las ventas asociadas a un numero de factura
+        :rtype: tuple
+
+        Devuelve una lista con todas las facturas de la base de datos que tengan asociado el numero de factura que se
+        recibe como parametro.
+
+        """
         try:
             ventas = []
             query = QtSql.QSqlQuery()
@@ -710,6 +1166,19 @@ class ConexionVenta:
 
     @staticmethod
     def buscarProductosNotInVentaDB(nfactura):
+        """
+
+        Módulo busca en la base de datos todos los productos que no estan ya en una factura concreta.
+
+        :param nfactura: Numero de factura a consultar
+        :type nfactura: str
+
+        :return: Devuelve una lista con todos los productos que no estan ya vendidos en una factura
+        :rtype: tuple
+
+        Devuelve una lista con todos los productos posibles que no esten ya asociados a una venta en una factura concreta.
+
+        """
         try:
             productos = []
             query = QtSql.QSqlQuery()
@@ -731,6 +1200,19 @@ class ConexionVenta:
 
     @staticmethod
     def altaVentaDB(venta):
+        """
+
+        Módulo que da de alta una venta en la BD.
+
+        :param venta: Objeto de tipo Venta para darlo de alta
+        :type venta: Venta
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Da de alta una venta asociada a una factura en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -749,6 +1231,22 @@ class ConexionVenta:
 
     @staticmethod
     def bajaVentaDB(nfactura, producto):
+        """
+
+        Módulo que da de baja una venta en la BD.
+
+        :param nfactura: Numero de la factura cuya venta se quiere borrar
+        :type nfactura: str
+
+        :param producto: Producto de la factura que se quiere borrar
+        :type producto: str
+
+        :return: Devuelve el resultado de la ejecucion de la sentensia sql
+        :rtype: bool
+
+        Da de baja una venta asociada a una factura en la base de datos.
+
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare('delete from ventas where nfactura = :nfactura and producto=:producto')

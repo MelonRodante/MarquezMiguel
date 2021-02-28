@@ -15,6 +15,20 @@ class EventosVentanas:
 
     @staticmethod
     def abrirDialogCalendario(edit):
+        """
+
+        Modulo que abre una ventana de dialogo con un calendario para seleccionar una fecha.
+
+        :param edit: Edit text en el que debe escribir la fecha seleccionada
+        :type edit: QtWidgets.QLineEdit
+
+        :return: None
+        :rtype: None
+
+        Abre una ventana de dialogo con un calendario para seleccionar una fecha y cargar esa fecha en un edit text que
+        se le pasa como parametro.
+
+        """
         try:
             dlgCalendar = DialogCalendario(edit=edit)
             dlgCalendar.exec_()
@@ -23,6 +37,16 @@ class EventosVentanas:
 
     @staticmethod
     def abrirDialogSalir():
+        """
+
+        Módulo que abre una ventana de dialogo para cerrar el programa.
+
+        :return: None
+        :rtype: None
+
+        Muestra una ventana de confirmacion para que el usuario elija si salir del programa o cancelar.
+
+        """
         try:
             dialog = DialogConfirmacion('¿Esta seguro que desea salir de la aplicacion?')
             dialog.show()
@@ -34,6 +58,19 @@ class EventosVentanas:
 
     @staticmethod
     def abrirDialogAviso(msg):
+        """
+
+        Módulo que abre una ventana de dialogo con un mensaje.
+
+        :param msg: Mensaje que debe mostrar la ventana
+        :type msg: str
+
+        :return: None
+        :rtype: None
+
+        Muestra una ventana de dialogo con un mensaje informativo que recibe como parametro.
+
+        """
         try:
             var.ui.statusbar.showMessage(msg)
 
@@ -46,6 +83,19 @@ class EventosVentanas:
 
     @staticmethod
     def abrirDialogConfimacion(msg):
+        """
+
+        Módulo que abre una ventana de confirmacion con un mensaje.
+
+        :param msg: Mensaje que debe mostrar la ventana
+        :type msg: str
+
+        :return: Devuelve True si se acepta o False si se cancela
+        :rtype: bool
+
+        Muestra una ventana de confirmacion con un mensaje que recibe como parametro.
+
+        """
         try:
             dialog = DialogConfirmacion(msg)
             dialog.show()
@@ -56,6 +106,17 @@ class EventosVentanas:
 
     @staticmethod
     def backup():
+        """
+
+        Módulo que realizar el backup de la BBDD
+
+        :return: None
+        :rtype: None
+
+        Utiliza la librería zipfile, añade la fecha y hora de la copia al nombre de esta y tras realizar la copia
+        la mueve al directorio deseado por el cliente. Para ello abre una ventana de diálogo
+
+        """
         try:
             fecha = datetime.today()
             fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
