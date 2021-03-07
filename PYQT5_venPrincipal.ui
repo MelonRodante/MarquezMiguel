@@ -33,7 +33,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="panelCliente">
        <attribute name="title">
@@ -3036,8 +3036,6 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="actionAbrir"/>
     <addaction name="actionImprimir"/>
     <addaction name="separator"/>
-    <addaction name="actionCrear_Backup"/>
-    <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
    <widget class="QMenu" name="menuInformes">
@@ -3049,7 +3047,17 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="separator"/>
     <addaction name="actionImprimir_factura"/>
    </widget>
+   <widget class="QMenu" name="menuHerramientas">
+    <property name="title">
+     <string>Herramientas</string>
+    </property>
+    <addaction name="actionCrear_Backup"/>
+    <addaction name="actionRestaurar_Backup"/>
+    <addaction name="separator"/>
+    <addaction name="actionImportar_Datos"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuHerramientas"/>
    <addaction name="menuInformes"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -3073,6 +3081,9 @@ border-color: rgb(0, 0, 0);</string>
    <addaction name="actionImprimir"/>
    <addaction name="separator"/>
    <addaction name="actionCrear_Backup"/>
+   <addaction name="actionRestaurar_Backup"/>
+   <addaction name="separator"/>
+   <addaction name="actionImportar_Datos"/>
    <addaction name="separator"/>
    <addaction name="actionSalir"/>
   </widget>
@@ -3128,6 +3139,24 @@ border-color: rgb(0, 0, 0);</string>
   <action name="actionImprimir_factura">
    <property name="text">
     <string>Imprimir factura</string>
+   </property>
+  </action>
+  <action name="actionRestaurar_Backup">
+   <property name="icon">
+    <iconset resource="img/rc_toolbar.qrc">
+     <normaloff>:/restaurarbackup/restaurarbackup.png</normaloff>:/restaurarbackup/restaurarbackup.png</iconset>
+   </property>
+   <property name="text">
+    <string> Restaurar Backup</string>
+   </property>
+  </action>
+  <action name="actionImportar_Datos">
+   <property name="icon">
+    <iconset resource="img/rc_toolbar.qrc">
+     <normaloff>:/importardatos/importardatos.png</normaloff>:/importardatos/importardatos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Importar Datos</string>
    </property>
   </action>
  </widget>

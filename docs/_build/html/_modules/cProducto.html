@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cProducto &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Código fuente para cProducto</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">var</span>
+<span class="kn">import</span> <span class="nn">ventanasDialogo</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtSql</span>
+
+
+<div class="viewcode-block" id="Producto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.Producto">[documentos]</a><span class="k">class</span> <span class="nc">Producto</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Constructor del objeto cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Constructor del objeto producto que almacena todos los datos de un producto</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codigoProducto</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stock</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="Producto.rellenarDatosProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.Producto.rellenarDatosProducto">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarDatosProducto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto producto con los datos almacenados en el formulario de producto.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">codigoProducto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editCodigoProducto</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editProducto</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">stock</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinStock</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinPrecio</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarDatosProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Producto.rellenarFormularioProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.Producto.rellenarFormularioProducto">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarFormularioProducto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de producto con los datos almacenados en el objeto producto.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editCodigoProducto</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">codigoProducto</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editProducto</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">producto</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinStock</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stock</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinPrecio</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarFormularioProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Producto.datosValidos"><a class="viewcode-back" href="../src/cProducto.html#cProducto.Producto.datosValidos">[documentos]</a>    <span class="k">def</span> <span class="nf">datosValidos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que comprueba la validez de los datos almacenados en el objeto producto.</span>
+
+<span class="sd">        :return: Retorna si los datos son validos para dar de alta un producto.</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Metodo que comprueba que el nombre del producto no sea una cadena vacia.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">producto</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="EventosProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto">[documentos]</a><span class="k">class</span> <span class="nc">EventosProducto</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EventosProducto.conectarEventosProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.conectarEventosProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">conectarEventosProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que conecta los eventos de la pestaña productos y da formato a la tabla.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de productos</span>
+<span class="sd">        asi como ajustar el tamaño de las columnas de la tabla.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">cargarDatosProducto</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoBuscar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">buscarProducto</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoRecargar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">recargarProducto</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoLimpiar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">limpiarProducto</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoAlta</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">altaProducto</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoModificar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">modificarProducto</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnProductoBaja</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">bajaProducto</span><span class="p">)</span>
+
+        <span class="n">EventosProducto</span><span class="o">.</span><span class="n">recargarProducto</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EventosProducto.cargarTablaProductos"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.cargarTablaProductos">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarTablaProductos</span><span class="p">(</span><span class="n">productos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo actualiza los valores de la tabla de productos.</span>
+
+<span class="sd">        :param productos: Lista de productos para cargar en la tabla</span>
+<span class="sd">        :type productos: tuple</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">productos</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">producto</span> <span class="ow">in</span> <span class="n">productos</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">codigoProducto</span><span class="p">)))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">producto</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">stock</span><span class="p">)))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">))</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarTablaProductos: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.cargarDatosProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.cargarDatosProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarDatosProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo carga un producto de la tabla en el formulario de producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Al hacer click en un producto de la tabla recoge el nombre del producto y carga todos sus datos en el formulario</span>
+<span class="sd">        de producto.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fila</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaProductos</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="n">fila</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">())</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">producto</span><span class="o">.</span><span class="n">rellenarFormularioProducto</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarDatosProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.limpiarProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.limpiarProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">limpiarProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo limpia el formulario de producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Vacia todos los datos del formulario producto, y pone a 0 el spinner de precio.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editCodigoProducto</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editProducto</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinStock</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinPrecio</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error limpiarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.recargarProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.recargarProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">recargarProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que recarga la tabla de productos.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recarga la tabla de productos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">productos</span> <span class="o">=</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">EventosProducto</span><span class="o">.</span><span class="n">cargarTablaProductos</span><span class="p">(</span><span class="n">productos</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error recargarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.buscarProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.buscarProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo para buscar un producto concreto en la tabla de productos.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el nombre del producto del formulario de producto y lo busca en la base de datos para luego pasarselo al</span>
+<span class="sd">        modulo que carga la tabla de productos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editProducto</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">productos</span> <span class="o">=</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">)</span>
+            <span class="n">EventosProducto</span><span class="o">.</span><span class="n">cargarTablaProductos</span><span class="p">(</span><span class="n">productos</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.altaProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.altaProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta un producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge los datos del formulario de producto y los vuelca en un objeto producto y lo envia al metodo de alta en</span>
+<span class="sd">        la base de datos.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten</span>
+<span class="sd">        datos, o da un mensaje de confirmacion en la status bar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">()</span>
+            <span class="n">producto</span><span class="o">.</span><span class="n">rellenarDatosProducto</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">producto</span><span class="o">.</span><span class="n">datosValidos</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">altaProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s2">&quot;Producto </span><span class="se">\&#39;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2"> dado de alta.&quot;</span><span class="p">)</span>
+                    <span class="n">EventosProducto</span><span class="o">.</span><span class="n">limpiarProducto</span><span class="p">()</span>
+                    <span class="n">EventosProducto</span><span class="o">.</span><span class="n">recargarProducto</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s2">&quot;ERROR: Ya existe el producto </span><span class="se">\&#39;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s2">&quot;ERROR: Faltan datos&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.bajaProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.bajaProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de baja un producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el nombre del producto del formulario de producto y lo envia al metodo de baja en la base de datos</span>
+<span class="sd">        pidiendo antes confirmacion.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit</span>
+<span class="sd">        text de nombre de producto, no existe ningun producto con ese nombre o no fue posible darlo de baja.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editProducto</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">producto</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro que desea dar de baja el producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">?&#39;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">bajaProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+                            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> dado de baja.&#39;</span><span class="p">)</span>
+                            <span class="n">EventosProducto</span><span class="o">.</span><span class="n">limpiarProducto</span><span class="p">()</span>
+                            <span class="n">EventosProducto</span><span class="o">.</span><span class="n">recargarProducto</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No se ha podido dar de baja el producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No existe ningun producto llamado </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Introduzca un producto a eliminar.&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error bajaProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosProducto.modificarProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.EventosProducto.modificarProducto">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">modificarProducto</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que modifica los datos de un producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el nombre del producto del formulario de producto y lo envia al metodo de modificar datos en la base de</span>
+<span class="sd">        datos pidiendo antes confirmacion.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit</span>
+<span class="sd">        text de nombre de producto, no existe ningun producto con ese nombre o no fue posible modificar sus datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">()</span>
+            <span class="n">producto</span><span class="o">.</span><span class="n">rellenarDatosProducto</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="o">.</span><span class="n">producto</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro que desea modificar el producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">?&#39;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">ConexionProducto</span><span class="o">.</span><span class="n">modificarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+                            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> actualizado con exito.&#39;</span><span class="p">)</span>
+                            <span class="n">EventosProducto</span><span class="o">.</span><span class="n">recargarProducto</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No se han podido modificar el producto </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No existe ningun producto llamado </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Introduzca un producto a modificar.&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error modificarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ConexionProducto"><a class="viewcode-back" href="../src/cProducto.html#cProducto.ConexionProducto">[documentos]</a><span class="k">class</span> <span class="nc">ConexionProducto</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ConexionProducto.buscarProductoDB"><a class="viewcode-back" href="../src/cProducto.html#cProducto.ConexionProducto.buscarProductoDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca en la base de datos un cliente o todos los clientes.</span>
+
+<span class="sd">        :param producto: Nombre del producto a buscar, si no se recibe ningun nombre o esta vacio devuelve la lista de todos los productos</span>
+<span class="sd">        :type producto: str</span>
+
+<span class="sd">        :return: Devuelve una lista con todos los productos o el producto cuyo nombre recibe como parametro</span>
+<span class="sd">        :rtype: tuple</span>
+
+<span class="sd">        En caso de que el parametro contenga una cadena que no este vacia busca en la BD un producto cuyo nombre</span>
+<span class="sd">        recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos</span>
+<span class="sd">        los productos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">productos</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">b_producto</span> <span class="o">=</span> <span class="s1">&#39;producto&#39;</span>
+            <span class="k">if</span> <span class="n">producto</span><span class="p">:</span>
+                <span class="n">b_producto</span> <span class="o">=</span> <span class="s1">&#39;:producto&#39;</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;select codigoproducto, producto, stock, precio from productos where producto = &#39;</span> <span class="o">+</span> <span class="n">b_producto</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">()</span>
+
+                    <span class="n">p</span><span class="o">.</span><span class="n">codigoProducto</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">stock</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+                    <span class="n">productos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">productos</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionProducto.altaProductoDB"><a class="viewcode-back" href="../src/cProducto.html#cProducto.ConexionProducto.altaProductoDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta un producto en la BD.</span>
+
+<span class="sd">        :param producto: Objeto de tipo Producto para darlo de alta</span>
+<span class="sd">        :type producto: Producto</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Da de alta un producto en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;insert into productos (producto, stock, precio)&#39;</span>
+                          <span class="s1">&#39;VALUES (:producto, :stock, :precio)&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:stock&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">stock</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:precio&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionProducto.bajaProductoDB"><a class="viewcode-back" href="../src/cProducto.html#cProducto.ConexionProducto.bajaProductoDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo da de baja un producto en la BD.</span>
+
+<span class="sd">        :param producto: Nombre del producto a dar de baja</span>
+<span class="sd">        :type producto: str</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Elimina de la base de datos el producto con el nombre que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;delete from productos where producto = :producto&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error bajaProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionProducto.modificarProductoDB"><a class="viewcode-back" href="../src/cProducto.html#cProducto.ConexionProducto.modificarProductoDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">modificarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo modifica los datos de un producto en la BD.</span>
+
+<span class="sd">        :param producto: Objeto de tipo Producto con los nuevos datos</span>
+<span class="sd">        :type producto: Producto</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Actualiza la informacion del producto en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;update productos set stock=:stock, precio=:precio where producto = :producto&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">producto</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:stock&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">stock</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:precio&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error modificarProducto: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

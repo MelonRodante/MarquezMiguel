@@ -2,11 +2,17 @@ import os
 import shutil
 import sys
 import zipfile
+
+import cCliente
+import cFactura
+import cProducto
 import var
 
 from datetime import datetime
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialogButtonBox
+
+import ventanaPrincipal
 from PYQT5_dialogAviso import Ui_dialogAviso
 from PYQT5_dialogCalendario import Ui_dialogCalendario
 
@@ -105,7 +111,7 @@ class EventosVentanas:
             print('El error es %s' % str(error))
 
     @staticmethod
-    def backup():
+    def hacerBackup():
         """
 
         Módulo que realizar el backup de la BBDD
@@ -122,7 +128,7 @@ class EventosVentanas:
             fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
             copia = (str(fecha) + '_backup.zip')
             option = QtWidgets.QFileDialog.Options()
-            directorio, filename = QtWidgets.QFileDialog().getSaveFileName(None, 'Backup', copia, '.zip', options=option)
+            directorio, filename = QtWidgets.QFileDialog().getSaveFileName(None, 'Crear backup', copia, '.zip', options=option)
             if filename != '':
                 fichzip = zipfile.ZipFile(copia, 'w')
                 fichzip.write(var.filedb, os.path.basename(var.filedb), zipfile.ZIP_DEFLATED)
@@ -131,6 +137,40 @@ class EventosVentanas:
                 shutil.move(str(copia), str(directorio))
         except Exception as error:
             print('El error es %s' % str(error))
+
+    @staticmethod
+    def restaurarBackup():
+        """
+
+        Módulo que restaura la BBDD
+
+        :return: None
+        :rtype: None
+
+        Abre ventana de diálogo para buscar el directorio donde está copia de la BBDD y la restaura haciendo uso
+        de la librería zipfile
+
+        """
+        try:
+            option = QtWidgets.QFileDialog.Options()
+            filename = QtWidgets.QFileDialog().getOpenFileName(None, 'Restaurar backup', '', '*.zip;;All Files', options=option)
+
+            if filename != '':
+                file = filename[0]
+                with zipfile.ZipFile(str(file), 'r') as bbdd:
+                    bbdd.extractall(pwd=None)
+                bbdd.close()
+                var.ui.statusbar.showMessage('Backup de la BD restaurada')
+
+                ventanaPrincipal.Conexion.conectardb(var.filedb)
+                cCliente.EventosCliente.recargarCliente()
+                cProducto.EventosProducto.recargarProducto()
+                cFactura.EventosFactura.recargarFactura()
+
+
+        except Exception as error:
+            print('Error restaurar base de datos: %s ' % str(error))
+
 
 
 class DialogCalendario(QtWidgets.QDialog):

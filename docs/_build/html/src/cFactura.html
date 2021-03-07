@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cFactura module &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cFactura">
+<span id="cfactura-module"></span><h1>cFactura module<a class="headerlink" href="#module-cFactura" title="Enlazar permanentemente con este título">¶</a></h1>
+<dl class="py class">
+<dt id="cFactura.ConexionFactura">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">ConexionFactura</span></code><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cFactura.ConexionFactura.altaFacturaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaFacturaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura.altaFacturaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura.altaFacturaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta una factura en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>factura</strong> (<a class="reference internal" href="#cFactura.Factura" title="cFactura.Factura"><em>Factura</em></a>) – Objeto de tipo Factura para darla de alta</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Da de alta una factura en la base de datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionFactura.buscarFacturaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarFacturaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura.buscarFacturaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura.buscarFacturaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca en la base de datos una factura concreta o todas las facturas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>factura</strong> (<a class="reference internal" href="#cFactura.Factura" title="cFactura.Factura"><em>Factura</em></a>) – Objeto de tipo factura que contiene los datos por los que se debe buscar</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve una lista con todas las facturas que coinciden con los criterios a buscar</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>Devuelve una lista con todas las facturas que cuadran con los criterios de busqueda que se reciben como un objeto
+de tipo factura, se puede buscar por numero de factura, DNI o fecha de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionFactura.buscarUltimaFacturaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarUltimaFacturaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dni</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fechafactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura.buscarUltimaFacturaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura.buscarUltimaFacturaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca la ultima factura creada de un cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dni</strong> (<em>str</em>) – DNI del cliente a buscar</p></li>
+<li><p><strong>fechafactura</strong> (<em>str</em>) – Fecha de la factura a buscar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve como string el numero de la ultima factura que figura con el dni y fecha de la busqueda</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>Devuelve el numero de factura de la ultima factura que corresponde al cliente con el dni y fecha de factura
+recibidos como parametro.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionFactura.cambiarEstadoFacturaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cambiarEstadoFacturaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura.cambiarEstadoFacturaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura.cambiarEstadoFacturaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que cambia el estado de una factura en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>factura</strong> (<a class="reference internal" href="#cFactura.Factura" title="cFactura.Factura"><em>Factura</em></a>) – Objeto de tipo factura que contiene el numero de factura y estado a cambiar</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Cambia el estado de una factura en la base de datos en base al numero de factura y estado del objeto que recibe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionFactura.eliminarFacturaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">eliminarFacturaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionFactura.eliminarFacturaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionFactura.eliminarFacturaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo da de baja una factura en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>nfactura</strong> (<em>str</em>) – Numero de factura a dar de baja</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Elimina de la base de datos la factura con el numero de factura que recibe como parametro.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cFactura.ConexionVenta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">ConexionVenta</span></code><a class="reference internal" href="../_modules/cFactura.html#ConexionVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cFactura.ConexionVenta.altaVentaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaVentaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">venta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionVenta.altaVentaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionVenta.altaVentaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta una venta en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>venta</strong> (<a class="reference internal" href="#cFactura.Venta" title="cFactura.Venta"><em>Venta</em></a>) – Objeto de tipo Venta para darlo de alta</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Da de alta una venta asociada a una factura en la base de datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionVenta.bajaVentaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaVentaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">producto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionVenta.bajaVentaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionVenta.bajaVentaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de baja una venta en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nfactura</strong> (<em>str</em>) – Numero de la factura cuya venta se quiere borrar</p></li>
+<li><p><strong>producto</strong> (<em>str</em>) – Producto de la factura que se quiere borrar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Da de baja una venta asociada a una factura en la base de datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionVenta.buscarProductosNotInVentaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarProductosNotInVentaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionVenta.buscarProductosNotInVentaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionVenta.buscarProductosNotInVentaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca en la base de datos todos los productos que no estan ya en una factura concreta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>nfactura</strong> (<em>str</em>) – Numero de factura a consultar</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve una lista con todos los productos que no estan ya vendidos en una factura</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>Devuelve una lista con todos los productos posibles que no esten ya asociados a una venta en una factura concreta.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.ConexionVenta.buscarVentaDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarVentaDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#ConexionVenta.buscarVentaDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.ConexionVenta.buscarVentaDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca en la base de datos todas las ventas asociadas a un numero de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>nfactura</strong> (<em>str</em>) – Numero de factura de las ventas a listar</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve una lista con todas las ventas asociadas a un numero de factura</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>Devuelve una lista con todas las facturas de la base de datos que tengan asociado el numero de factura que se
+recibe como parametro.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cFactura.EventosFactura">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">EventosFactura</span></code><a class="reference internal" href="../_modules/cFactura.html#EventosFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cFactura.EventosFactura.altaFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.altaFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.altaFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta una factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge los datos del formulario de factura y los vuelca en un objeto factura y lo envia al metodo de alta en
+la base de datos.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que falten datos, no sea posible dar de alta
+la factura o da un mensaje de confirmacion en la status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.anularFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">anularFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.anularFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.anularFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que cambia el estado de una factura a anulada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+de pagada a anulada tras pedirnos confirmacion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.buscarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.buscarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.buscarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo para buscar facturas y mostrarlas en la tabla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Crea un objeto tipo factura con los datos del formulario y realiza una busqueda de las facturas que tengan la
+misma fecha, el mismo DNI o ambos y carga todas las facturas encontradas en la tabla.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.calendarioFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calendarioFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.calendarioFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.calendarioFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que abre una ventana de dialogo en la que seleccionar la fecha de la factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como
+argumento el edit text donde debe almacenar el valor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.cargarDatosClienteFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarDatosClienteFactura</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cliente</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.cargarDatosClienteFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.cargarDatosClienteFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo rellena los campos del cliente en la pestaña facturacion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>cliente</strong> (<a class="reference internal" href="cCliente.html#cCliente.Cliente" title="cCliente.Cliente"><em>Cliente</em></a>) – Objeto de cliente que contiene los datos a cargar en los edit text</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Recibe un objeto Cliente y escribe su DNI, nombre y apellidos en los edit text correspondientes de la pestaña
+de facturacion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.cargarDatosFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarDatosFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.cargarDatosFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.cargarDatosFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que carga una factura de la tabla en el formulario de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Al hacer click en una factura de la tabla recoge su numero de factura y carga todos sus datos en el formulario
+de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.cargarLineaTablaFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarLineaTablaFactura</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.cargarLineaTablaFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.cargarLineaTablaFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que añade una factura como una nueva fila en la tabla de facturas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>factura</strong> (<a class="reference internal" href="#cFactura.Factura" title="cFactura.Factura"><em>Factura</em></a>) – Lista de clientes para cargar en la tabla</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Rellena una fila de la tabla de facturas con una factura que recibe en los parametros.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.cargarTablaFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarTablaFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.cargarTablaFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.cargarTablaFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo actualiza los valores de la tabla de facturas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Rellena la tabla de facturas con la lista de facturas que esta almacenada en una variable global en la clase
+Factura.</p>
+<p>Solo rellena la tabla con las facturas cuyo estado sea igual al del estado actual del combobox de facturas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.comboboxFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">comboboxFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.comboboxFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.comboboxFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo carga los valores de los estados de una factura en el combo box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Carga los estados posibles de una factyra en el combo box de la pestaña facturas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.conectarEventosFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">conectarEventosFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.conectarEventosFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.conectarEventosFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que conecta los eventos de la pestaña facturas y da formato a la tabla de facturas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes
+asi como ajustar el tamaño de las columnas de la tabla.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.editDNIFacturaChange">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">editDNIFacturaChange</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.editDNIFacturaChange"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.editDNIFacturaChange" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo rellena los datos del cliente en el formulario factura al escribir el DNI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cuando el campo DNI de factura cambia si existe un cliente asociado a ese DNI escribe su nombre y apellidos en
+el formulario asi como borra el campo numero de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.editNFacturaChange">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">editNFacturaChange</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.editNFacturaChange"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.editNFacturaChange" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo cambia el estado de los botones de la pestaña de facturas cuando cambia el edit text de numero de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cuando el contenido del edit text de numero de factura cambia se modifica el estado y los metodos que llaman los
+botones del formulario de factura, actualiza la tabla de ventas de la factura y actualiza el estado de los botones
+de venta de la factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.eliminarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">eliminarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.eliminarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.eliminarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que cambia el estado de una factura a pagada cuando esta esta anulada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Borra de la base de datos la factura actual, aquella cuyo numero de factura este en el edit text de numero de
+factura, tras pedirnos confirmacion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.limpiarEditNFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">limpiarEditNFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.limpiarEditNFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.limpiarEditNFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que vacia el campo numero de factura del formulario de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Vacia el edit text numero de factura del formulario de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.limpiarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">limpiarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.limpiarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.limpiarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo limpia el formulario de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Vacia todos los datos del formulario de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.pagarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">pagarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.pagarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.pagarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que cambia el estado de una factura a pagada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+de pendiente a pagada tras pedirnos confirmacion.</p>
+<p>Solo permite cambiar el estado en caso de que tenga al menos una venta asociada a ese numero de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.recargarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">recargarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.recargarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.recargarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que recarga la tabla de facturas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recarga la tabla de facturas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosFactura.restaurarFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">restaurarFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosFactura.restaurarFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosFactura.restaurarFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que cambia el estado de una factura a pagada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,
+de anulada a pagada tras pedirnos confirmacion.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cFactura.EventosVenta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">EventosVenta</span></code><a class="reference internal" href="../_modules/cFactura.html#EventosVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cFactura.EventosVenta.altaVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaVenta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.altaVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.altaVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta una venta asociada a una factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge los datos de la primera linea de la tabla de ventas, los vuelca en un objeto Venta y lo envia al metodo
+de alta en la base de datos.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que no se seleccione ningun producto en el
+combobox o da un mensaje de confirmacion en la status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.bajaVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaVenta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.bajaVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.bajaVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de baja un grupo de ventas asociadas a una factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge las ventas seleccionadas en la tabla ventas y las elimina de las ventas asociadas a dicha factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.cargarTablaVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarTablaVenta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.cargarTablaVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.cargarTablaVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo actualiza los valores de la tabla de ventas de una factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nfactura</strong> (<em>str</em>) – Numero de la factura actualmente seleccionada</p></li>
+<li><p><strong>estado</strong> (<em>str</em>) – Estado de la factura actualmente seleccionada</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Rellena la tabla de ventas de una factura con la lista de objetos venta que busca en la base de datos, ademas si
+el estado de la factura fuese pendiente agrega como primera linea una en la que poder introducirse un nuevo
+producto y su cantidad para agregar como venta de una factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.comboboxVentaChange">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">comboboxVentaChange</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.comboboxVentaChange"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.comboboxVentaChange" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo cambia los valores de precio de la fila al cambiar el producto del combobox de la tabla de venta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el precio por unidad de la fila de la tabla de ventas al cambiar el producto del combobox de la tabla de
+ventas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.conectarEventosVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">conectarEventosVenta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.conectarEventosVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.conectarEventosVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que conecta los eventos asociados a las ventas de una factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de facturas
+referentes a las ventas de una factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.crearComboboxVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">crearComboboxVenta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nfactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.crearComboboxVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.crearComboboxVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo crea un widget de tipo combobox.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>nfactura</strong> (<em>str</em>) – Numero de la factura para comprobar los productos ya asociados a esta factura</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve un objeto de tipo combobox que contiene todos los posibles productos a agregar a las ventas</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>QtWidgets.QComboBox</p>
+</dd>
+</dl>
+<p>Crea y devuelve un combobox que contiene todos los nombres de todos los productos que no esten ya asociados a
+ese numero de factura, ademas de quitar el borde y poner un color de fondo acorde a la fila de la tabla.</p>
+<p>Tambien conecta a este combobox con el metodo correspondiente al cambio de producto.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.crearSpinVenta">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">crearSpinVenta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.crearSpinVenta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.crearSpinVenta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo crea un widget de tipo spinner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Devuelve un objeto de tipo spinner que esta alineado al centro a la derecha y no tiene botones</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>QtWidgets.QSpinBox</p>
+</dd>
+</dl>
+<p>Crea y devuelve un spinner para la cantidad de producto, el cual esta alineado a la derecha al centro, no tiene
+borde ni botones, tiene un maximo de 9999, un minimo de 1 y tiene un color de fondo correspondiente a la primera
+fila de la tabla.</p>
+<p>Tambien conecta a este spinner el metodo correspondiente al cambio del valor de la cantidad.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.precio_cantidadChange">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">precio_cantidadChange</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.precio_cantidadChange"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.precio_cantidadChange" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo cambia los valores de precio de la factura al cambiar el precio o la cantidad de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el precio de los subtotales y totales de la factura cuando el precio o la cantidad del producto cambian.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.updateTotalesFactura">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">updateTotalesFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.updateTotalesFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.updateTotalesFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo actualiza los valores de subtotal, impuestos y total de la factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Actualiza los valores de subtotal, impuestos y total de la factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.EventosVenta.updateVentaButtons">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">updateVentaButtons</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estado</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#EventosVenta.updateVentaButtons"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.EventosVenta.updateVentaButtons" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo cambia el estado de los botones de la pestaña de facturas asociados a las ventas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>estado</strong> (<em>str</em>) – Estado de la factura actual</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Cambia el estado de los botones asociados a las ventas dependiendo del estado de la factura actual, teniendo en
+cuenta el estado que recibe como parametro.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cFactura.Factura">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">Factura</span></code><a class="reference internal" href="../_modules/cFactura.html#Factura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.Factura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cFactura.Factura.datosValidos">
+<code class="sig-name descname"><span class="pre">datosValidos</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#Factura.datosValidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.Factura.datosValidos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que comprueba la validez de los datos almacenados en el objeto factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Retorna si los datos son validos para dar de alta una factura.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p>Metodo que comprueba que ningun dato este vacio en el objeto factura.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="cFactura.Factura.facturas">
+<code class="sig-name descname"><span class="pre">facturas</span></code><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#cFactura.Factura.facturas" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.Factura.rellenarDatosFactura">
+<code class="sig-name descname"><span class="pre">rellenarDatosFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#Factura.rellenarDatosFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.Factura.rellenarDatosFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del objeto factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del objeto factura con los datos almacenados en el formulario de factura.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cFactura.Factura.rellenarFormularioFactura">
+<code class="sig-name descname"><span class="pre">rellenarFormularioFactura</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cFactura.html#Factura.rellenarFormularioFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.Factura.rellenarFormularioFactura" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del formulario de factura.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del formulario de factura con los datos almacenados en el objeto factura.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cFactura.Venta">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cFactura.</span></code><code class="sig-name descname"><span class="pre">Venta</span></code><a class="reference internal" href="../_modules/cFactura.html#Venta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cFactura.Venta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/src/cFactura.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

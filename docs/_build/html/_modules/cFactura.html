@@ -1,0 +1,1357 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cFactura &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Código fuente para cFactura</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cCliente</span>
+<span class="kn">import</span> <span class="nn">cProducto</span>
+<span class="kn">import</span> <span class="nn">var</span>
+<span class="kn">import</span> <span class="nn">ventanasDialogo</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtSql</span>
+
+
+<div class="viewcode-block" id="Factura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.Factura">[documentos]</a><span class="k">class</span> <span class="nc">Factura</span><span class="p">:</span>
+
+    <span class="n">facturas</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Constructor del objeto factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Constructor del objeto factura que almacena los datos de una factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fechafactura</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cliente</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Factura.rellenarDatosFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.Factura.rellenarDatosFactura">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarDatosFactura</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto factura con los datos almacenados en el formulario de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">nfactura</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nfactura</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">fechafactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cliente</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarDatosCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Factura.rellenarFormularioFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.Factura.rellenarFormularioFactura">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarFormularioFactura</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de factura con los datos almacenados en el objeto factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cliente</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nfactura</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarFormularioCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Factura.datosValidos"><a class="viewcode-back" href="../src/cFactura.html#cFactura.Factura.datosValidos">[documentos]</a>    <span class="k">def</span> <span class="nf">datosValidos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que comprueba la validez de los datos almacenados en el objeto factura.</span>
+
+<span class="sd">        :return: Retorna si los datos son validos para dar de alta una factura.</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Metodo que comprueba que ningun dato este vacio en el objeto factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fechafactura</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cliente</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="EventosFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura">[documentos]</a><span class="k">class</span> <span class="nc">EventosFactura</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EventosFactura.conectarEventosFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.conectarEventosFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">conectarEventosFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que conecta los eventos de la pestaña facturas y da formato a la tabla de facturas.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes</span>
+<span class="sd">        asi como ajustar el tamaño de las columnas de la tabla.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">editNFacturaChange</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">editDNIFacturaChange</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaFactura</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">limpiarEditNFactura</span><span class="p">)</span>
+
+        <span class="n">EventosFactura</span><span class="o">.</span><span class="n">comboboxFactura</span><span class="p">()</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarTablaFactura</span><span class="p">)</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setColumnWidth</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">81</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setColumnWidth</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">82</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setColumnWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">82</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setColumnWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">218</span><span class="p">)</span>
+
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Custom</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Custom</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Custom</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarDatosFactura</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNueva</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">altaFactura</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionPagar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">pagarFactura</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionPagar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">editNFacturaChange</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionCalendario</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">calendarioFactura</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFaturacionBuscar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionLimpiar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">limpiarFactura</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionRecargar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">recargarFactura</span><span class="p">)</span>
+
+        <span class="n">EventosVenta</span><span class="o">.</span><span class="n">conectarEventosVenta</span><span class="p">()</span>
+
+        <span class="n">EventosFactura</span><span class="o">.</span><span class="n">recargarFactura</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EventosFactura.limpiarEditNFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.limpiarEditNFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">limpiarEditNFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que vacia el campo numero de factura del formulario de factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Vacia el edit text numero de factura del formulario de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error limpiarEditNFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.editDNIFacturaChange"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.editDNIFacturaChange">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">editDNIFacturaChange</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo rellena los datos del cliente en el formulario factura al escribir el DNI.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cuando el campo DNI de factura cambia si existe un cliente asociado a ese DNI escribe su nombre y apellidos en</span>
+<span class="sd">        el formulario asi como borra el campo numero de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">dni</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="n">cliente</span> <span class="o">=</span> <span class="n">cCliente</span><span class="o">.</span><span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cliente</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cliente</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">EventosFactura</span><span class="o">.</span><span class="n">limpiarEditNFactura</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error editDNIFacturaChange: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.editNFacturaChange"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.editNFacturaChange">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">editNFacturaChange</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo cambia el estado de los botones de la pestaña de facturas cuando cambia el edit text de numero de factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cuando el contenido del edit text de numero de factura cambia se modifica el estado y los metodos que llaman los</span>
+<span class="sd">        botones del formulario de factura, actualiza la tabla de ventas de la factura y actualiza el estado de los botones</span>
+<span class="sd">        de venta de la factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionPagar</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNueva</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="n">estado</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">nfactura</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+                <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">nfactura</span>
+                <span class="n">estado</span> <span class="o">=</span> <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">buscarFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span><span class="o">.</span><span class="n">estado</span>
+
+                <span class="k">if</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Pendiente&quot;</span><span class="p">:</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionPagar</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Eliminar&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">eliminarFactura</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Pagada&quot;</span><span class="p">:</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Anular&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">anularFactura</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Anulada&quot;</span><span class="p">:</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Restaurar&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">restaurarFactura</span><span class="p">)</span>
+
+                <span class="c1"># Cuando se pulse el boton se vuelve a llamar al evento para actualizar el estado de los botones</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">editNFacturaChange</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNueva</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionEliAnuRes</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Eliminar&#39;</span><span class="p">)</span>
+
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">cargarTablaVenta</span><span class="p">(</span><span class="n">nfactura</span><span class="p">,</span> <span class="n">estado</span><span class="p">)</span>
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">updateVentaButtons</span><span class="p">(</span><span class="n">estado</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error editFacturaChange: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.calendarioFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.calendarioFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calendarioFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de dialogo en la que seleccionar la fecha de la factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como</span>
+<span class="sd">        argumento el edit text donde debe almacenar el valor.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogCalendario</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaFactura</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error calendarioFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.comboboxFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.comboboxFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">comboboxFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo carga los valores de los estados de una factura en el combo box.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Carga los estados posibles de una factyra en el combo box de la pestaña facturas.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Pendiente&#39;</span><span class="p">,</span> <span class="s1">&#39;Pagada&#39;</span><span class="p">,</span> <span class="s1">&#39;Anulada&#39;</span><span class="p">,</span> <span class="s1">&#39;Todas&#39;</span><span class="p">]:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error comboboxFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.cargarTablaFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.cargarTablaFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarTablaFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo actualiza los valores de la tabla de facturas.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Rellena la tabla de facturas con la lista de facturas que esta almacenada en una variable global en la clase</span>
+<span class="sd">        Factura.</span>
+
+<span class="sd">        Solo rellena la tabla con las facturas cuyo estado sea igual al del estado actual del combobox de facturas.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">factura</span> <span class="ow">in</span> <span class="n">Factura</span><span class="o">.</span><span class="n">facturas</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Todas&#39;</span><span class="p">:</span>
+                    <span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarLineaTablaFactura</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span> <span class="o">==</span> <span class="n">factura</span><span class="o">.</span><span class="n">estado</span><span class="p">:</span>
+                    <span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarLineaTablaFactura</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarTablaFacturas: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.cargarLineaTablaFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.cargarLineaTablaFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarLineaTablaFactura</span><span class="p">(</span><span class="n">factura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que añade una factura como una nueva fila en la tabla de facturas.</span>
+
+<span class="sd">        :param factura: Lista de clientes para cargar en la tabla</span>
+<span class="sd">        :type factura: Factura</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Rellena una fila de la tabla de facturas con una factura que recibe en los parametros.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span><span class="p">)))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">dni</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">cliente</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">estado</span><span class="p">))</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarLineaTablaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.cargarDatosFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.cargarDatosFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarDatosFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que carga una factura de la tabla en el formulario de factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Al hacer click en una factura de la tabla recoge su numero de factura y carga todos sus datos en el formulario</span>
+<span class="sd">        de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fila</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">fila</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">buscarFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">rellenarFormularioFactura</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarDatosFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.cargarDatosClienteFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.cargarDatosClienteFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarDatosClienteFactura</span><span class="p">(</span><span class="n">cliente</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo rellena los campos del cliente en la pestaña facturacion.</span>
+
+<span class="sd">        :param cliente: Objeto de cliente que contiene los datos a cargar en los edit text</span>
+<span class="sd">        :type cliente: Cliente</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recibe un objeto Cliente y escribe su DNI, nombre y apellidos en los edit text correspondientes de la pestaña</span>
+<span class="sd">        de facturacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarDatosCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.limpiarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.limpiarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">limpiarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo limpia el formulario de factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Vacia todos los datos del formulario de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidosNombreFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editSubtotal</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editIVA</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editTotal</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error limpiarFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.recargarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.recargarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">recargarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que recarga la tabla de facturas.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recarga la tabla de facturas.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Factura</span><span class="o">.</span><span class="n">facturas</span> <span class="o">=</span> <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">buscarFacturaDB</span><span class="p">(</span><span class="n">Factura</span><span class="p">())</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span>
+            <span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarTablaFactura</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error recargarFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.buscarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.buscarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo para buscar facturas y mostrarlas en la tabla.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Crea un objeto tipo factura con los datos del formulario y realiza una busqueda de las facturas que tengan la</span>
+<span class="sd">        misma fecha, el mismo DNI o ambos y carga todas las facturas encontradas en la tabla.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">rellenarDatosFactura</span><span class="p">()</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">Factura</span><span class="o">.</span><span class="n">facturas</span> <span class="o">=</span> <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">buscarFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaFacturas</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span>
+            <span class="n">EventosFactura</span><span class="o">.</span><span class="n">cargarTablaFactura</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.altaFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.altaFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta una factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge los datos del formulario de factura y los vuelca en un objeto factura y lo envia al metodo de alta en</span>
+<span class="sd">        la base de datos.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que falten datos, no sea posible dar de alta</span>
+<span class="sd">        la factura o da un mensaje de confirmacion en la status bar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">rellenarDatosFactura</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">factura</span><span class="o">.</span><span class="n">datosValidos</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">altaFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">):</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Factura creada con exito.&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">ConexionFactura</span><span class="o">.</span><span class="n">buscarUltimaFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">))</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No se ha podido crear la factura.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Faltan datos&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.pagarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.pagarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">pagarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que cambia el estado de una factura a pagada.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,</span>
+<span class="sd">        de pendiente a pagada tras pedirnos confirmacion.</span>
+
+<span class="sd">        Solo permite cambiar el estado en caso de que tenga al menos una venta asociada a ese numero de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+                <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+
+                <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">nfactura</span>
+                <span class="n">factura</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="s1">&#39;Pagada&#39;</span>
+
+                <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro de que desea marcar la factura como pagada?&#39;</span><span class="p">):</span>
+                    <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">cambiarEstadoFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s2">&quot;Error: No puede pagarse una factura sin productos&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.anularFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.anularFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">anularFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que cambia el estado de una factura a anulada.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,</span>
+<span class="sd">        de pagada a anulada tras pedirnos confirmacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+
+            <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">nfactura</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="s1">&#39;Anulada&#39;</span>
+
+            <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro de que desea anular la factura pagada?&#39;</span><span class="p">):</span>
+                <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">cambiarEstadoFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.restaurarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.restaurarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">restaurarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que cambia el estado de una factura a pagada.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el estado de la factura actual, aquella cuyo numero de factura este en el edit text de numero de factura,</span>
+<span class="sd">        de anulada a pagada tras pedirnos confirmacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+
+            <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">nfactura</span>
+            <span class="n">factura</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="s1">&#39;Pagada&#39;</span>
+
+            <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro de que desea restaurar la factura anulada?&#39;</span><span class="p">):</span>
+                <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">cambiarEstadoFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbTipoFacturas</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosFactura.eliminarFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosFactura.eliminarFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">eliminarFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que cambia el estado de una factura a pagada cuando esta esta anulada.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Borra de la base de datos la factura actual, aquella cuyo numero de factura este en el edit text de numero de</span>
+<span class="sd">        factura, tras pedirnos confirmacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro de que desea eliminar la factura pendiente?&#39;</span><span class="p">):</span>
+                <span class="n">ConexionFactura</span><span class="o">.</span><span class="n">eliminarFacturaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">EventosFactura</span><span class="o">.</span><span class="n">buscarFactura</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ConexionFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura">[documentos]</a><span class="k">class</span> <span class="nc">ConexionFactura</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ConexionFactura.buscarFacturaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura.buscarFacturaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca en la base de datos una factura concreta o todas las facturas.</span>
+
+<span class="sd">        :param factura: Objeto de tipo factura que contiene los datos por los que se debe buscar</span>
+<span class="sd">        :type factura: Factura</span>
+
+<span class="sd">        :return: Devuelve una lista con todas las facturas que coinciden con los criterios a buscar</span>
+<span class="sd">        :rtype: tuple</span>
+
+<span class="sd">        Devuelve una lista con todas las facturas que cuadran con los criterios de busqueda que se reciben como un objeto</span>
+<span class="sd">        de tipo factura, se puede buscar por numero de factura, DNI o fecha de factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">facturas</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">b_nfactura</span> <span class="o">=</span> <span class="s1">&#39;nfactura&#39;</span>
+            <span class="n">b_fechafactura</span> <span class="o">=</span> <span class="s1">&#39;fechafactura&#39;</span>
+            <span class="n">b_dni</span> <span class="o">=</span> <span class="s1">&#39;dni&#39;</span>
+
+            <span class="k">if</span> <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">b_nfactura</span> <span class="o">=</span> <span class="s1">&#39;:nfactura&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">:</span>
+                    <span class="n">b_fechafactura</span> <span class="o">=</span> <span class="s1">&#39;:fechafactura&#39;</span>
+                <span class="k">if</span> <span class="n">factura</span><span class="o">.</span><span class="n">dni</span><span class="p">:</span>
+                    <span class="n">b_dni</span> <span class="o">=</span> <span class="s1">&#39;:dni&#39;</span>
+
+            <span class="n">busqueda</span> <span class="o">=</span> <span class="s1">&#39;nfactura = &#39;</span> <span class="o">+</span> <span class="n">b_nfactura</span> <span class="o">+</span> <span class="s1">&#39; and fechafactura = &#39;</span> <span class="o">+</span> <span class="n">b_fechafactura</span> <span class="o">+</span> <span class="s1">&#39; and dni = &#39;</span> <span class="o">+</span> <span class="n">b_dni</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;select nfactura, fechafactura, dni, cliente, estado from facturas where &#39;</span> <span class="o">+</span> <span class="n">busqueda</span> <span class="o">+</span> <span class="s1">&#39; order by nfactura&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:fechafactura&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="n">factura</span> <span class="o">=</span> <span class="n">Factura</span><span class="p">()</span>
+
+                    <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">factura</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">factura</span><span class="o">.</span><span class="n">cliente</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="n">factura</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+                    <span class="n">facturas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factura</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">facturas</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarFacturaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionFactura.buscarUltimaFacturaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura.buscarUltimaFacturaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarUltimaFacturaDB</span><span class="p">(</span><span class="n">dni</span><span class="p">,</span> <span class="n">fechafactura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca la ultima factura creada de un cliente.</span>
+
+<span class="sd">        :param dni: DNI del cliente a buscar</span>
+<span class="sd">        :type dni: str</span>
+
+<span class="sd">        :param fechafactura: Fecha de la factura a buscar</span>
+<span class="sd">        :type fechafactura: str</span>
+
+<span class="sd">        :return: Devuelve como string el numero de la ultima factura que figura con el dni y fecha de la busqueda</span>
+<span class="sd">        :rtype: str</span>
+
+<span class="sd">        Devuelve el numero de factura de la ultima factura que corresponde al cliente con el dni y fecha de factura</span>
+<span class="sd">        recibidos como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;select nfactura from facturas where dni=:dni and fechafactura=:fechafactura order by nfactura desc&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">dni</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:fechafactura&#39;</span><span class="p">,</span> <span class="n">fechafactura</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarFacturaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionFactura.altaFacturaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura.altaFacturaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta una factura en la BD.</span>
+
+<span class="sd">        :param factura: Objeto de tipo Factura para darla de alta</span>
+<span class="sd">        :type factura: Factura</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Da de alta una factura en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;insert into facturas (fechafactura, dni, cliente, estado)&#39;</span>
+                          <span class="s1">&#39;VALUES (:fechafactura, :dni, :cliente, &quot;Pendiente&quot;)&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:fechafactura&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">fechafactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:cliente&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">cliente</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaFacturaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionFactura.eliminarFacturaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura.eliminarFacturaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">eliminarFacturaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo da de baja una factura en la BD.</span>
+
+<span class="sd">        :param nfactura: Numero de factura a dar de baja</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Elimina de la base de datos la factura con el numero de factura que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;delete from facturas where nfactura = :nfactura&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">nfactura</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error eliminarFacturaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionFactura.cambiarEstadoFacturaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionFactura.cambiarEstadoFacturaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cambiarEstadoFacturaDB</span><span class="p">(</span><span class="n">factura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que cambia el estado de una factura en la BD.</span>
+
+<span class="sd">        :param factura: Objeto de tipo factura que contiene el numero de factura y estado a cambiar</span>
+<span class="sd">        :type factura: Factura</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Cambia el estado de una factura en la base de datos en base al numero de factura y estado del objeto que recibe.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;update facturas set estado=:estado where nfactura = :nfactura&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">nfactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:estado&#39;</span><span class="p">,</span> <span class="n">factura</span><span class="o">.</span><span class="n">estado</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cambiarEstadoFacturaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="Venta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.Venta">[documentos]</a><span class="k">class</span> <span class="nc">Venta</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Constructor del objeto venta.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Constructor del objeto venta que almacena los datos de una venta asociada a una factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unidades</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="EventosVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta">[documentos]</a><span class="k">class</span> <span class="nc">EventosVenta</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EventosVenta.conectarEventosVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.conectarEventosVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">conectarEventosVenta</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que conecta los eventos asociados a las ventas de una factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de facturas</span>
+<span class="sd">        referentes a las ventas de una factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNuevoElemento</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosVenta</span><span class="o">.</span><span class="n">altaVenta</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionBorrarElemento</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosVenta</span><span class="o">.</span><span class="n">bajaVenta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EventosVenta.crearSpinVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.crearSpinVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">crearSpinVenta</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo crea un widget de tipo spinner.</span>
+
+<span class="sd">        :return: Devuelve un objeto de tipo spinner que esta alineado al centro a la derecha y no tiene botones</span>
+<span class="sd">        :rtype: QtWidgets.QSpinBox</span>
+
+<span class="sd">        Crea y devuelve un spinner para la cantidad de producto, el cual esta alineado a la derecha al centro, no tiene</span>
+<span class="sd">        borde ni botones, tiene un maximo de 9999, un minimo de 1 y tiene un color de fondo correspondiente a la primera</span>
+<span class="sd">        fila de la tabla.</span>
+
+<span class="sd">        Tambien conecta a este spinner el metodo correspondiente al cambio del valor de la cantidad.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">spinCantidad</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">()</span>
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setButtonSymbols</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAbstractSpinBox</span><span class="o">.</span><span class="n">NoButtons</span><span class="p">)</span>
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setFrame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">9999</span><span class="p">)</span>
+
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;background-color: rgb(198, 205, 255);&#39;</span><span class="p">)</span>
+
+            <span class="n">spinCantidad</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosVenta</span><span class="o">.</span><span class="n">precio_cantidadChange</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">spinCantidad</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error crearSpinVenta: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.crearComboboxVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.crearComboboxVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">crearComboboxVenta</span><span class="p">(</span><span class="n">nfactura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo crea un widget de tipo combobox.</span>
+
+<span class="sd">        :param nfactura: Numero de la factura para comprobar los productos ya asociados a esta factura</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :return: Devuelve un objeto de tipo combobox que contiene todos los posibles productos a agregar a las ventas</span>
+<span class="sd">        :rtype: QtWidgets.QComboBox</span>
+
+<span class="sd">        Crea y devuelve un combobox que contiene todos los nombres de todos los productos que no esten ya asociados a</span>
+<span class="sd">        ese numero de factura, ademas de quitar el borde y poner un color de fondo acorde a la fila de la tabla.</span>
+
+<span class="sd">        Tambien conecta a este combobox con el metodo correspondiente al cambio de producto.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cmbProducto</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+            <span class="n">cmbProducto</span><span class="o">.</span><span class="n">setFrame</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">productos</span> <span class="o">=</span> <span class="n">ConexionVenta</span><span class="o">.</span><span class="n">buscarProductosNotInVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">)</span>
+
+            <span class="n">cmbProducto</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">productos</span><span class="p">:</span>
+                <span class="n">cmbProducto</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+            <span class="n">cmbProducto</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QComboBox {&quot;</span>
+                                      <span class="s2">&quot;     background-color: rgb(198, 205, 255);&quot;</span>
+                                      <span class="s2">&quot;}&quot;</span>
+                                      <span class="s2">&quot;QComboBox:on{&quot;</span>
+                                      <span class="s2">&quot;     background-color: rgb(198, 205, 255);&quot;</span>
+                                      <span class="s2">&quot;}&quot;</span>
+                                      <span class="p">)</span>
+
+            <span class="n">cmbProducto</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosVenta</span><span class="o">.</span><span class="n">comboboxVentaChange</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">cmbProducto</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error crearComboboxVenta: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.comboboxVentaChange"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.comboboxVentaChange">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">comboboxVentaChange</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo cambia los valores de precio de la fila al cambiar el producto del combobox de la tabla de venta.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el precio por unidad de la fila de la tabla de ventas al cambiar el producto del combobox de la tabla de</span>
+<span class="sd">        ventas.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">producto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">producto</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">precio</span> <span class="o">=</span> <span class="n">cProducto</span><span class="o">.</span><span class="n">ConexionProducto</span><span class="o">.</span><span class="n">buscarProductoDB</span><span class="p">(</span><span class="n">producto</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span><span class="o">.</span><span class="n">precio</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">precio</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">precio</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">)</span>
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">precio_cantidadChange</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error comboboxVentaChange: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.precio_cantidadChange"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.precio_cantidadChange">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">precio_cantidadChange</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo cambia los valores de precio de la factura al cambiar el precio o la cantidad de producto.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el precio de los subtotales y totales de la factura cuando el precio o la cantidad del producto cambian.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cantidad</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">precio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()[:</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+
+            <span class="n">subtotal_producto</span> <span class="o">=</span> <span class="n">precio</span> <span class="o">*</span> <span class="n">cantidad</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subtotal_producto</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">)</span>
+
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">updateTotalesFactura</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error precio_cantidadChange: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.updateTotalesFactura"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.updateTotalesFactura">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">updateTotalesFactura</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo actualiza los valores de subtotal, impuestos y total de la factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Actualiza los valores de subtotal, impuestos y total de la factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subtotal</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                <span class="n">subtotal</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">iva</span> <span class="o">=</span> <span class="n">subtotal</span> <span class="o">*</span> <span class="mf">0.21</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editSubtotal</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subtotal</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editIVA</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iva</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editTotal</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subtotal</span> <span class="o">+</span> <span class="n">iva</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error updateTotalesFactura: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.updateVentaButtons"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.updateVentaButtons">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">updateVentaButtons</span><span class="p">(</span><span class="n">estado</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo cambia el estado de los botones de la pestaña de facturas asociados a las ventas.</span>
+
+<span class="sd">        :param estado: Estado de la factura actual</span>
+<span class="sd">        :type estado: str</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cambia el estado de los botones asociados a las ventas dependiendo del estado de la factura actual, teniendo en</span>
+<span class="sd">        cuenta el estado que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">estado</span> <span class="o">==</span> <span class="s1">&#39;Pendiente&#39;</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNuevoElemento</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionBorrarElemento</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionNuevoElemento</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnFacturacionBorrarElemento</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error updateVentaButtons: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.cargarTablaVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.cargarTablaVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarTablaVenta</span><span class="p">(</span><span class="n">nfactura</span><span class="p">,</span> <span class="n">estado</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo actualiza los valores de la tabla de ventas de una factura.</span>
+
+<span class="sd">        :param nfactura: Numero de la factura actualmente seleccionada</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :param estado: Estado de la factura actualmente seleccionada</span>
+<span class="sd">        :type estado: str</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Rellena la tabla de ventas de una factura con la lista de objetos venta que busca en la base de datos, ademas si</span>
+<span class="sd">        el estado de la factura fuese pendiente agrega como primera linea una en la que poder introducirse un nuevo</span>
+<span class="sd">        producto y su cantidad para agregar como venta de una factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">ventas</span> <span class="o">=</span> <span class="n">ConexionVenta</span><span class="o">.</span><span class="n">buscarVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">estado</span> <span class="o">==</span> <span class="s2">&quot;Pendiente&quot;</span><span class="p">:</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ventas</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">EventosVenta</span><span class="o">.</span><span class="n">crearSpinVenta</span><span class="p">())</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">EventosVenta</span><span class="o">.</span><span class="n">crearComboboxVenta</span><span class="p">(</span><span class="n">nfactura</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">))</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setFlags</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setFlags</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span><span class="p">)</span>
+
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ventas</span><span class="p">))</span>
+
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">updateVentaButtons</span><span class="p">(</span><span class="n">estado</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">venta</span> <span class="ow">in</span> <span class="n">ventas</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">venta</span><span class="o">.</span><span class="n">unidades</span><span class="p">)))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">venta</span><span class="o">.</span><span class="n">producto</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">venta</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">venta</span><span class="o">.</span><span class="n">unidades</span> <span class="o">*</span> <span class="n">venta</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; € &quot;</span><span class="p">))</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">EventosVenta</span><span class="o">.</span><span class="n">updateTotalesFactura</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarTablaVenta: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.altaVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.altaVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaVenta</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta una venta asociada a una factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge los datos de la primera linea de la tabla de ventas, los vuelca en un objeto Venta y lo envia al metodo</span>
+<span class="sd">        de alta en la base de datos.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que no se seleccione ningun producto en el</span>
+<span class="sd">        combobox o da un mensaje de confirmacion en la status bar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">venta</span> <span class="o">=</span> <span class="n">Venta</span><span class="p">()</span>
+            <span class="n">venta</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">venta</span><span class="o">.</span><span class="n">unidades</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">venta</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+            <span class="n">venta</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()[:</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">venta</span><span class="o">.</span><span class="n">producto</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">ConexionVenta</span><span class="o">.</span><span class="n">altaVentaDB</span><span class="p">(</span><span class="n">venta</span><span class="p">)</span>
+                <span class="n">EventosFactura</span><span class="o">.</span><span class="n">editNFacturaChange</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s2">&quot;Error: Seleccione un producto&quot;</span><span class="p">)</span>
+
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaVenta: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVenta.bajaVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.EventosVenta.bajaVenta">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaVenta</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de baja un grupo de ventas asociadas a una factura.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge las ventas seleccionadas en la tabla ventas y las elimina de las ventas asociadas a dicha factura.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nfactura</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNFactura</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">productos_eliminar</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaVentas</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">productos_eliminar</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">)):</span>
+                <span class="n">ConexionVenta</span><span class="o">.</span><span class="n">bajaVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">,</span> <span class="n">productos_eliminar</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+
+            <span class="n">EventosFactura</span><span class="o">.</span><span class="n">editNFacturaChange</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaVenta: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ConexionVenta"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionVenta">[documentos]</a><span class="k">class</span> <span class="nc">ConexionVenta</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ConexionVenta.buscarVentaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionVenta.buscarVentaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca en la base de datos todas las ventas asociadas a un numero de factura.</span>
+
+<span class="sd">        :param nfactura: Numero de factura de las ventas a listar</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :return: Devuelve una lista con todas las ventas asociadas a un numero de factura</span>
+<span class="sd">        :rtype: tuple</span>
+
+<span class="sd">        Devuelve una lista con todas las facturas de la base de datos que tengan asociado el numero de factura que se</span>
+<span class="sd">        recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ventas</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;select producto, precio, unidades from ventas where nfactura = :nfactura&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">nfactura</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="n">venta</span> <span class="o">=</span> <span class="n">Venta</span><span class="p">()</span>
+
+                    <span class="n">venta</span><span class="o">.</span><span class="n">nfactura</span> <span class="o">=</span> <span class="n">nfactura</span>
+                    <span class="n">venta</span><span class="o">.</span><span class="n">producto</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">venta</span><span class="o">.</span><span class="n">precio</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">venta</span><span class="o">.</span><span class="n">unidades</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+                    <span class="n">ventas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">venta</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">ventas</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarVentaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionVenta.buscarProductosNotInVentaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionVenta.buscarProductosNotInVentaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarProductosNotInVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca en la base de datos todos los productos que no estan ya en una factura concreta.</span>
+
+<span class="sd">        :param nfactura: Numero de factura a consultar</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :return: Devuelve una lista con todos los productos que no estan ya vendidos en una factura</span>
+<span class="sd">        :rtype: tuple</span>
+
+<span class="sd">        Devuelve una lista con todos los productos posibles que no esten ya asociados a una venta en una factura concreta.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">productos</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+                <span class="s1">&#39;SELECT producto FROM productos WHERE producto not in (select producto from ventas where nfactura = :nfactura) ORDER BY producto&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">nfactura</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="n">productos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+                <span class="k">return</span> <span class="n">productos</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarProductosNotInVentaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionVenta.altaVentaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionVenta.altaVentaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaVentaDB</span><span class="p">(</span><span class="n">venta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta una venta en la BD.</span>
+
+<span class="sd">        :param venta: Objeto de tipo Venta para darlo de alta</span>
+<span class="sd">        :type venta: Venta</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Da de alta una venta asociada a una factura en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+                <span class="s1">&#39;insert into ventas (nfactura, producto, precio, unidades)&#39;</span>
+                <span class="s1">&#39;VALUES (:nfactura, :producto, :precio, :unidades)&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">venta</span><span class="o">.</span><span class="n">nfactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">venta</span><span class="o">.</span><span class="n">producto</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:precio&#39;</span><span class="p">,</span> <span class="n">venta</span><span class="o">.</span><span class="n">precio</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:unidades&#39;</span><span class="p">,</span> <span class="n">venta</span><span class="o">.</span><span class="n">unidades</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaClienteDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionVenta.bajaVentaDB"><a class="viewcode-back" href="../src/cFactura.html#cFactura.ConexionVenta.bajaVentaDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaVentaDB</span><span class="p">(</span><span class="n">nfactura</span><span class="p">,</span> <span class="n">producto</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de baja una venta en la BD.</span>
+
+<span class="sd">        :param nfactura: Numero de la factura cuya venta se quiere borrar</span>
+<span class="sd">        :type nfactura: str</span>
+
+<span class="sd">        :param producto: Producto de la factura que se quiere borrar</span>
+<span class="sd">        :type producto: str</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Da de baja una venta asociada a una factura en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;delete from ventas where nfactura = :nfactura and producto=:producto&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nfactura&#39;</span><span class="p">,</span> <span class="n">nfactura</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:producto&#39;</span><span class="p">,</span> <span class="n">producto</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error bajaVentaDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

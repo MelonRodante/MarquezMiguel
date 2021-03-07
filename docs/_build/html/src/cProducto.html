@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cProducto module &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cProducto">
+<span id="cproducto-module"></span><h1>cProducto module<a class="headerlink" href="#module-cProducto" title="Enlazar permanentemente con este título">¶</a></h1>
+<dl class="py class">
+<dt id="cProducto.ConexionProducto">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cProducto.</span></code><code class="sig-name descname"><span class="pre">ConexionProducto</span></code><a class="reference internal" href="../_modules/cProducto.html#ConexionProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.ConexionProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cProducto.ConexionProducto.altaProductoDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaProductoDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">producto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#ConexionProducto.altaProductoDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.ConexionProducto.altaProductoDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta un producto en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>producto</strong> (<a class="reference internal" href="#cProducto.Producto" title="cProducto.Producto"><em>Producto</em></a>) – Objeto de tipo Producto para darlo de alta</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Da de alta un producto en la base de datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.ConexionProducto.bajaProductoDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaProductoDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">producto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#ConexionProducto.bajaProductoDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.ConexionProducto.bajaProductoDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo da de baja un producto en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>producto</strong> (<em>str</em>) – Nombre del producto a dar de baja</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Elimina de la base de datos el producto con el nombre que recibe como parametro.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.ConexionProducto.buscarProductoDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarProductoDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">producto</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#ConexionProducto.buscarProductoDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.ConexionProducto.buscarProductoDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca en la base de datos un cliente o todos los clientes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>producto</strong> (<em>str</em>) – Nombre del producto a buscar, si no se recibe ningun nombre o esta vacio devuelve la lista de todos los productos</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve una lista con todos los productos o el producto cuyo nombre recibe como parametro</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>En caso de que el parametro contenga una cadena que no este vacia busca en la BD un producto cuyo nombre
+recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos
+los productos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.ConexionProducto.modificarProductoDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">modificarProductoDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">producto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#ConexionProducto.modificarProductoDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.ConexionProducto.modificarProductoDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo modifica los datos de un producto en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>producto</strong> (<a class="reference internal" href="#cProducto.Producto" title="cProducto.Producto"><em>Producto</em></a>) – Objeto de tipo Producto con los nuevos datos</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Actualiza la informacion del producto en la base de datos.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cProducto.EventosProducto">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cProducto.</span></code><code class="sig-name descname"><span class="pre">EventosProducto</span></code><a class="reference internal" href="../_modules/cProducto.html#EventosProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cProducto.EventosProducto.altaProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.altaProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.altaProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge los datos del formulario de producto y los vuelca en un objeto producto y lo envia al metodo de alta en
+la base de datos.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten
+datos, o da un mensaje de confirmacion en la status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.bajaProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.bajaProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.bajaProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de baja un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el nombre del producto del formulario de producto y lo envia al metodo de baja en la base de datos
+pidiendo antes confirmacion.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit
+text de nombre de producto, no existe ningun producto con ese nombre o no fue posible darlo de baja.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.buscarProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.buscarProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.buscarProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo para buscar un producto concreto en la tabla de productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el nombre del producto del formulario de producto y lo busca en la base de datos para luego pasarselo al
+modulo que carga la tabla de productos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.cargarDatosProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarDatosProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.cargarDatosProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.cargarDatosProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo carga un producto de la tabla en el formulario de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Al hacer click en un producto de la tabla recoge el nombre del producto y carga todos sus datos en el formulario
+de producto.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.cargarTablaProductos">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarTablaProductos</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">productos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.cargarTablaProductos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.cargarTablaProductos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo actualiza los valores de la tabla de productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>productos</strong> (<em>tuple</em>) – Lista de productos para cargar en la tabla</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.conectarEventosProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">conectarEventosProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.conectarEventosProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.conectarEventosProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que conecta los eventos de la pestaña productos y da formato a la tabla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de productos
+asi como ajustar el tamaño de las columnas de la tabla.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.limpiarProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">limpiarProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.limpiarProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.limpiarProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo limpia el formulario de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Vacia todos los datos del formulario producto, y pone a 0 el spinner de precio.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.modificarProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">modificarProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.modificarProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.modificarProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que modifica los datos de un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el nombre del producto del formulario de producto y lo envia al metodo de modificar datos en la base de
+datos pidiendo antes confirmacion.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya nombre de producto en el edit
+text de nombre de producto, no existe ningun producto con ese nombre o no fue posible modificar sus datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.EventosProducto.recargarProducto">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">recargarProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#EventosProducto.recargarProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.EventosProducto.recargarProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que recarga la tabla de productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recarga la tabla de productos.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cProducto.Producto">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cProducto.</span></code><code class="sig-name descname"><span class="pre">Producto</span></code><a class="reference internal" href="../_modules/cProducto.html#Producto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.Producto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cProducto.Producto.datosValidos">
+<code class="sig-name descname"><span class="pre">datosValidos</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#Producto.datosValidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.Producto.datosValidos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que comprueba la validez de los datos almacenados en el objeto producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Retorna si los datos son validos para dar de alta un producto.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p>Metodo que comprueba que el nombre del producto no sea una cadena vacia.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.Producto.rellenarDatosProducto">
+<code class="sig-name descname"><span class="pre">rellenarDatosProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#Producto.rellenarDatosProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.Producto.rellenarDatosProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del objeto producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del objeto producto con los datos almacenados en el formulario de producto.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cProducto.Producto.rellenarFormularioProducto">
+<code class="sig-name descname"><span class="pre">rellenarFormularioProducto</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cProducto.html#Producto.rellenarFormularioProducto"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cProducto.Producto.rellenarFormularioProducto" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del formulario de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del formulario de producto con los datos almacenados en el objeto producto.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/src/cProducto.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

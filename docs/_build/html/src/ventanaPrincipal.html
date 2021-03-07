@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ventanaPrincipal module &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ventanaPrincipal">
+<span id="ventanaprincipal-module"></span><h1>ventanaPrincipal module<a class="headerlink" href="#module-ventanaPrincipal" title="Enlazar permanentemente con este título">¶</a></h1>
+<dl class="py class">
+<dt id="ventanaPrincipal.Conexion">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ventanaPrincipal.</span></code><code class="sig-name descname"><span class="pre">Conexion</span></code><a class="reference internal" href="../_modules/ventanaPrincipal.html#Conexion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#ventanaPrincipal.Conexion" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="ventanaPrincipal.Conexion.conectardb">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">conectardb</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ventanaPrincipal.html#Conexion.conectardb"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#ventanaPrincipal.Conexion.conectardb" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que realiza la conexión de la aplicación con la BBDD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – nombre del archivo de la BBDD</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>True o False</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Utiliza la librería de QtSql y el gestor de la BBDD es QSQlite. En caso de error muestra pantalla
+de aviso.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ventanaPrincipal.VentanaPrincipal">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ventanaPrincipal.</span></code><code class="sig-name descname"><span class="pre">VentanaPrincipal</span></code><a class="reference internal" href="../_modules/ventanaPrincipal.html#VentanaPrincipal"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#ventanaPrincipal.VentanaPrincipal" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code></p>
+<dl class="py method">
+<dt id="ventanaPrincipal.VentanaPrincipal.closeEvent">
+<code class="sig-name descname"><span class="pre">closeEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ventanaPrincipal.html#VentanaPrincipal.closeEvent"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#ventanaPrincipal.VentanaPrincipal.closeEvent" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que abre una ventana de dialogo para cerrar el programa cuando se pulsa la cruz de la ventana.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Muestra una ventana de confirmacion para que el usuario elija si salir del programa o cancelar.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/src/ventanaPrincipal.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

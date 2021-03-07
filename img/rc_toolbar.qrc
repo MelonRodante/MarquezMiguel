@@ -2,6 +2,12 @@
   <qresource prefix="abrir">
     <file>abrir.png</file>
   </qresource>
+  <qresource prefix="importardatos">
+    <file>importardatos.png</file>
+  </qresource>
+  <qresource prefix="restaurarbackup">
+    <file>restaurarbackup.png</file>
+  </qresource>
   <qresource prefix="crearbackup">
     <file>crearbackup.png</file>
   </qresource>

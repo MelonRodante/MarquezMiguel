@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ventanasDialogo &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Código fuente para ventanasDialogo</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">var</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QDialogButtonBox</span>
+<span class="kn">from</span> <span class="nn">PYQT5_dialogAviso</span> <span class="kn">import</span> <span class="n">Ui_dialogAviso</span>
+<span class="kn">from</span> <span class="nn">PYQT5_dialogCalendario</span> <span class="kn">import</span> <span class="n">Ui_dialogCalendario</span>
+
+
+<div class="viewcode-block" id="EventosVentanas"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas">[documentos]</a><span class="k">class</span> <span class="nc">EventosVentanas</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EventosVentanas.abrirDialogCalendario"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas.abrirDialogCalendario">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">abrirDialogCalendario</span><span class="p">(</span><span class="n">edit</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Modulo que abre una ventana de dialogo con un calendario para seleccionar una fecha.</span>
+
+<span class="sd">        :param edit: Edit text en el que debe escribir la fecha seleccionada</span>
+<span class="sd">        :type edit: QtWidgets.QLineEdit</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Abre una ventana de dialogo con un calendario para seleccionar una fecha y cargar esa fecha en un edit text que</span>
+<span class="sd">        se le pasa como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dlgCalendar</span> <span class="o">=</span> <span class="n">DialogCalendario</span><span class="p">(</span><span class="n">edit</span><span class="o">=</span><span class="n">edit</span><span class="p">)</span>
+            <span class="n">dlgCalendar</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVentanas.abrirDialogSalir"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas.abrirDialogSalir">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">abrirDialogSalir</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de dialogo para cerrar el programa.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Muestra una ventana de confirmacion para que el usuario elija si salir del programa o cancelar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dialog</span> <span class="o">=</span> <span class="n">DialogConfirmacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro que desea salir de la aplicacion?&#39;</span><span class="p">)</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error es </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVentanas.abrirDialogAviso"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas.abrirDialogAviso">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">abrirDialogAviso</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de dialogo con un mensaje.</span>
+
+<span class="sd">        :param msg: Mensaje que debe mostrar la ventana</span>
+<span class="sd">        :type msg: str</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Muestra una ventana de dialogo con un mensaje informativo que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="n">dialog</span> <span class="o">=</span> <span class="n">DialogAviso</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error es </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVentanas.abrirDialogConfimacion"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas.abrirDialogConfimacion">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">abrirDialogConfimacion</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de confirmacion con un mensaje.</span>
+
+<span class="sd">        :param msg: Mensaje que debe mostrar la ventana</span>
+<span class="sd">        :type msg: str</span>
+
+<span class="sd">        :return: Devuelve True si se acepta o False si se cancela</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Muestra una ventana de confirmacion con un mensaje que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dialog</span> <span class="o">=</span> <span class="n">DialogConfirmacion</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">setFixedSize</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error es </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosVentanas.backup"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.EventosVentanas.backup">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">backup</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que realizar el backup de la BBDD</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Utiliza la librería zipfile, añade la fecha y hora de la copia al nombre de esta y tras realizar la copia</span>
+<span class="sd">        la mueve al directorio deseado por el cliente. Para ello abre una ventana de diálogo</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fecha</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+            <span class="n">fecha</span> <span class="o">=</span> <span class="n">fecha</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y.%m.</span><span class="si">%d</span><span class="s1">.%H.%M.%S&#39;</span><span class="p">)</span>
+            <span class="n">copia</span> <span class="o">=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fecha</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_backup.zip&#39;</span><span class="p">)</span>
+            <span class="n">option</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+            <span class="n">directorio</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="p">()</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Backup&#39;</span><span class="p">,</span> <span class="n">copia</span><span class="p">,</span> <span class="s1">&#39;.zip&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">option</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">fichzip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">copia</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">fichzip</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">filedb</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">filedb</span><span class="p">),</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+                <span class="n">fichzip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Backup creado con exito&#39;</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">copia</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">directorio</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error es </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="DialogCalendario"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.DialogCalendario">[documentos]</a><span class="k">class</span> <span class="nc">DialogCalendario</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DialogCalendario</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialogCalendario</span> <span class="o">=</span> <span class="n">Ui_dialogCalendario</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialogCalendario</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit</span> <span class="o">=</span> <span class="n">edit</span>
+        <span class="n">diaactual</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">day</span>
+        <span class="n">mesactual</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">month</span>
+        <span class="n">anoactual</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialogCalendario</span><span class="o">.</span><span class="n">widgetCalendario</span><span class="o">.</span><span class="n">setSelectedDate</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QDate</span><span class="p">(</span><span class="n">anoactual</span><span class="p">,</span><span class="n">mesactual</span><span class="p">,</span><span class="n">diaactual</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialogCalendario</span><span class="o">.</span><span class="n">widgetCalendario</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cargarFecha</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DialogCalendario.cargarFecha"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.DialogCalendario.cargarFecha">[documentos]</a>    <span class="k">def</span> <span class="nf">cargarFecha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialogCalendario</span><span class="o">.</span><span class="n">widgetCalendario</span><span class="o">.</span><span class="n">selectedDate</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="p">(),</span><span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">(),</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="DialogAviso"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.DialogAviso">[documentos]</a><span class="k">class</span> <span class="nc">DialogAviso</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DialogAviso</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span> <span class="o">=</span> <span class="n">Ui_dialogAviso</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">botones</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">botones</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Aceptar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">lblAviso</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DialogConfirmacion"><a class="viewcode-back" href="../src/ventanasDialogo.html#ventanasDialogo.DialogConfirmacion">[documentos]</a><span class="k">class</span> <span class="nc">DialogConfirmacion</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DialogConfirmacion</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span> <span class="o">=</span> <span class="n">Ui_dialogAviso</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">botones</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">No</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">botones</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Si&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">lblAviso</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

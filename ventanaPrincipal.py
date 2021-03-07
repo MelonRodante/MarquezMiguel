@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QProgressBar
+
 import cInformes
 import var
 
@@ -33,15 +35,21 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
         var.ui.actionAbrir.triggered.connect(QtWidgets.QFileDialog.getSaveFileName)
         #var.ui.actionImprimir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogConfimacion)
 
-        var.ui.actionCrear_Backup.triggered.connect(ventanasDialogo.EventosVentanas.backup)
+        var.ui.actionCrear_Backup.triggered.connect(ventanasDialogo.EventosVentanas.hacerBackup)
+        var.ui.actionRestaurar_Backup.triggered.connect(ventanasDialogo.EventosVentanas.restaurarBackup)
 
-
+        var.ui.actionImportar_Datos.triggered.connect(cProducto.EventosProducto.importarDatos)
 
         var.ui.actionSalir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogSalir)
 
-        ''' Label de fecha en el statusbar '''
-        lblStatusFecha = QtWidgets.QLabel(datetime.now().strftime("%d %B %Y"))
-        var.ui.statusbar.addPermanentWidget(lblStatusFecha)
+        ''' Label de fecha en el statusbar y barra de carga'''
+        var.ui.lblStatusFecha = QtWidgets.QLabel(datetime.now().strftime("%d %B %Y"))
+        var.ui.pbar = QProgressBar()
+        var.ui.pbar.setMaximumSize(150, 15)
+        var.ui.statusbar.addPermanentWidget(var.ui.pbar)
+        var.ui.statusbar.addPermanentWidget(var.ui.lblStatusFecha)
+        var.ui.pbar.hide()
+
 
         ''' Conexion con la base de datos '''
         Conexion.conectardb(var.filedb)

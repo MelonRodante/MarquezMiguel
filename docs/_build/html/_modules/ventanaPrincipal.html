@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ventanaPrincipal &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Código fuente para ventanaPrincipal</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cInformes</span>
+<span class="kn">import</span> <span class="nn">var</span>
+
+<span class="kn">import</span> <span class="nn">cCliente</span>
+<span class="kn">import</span> <span class="nn">cProducto</span>
+<span class="kn">import</span> <span class="nn">cFactura</span>
+<span class="kn">import</span> <span class="nn">informes</span>
+<span class="kn">import</span> <span class="nn">ventanasDialogo</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtSql</span>
+<span class="kn">from</span> <span class="nn">PYQT5_venPrincipal</span> <span class="kn">import</span> <span class="n">Ui_venPrincipal</span>
+
+
+<div class="viewcode-block" id="VentanaPrincipal"><a class="viewcode-back" href="../src/ventanaPrincipal.html#ventanaPrincipal.VentanaPrincipal">[documentos]</a><span class="k">class</span> <span class="nc">VentanaPrincipal</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Constructor de la ventana principal del programa.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Constructor de la ventana principal del programa, en el constructor se llama a los diferentes metodos de conexion</span>
+<span class="sd">        de los eventos de los diferentes widgets de la aplicacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">VentanaPrincipal</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_venPrincipal</span><span class="p">()</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">actionAbrir</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">)</span>
+        <span class="c1">#var.ui.actionImprimir.triggered.connect(ventanasDialogo.EventosVentanas.abrirDialogConfimacion)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">actionCrear_Backup</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">backup</span><span class="p">)</span>
+
+
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">actionSalir</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogSalir</span><span class="p">)</span>
+
+        <span class="sd">&#39;&#39;&#39; Label de fecha en el statusbar &#39;&#39;&#39;</span>
+        <span class="n">lblStatusFecha</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> %B %Y&quot;</span><span class="p">))</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="n">lblStatusFecha</span><span class="p">)</span>
+
+        <span class="sd">&#39;&#39;&#39; Conexion con la base de datos &#39;&#39;&#39;</span>
+        <span class="n">Conexion</span><span class="o">.</span><span class="n">conectardb</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">filedb</span><span class="p">)</span>
+
+        <span class="sd">&#39;&#39;&#39; Conexion Eventos Cliente&#39;&#39;&#39;</span>
+        <span class="n">cCliente</span><span class="o">.</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">conectarEventosCliente</span><span class="p">()</span>
+
+        <span class="sd">&#39;&#39;&#39; Conexion Eventos Producto &#39;&#39;&#39;</span>
+        <span class="n">cProducto</span><span class="o">.</span><span class="n">EventosProducto</span><span class="o">.</span><span class="n">conectarEventosProducto</span><span class="p">()</span>
+
+        <span class="sd">&#39;&#39;&#39; Conexion Eventos Facturas &#39;&#39;&#39;</span>
+        <span class="n">cFactura</span><span class="o">.</span><span class="n">EventosFactura</span><span class="o">.</span><span class="n">conectarEventosFactura</span><span class="p">()</span>
+
+        <span class="sd">&#39;&#39;&#39; Conexion Eventos Informes &#39;&#39;&#39;</span>
+        <span class="n">cInformes</span><span class="o">.</span><span class="n">Informes</span><span class="o">.</span><span class="n">conectarEventosFactura</span><span class="p">()</span>
+
+        <span class="sd">&#39;&#39;&#39; Evento de cerrado de la aplicacion &#39;&#39;&#39;</span>
+        <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VentanaPrincipal.closeEvent"><a class="viewcode-back" href="../src/ventanaPrincipal.html#ventanaPrincipal.VentanaPrincipal.closeEvent">[documentos]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de dialogo para cerrar el programa cuando se pulsa la cruz de la ventana.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Muestra una ventana de confirmacion para que el usuario elija si salir del programa o cancelar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogSalir</span><span class="p">()</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Conexion"><a class="viewcode-back" href="../src/ventanaPrincipal.html#ventanaPrincipal.Conexion">[documentos]</a><span class="k">class</span> <span class="nc">Conexion</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Conexion.conectardb"><a class="viewcode-back" href="../src/ventanaPrincipal.html#ventanaPrincipal.Conexion.conectardb">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">conectardb</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que realiza la conexión de la aplicación con la BBDD</span>
+
+<span class="sd">        :param filename: nombre del archivo de la BBDD</span>
+<span class="sd">        :type filename: str</span>
+
+<span class="sd">        :return: True o False</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Utiliza la librería de QtSql y el gestor de la BBDD es QSQlite. En caso de error muestra pantalla</span>
+<span class="sd">        de aviso.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlDatabase</span><span class="o">.</span><span class="n">addDatabase</span><span class="p">(</span><span class="s1">&#39;QSQLITE&#39;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">setDatabaseName</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">db</span><span class="o">.</span><span class="n">open</span><span class="p">():</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;No se puede abrir la base de datos&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;No se puede establecer conexion.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="s1">&#39;Haz click para cancelar.&#39;</span><span class="p">,</span>
+                                           <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Conexion establecida&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

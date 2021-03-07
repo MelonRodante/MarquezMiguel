@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cCliente module &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cCliente">
+<span id="ccliente-module"></span><h1>cCliente module<a class="headerlink" href="#module-cCliente" title="Enlazar permanentemente con este título">¶</a></h1>
+<dl class="py class">
+<dt id="cCliente.Cliente">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cCliente.</span></code><code class="sig-name descname"><span class="pre">Cliente</span></code><a class="reference internal" href="../_modules/cCliente.html#Cliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.Cliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cCliente.Cliente.comprobarDNI">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">comprobarDNI</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#Cliente.comprobarDNI"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.Cliente.comprobarDNI" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que comprueba la validez de un DNI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Devuelve verdadero si el DNI es valido y falso si no lo es</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p>Comprueba si el DNI en el edit text dni es un DNI valido.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.Cliente.datosValidos">
+<code class="sig-name descname"><span class="pre">datosValidos</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#Cliente.datosValidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.Cliente.datosValidos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que comprueba la validez de los datos almacenados en el objeto cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>Retorna si los datos son validos para dar de alta o modificar un cliente.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p>Metodo que comprueba que ningun dato este vacio en el objeto cliente.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="cCliente.Cliente.provincias">
+<code class="sig-name descname"><span class="pre">provincias</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['',</span> <span class="pre">'Álava',</span> <span class="pre">'Albacete</span> <span class="pre">',</span> <span class="pre">'Alicante</span> <span class="pre">',</span> <span class="pre">'Almería',</span> <span class="pre">'Asturias',</span> <span class="pre">'Ávila',</span> <span class="pre">'Badajoz',</span> <span class="pre">'Barcelona',</span> <span class="pre">'Burgos',</span> <span class="pre">'Cáceres',</span> <span class="pre">'Cádiz',</span> <span class="pre">'Cantabria',</span> <span class="pre">'Castellón',</span> <span class="pre">'Ciudad</span> <span class="pre">Real',</span> <span class="pre">'Córdoba',</span> <span class="pre">'Cuenca',</span> <span class="pre">'Gerona',</span> <span class="pre">'Granada',</span> <span class="pre">'Guadalajara',</span> <span class="pre">'Guipúzcoa',</span> <span class="pre">'Huelva',</span> <span class="pre">'Huesca',</span> <span class="pre">'Islas</span> <span class="pre">Baleares</span> <span class="pre">',</span> <span class="pre">'Jaén',</span> <span class="pre">'A</span> <span class="pre">Coruña',</span> <span class="pre">'La</span> <span class="pre">Rioja',</span> <span class="pre">'Las</span> <span class="pre">Palmas',</span> <span class="pre">'León',</span> <span class="pre">'Lérida',</span> <span class="pre">'Lugo',</span> <span class="pre">'Madrid',</span> <span class="pre">'Málaga',</span> <span class="pre">'Murcia',</span> <span class="pre">'Navarra',</span> <span class="pre">'Ourense',</span> <span class="pre">'Palencia',</span> <span class="pre">'Pontevedra',</span> <span class="pre">'Salamanca',</span> <span class="pre">'Santa</span> <span class="pre">Cruz</span> <span class="pre">de</span> <span class="pre">Tenerife',</span> <span class="pre">'Segovia',</span> <span class="pre">'Sevilla',</span> <span class="pre">'Soria',</span> <span class="pre">'Tarragona',</span> <span class="pre">'Teruel',</span> <span class="pre">'Toledo',</span> <span class="pre">'Valencia',</span> <span class="pre">'Valladolid',</span> <span class="pre">'Vizcaya',</span> <span class="pre">'Zamora',</span> <span class="pre">'Zaragoza']</span></em><a class="headerlink" href="#cCliente.Cliente.provincias" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.Cliente.rellenarDatosCliente">
+<code class="sig-name descname"><span class="pre">rellenarDatosCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#Cliente.rellenarDatosCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.Cliente.rellenarDatosCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del objeto cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del objeto cliente con los datos almacenados en el formulario de cliente.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.Cliente.rellenarFormularioCliente">
+<code class="sig-name descname"><span class="pre">rellenarFormularioCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#Cliente.rellenarFormularioCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.Cliente.rellenarFormularioCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Metodo que rellena los campos del formulario de cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Metodo que rellena los campos del formulario de cliente con los datos almacenados en el objeto cliente.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cCliente.ConexionCliente">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cCliente.</span></code><code class="sig-name descname"><span class="pre">ConexionCliente</span></code><a class="reference internal" href="../_modules/cCliente.html#ConexionCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.ConexionCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cCliente.ConexionCliente.altaClienteDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaClienteDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cliente</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#ConexionCliente.altaClienteDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.ConexionCliente.altaClienteDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta el cliente en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>cliente</strong> (<a class="reference internal" href="#cCliente.Cliente" title="cCliente.Cliente"><em>Cliente</em></a>) – Objeto de tipo Cliente para darlo de alta</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Da de alta un cliente en la base de datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.ConexionCliente.bajaClienteDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaClienteDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dni</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#ConexionCliente.bajaClienteDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.ConexionCliente.bajaClienteDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo da de baja un cliente en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>dni</strong> (<em>str</em>) – DNI del cliente a dar de baja</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Elimina de la base de datos al cliente con el dni que recibe como parametro.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.ConexionCliente.buscarClienteDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarClienteDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dni</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#ConexionCliente.buscarClienteDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.ConexionCliente.buscarClienteDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo busca en la base de datos un cliente concreto o todos los clientes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>dni</strong> (<em>str</em>) – DNI del cliente a buscar, si no se recibe ningun DNI o el DNI esta vacio devuelve la lista de todos los clientes</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve una lista con todos los clientes o el cliente cuyo dni recibe como paramtro</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p>En caso de que el parametro contenga una cadena que no este vacia busca en la BD un cliente cuyo dni
+recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos
+los clientes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.ConexionCliente.modificarClienteDB">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">modificarClienteDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cliente</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#ConexionCliente.modificarClienteDB"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.ConexionCliente.modificarClienteDB" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo modifica los datos de un cliente en la BD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>cliente</strong> (<a class="reference internal" href="#cCliente.Cliente" title="cCliente.Cliente"><em>Cliente</em></a>) – Objeto de tipo cliente con los nuevos datos</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Devuelve el resultado de la ejecucion de la sentensia sql</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Actualiza la informacion del cliente en la base de datos.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="cCliente.EventosCliente">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">cCliente.</span></code><code class="sig-name descname"><span class="pre">EventosCliente</span></code><a class="reference internal" href="../_modules/cCliente.html#EventosCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="cCliente.EventosCliente.altaCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">altaCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.altaCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.altaCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de alta un cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge los datos del formulario de cliente y los vuelca en un objeto cliente y lo envia al metodo de alta en
+la base de datos.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten
+datos, el formato del DNI no sea valido o da un mensaje de confirmacion en la status bar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.bajaCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">bajaCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.bajaCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.bajaCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que da de baja un cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes
+confirmacion.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de
+dni, no existe ningun cliente con ese DNI o no fue posible darlo de baja.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.buscarCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">buscarCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.buscarCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.buscarCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo para buscar un cliente concreto en la tabla de clientes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el dni del formulario de cliente y lo busca en la base de datos para luego pasarselo al modulo que carga
+la tabla de clientes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.calendarioCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calendarioCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.calendarioCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.calendarioCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que abre una ventana de dialogo en la que seleccionar la fecha de alta del cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como
+argumento el edit text donde debe almacenar el valor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.cargarDatosCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarDatosCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.cargarDatosCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.cargarDatosCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que carga un cliente de la tabla en el formulario de cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Al hacer click en un cliente de la tabla recoge su dni y carga todos sus datos en el formulario de cliente y
+los datos de cliente en el formulario de facturacion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.cargarTablaClientes">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cargarTablaClientes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clientes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.cargarTablaClientes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.cargarTablaClientes" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo actualiza los valores de la tabla de clientes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>clientes</strong> (<em>tuple</em>) – Lista de clientes para cargar en la tabla</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p>Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.comboboxCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">comboboxCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.comboboxCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.comboboxCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo carga los valores de las provincias en el combo box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Carga las provincias en el combo box de la pestaña clientes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.conectarEventosCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">conectarEventosCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.conectarEventosCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.conectarEventosCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que conecta los eventos de la pestaña clientes y da formato a la tabla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes
+asi como ajustar el tamaño de las columnas de la tabla.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.editDNIChange">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">editDNIChange</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.editDNIChange"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.editDNIChange" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que comprueba la validez del DNI y carga los datos del cliente cuando el edit text de DNI cambia.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Cuando el edit text de DNI cambia:</p>
+<p>Recoge el valor del DNI y comprueba que este sea valido, en caso de ser valido dibuja un check verde o una cruz
+roja en caso de no ser valido.</p>
+<p>Carga todos los datos del cliente en el formulario si hay un cliente con ese DNI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.limpiarCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">limpiarCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.limpiarCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.limpiarCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo limpia el formulario de cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Vacia todos los datos del formulario cliente, desmarca los checkbox y los radio button.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.modificarCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">modificarCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.modificarCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.modificarCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que modifica los datos de un cliente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes
+confirmacion.</p>
+<p>Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de
+dni, no existe ningun cliente con ese DNI o no fue posible modificar sus datos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="cCliente.EventosCliente.recargarCliente">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">recargarCliente</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cCliente.html#EventosCliente.recargarCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#cCliente.EventosCliente.recargarCliente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Módulo que recarga la tabla de clientes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p>Recarga la tabla de clientes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/src/cCliente.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

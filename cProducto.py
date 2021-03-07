@@ -1,3 +1,6 @@
+import xlrd
+from PyQt5.QtWidgets import QApplication, QProgressBar
+
 import var
 import ventanasDialogo
 
@@ -327,6 +330,55 @@ class EventosProducto:
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))
 
+    @staticmethod
+    def importarDatos():
+        try:
+            option = QtWidgets.QFileDialog.Options()
+            filename = QtWidgets.QFileDialog().getOpenFileName(None, 'Importar productos', '', '*.xls;;All Files', options=option)
+            if filename != '':
+                if ventanasDialogo.EventosVentanas.abrirDialogConfimacion("¿Esta seguro de que desea importar los datos del archivo?"):
+                    documento = xlrd.open_workbook(filename[0]).sheet_by_index(0)
+
+                    var.ui.statusbar.showMessage("Importando datos...")
+                    var.ui.pbar.setValue(0)
+                    var.ui.pbar.show()
+
+                    nrows = documento.nrows
+
+                    for i in range(nrows):
+                        if documento.cell_type(i, 0) == 1 and documento.cell_type(i, 1) == 2 and documento.cell_type(i,
+                                                                                                                     2) == 2:
+
+                            QApplication.processEvents()
+
+                            producto = ConexionProducto.buscarProductoDB(documento.cell_value(i, 0))
+
+                            if len(producto) > 0:
+                                nuevo = False
+                                producto = producto[0]
+                            else:
+                                nuevo = True
+                                producto = Producto()
+                                producto.producto = documento.cell_value(i, 0)
+
+                            producto.precio = float(documento.cell_value(i, 1))
+
+                            producto.stock = producto.stock + int(documento.cell_value(i, 2))
+
+                            if nuevo:
+                                ConexionProducto.altaProductoDB(producto)
+                            else:
+                                ConexionProducto.modificarProductoDB(producto)
+
+                            var.ui.pbar.setValue(i * nrows / 100)
+
+                    var.ui.pbar.hide()
+                    var.ui.statusbar.showMessage("Datos importados correctamente")
+                    EventosProducto.recargarProducto()
+
+        except Exception as error:
+            print('Error importarDatos: %s' % str(error))
+
 
 class ConexionProducto:
 
@@ -457,3 +509,4 @@ class ConexionProducto:
 
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))
+

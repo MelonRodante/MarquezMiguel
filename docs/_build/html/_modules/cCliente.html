@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cCliente &#8212; documentación de PROYECTODAM20_21 - v.0.0.1</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Código fuente para cCliente</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cFactura</span>
+<span class="kn">import</span> <span class="nn">var</span>
+<span class="kn">import</span> <span class="nn">ventanasDialogo</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtSql</span>
+
+
+<div class="viewcode-block" id="Cliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.Cliente">[documentos]</a><span class="k">class</span> <span class="nc">Cliente</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Constructor del objeto cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Constructor del objeto cliente que almacena todos los datos de un cliente</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="mi">18</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fechaAlta</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">direccion</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">provincia</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="Cliente.rellenarDatosCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.Cliente.rellenarDatosCliente">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarDatosCliente</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del objeto cliente con los datos almacenados en el formulario de cliente.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNombre</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidos</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinEdad</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fechaAlta</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaAlta</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">direccion</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDireccion</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">provincia</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbProvincia</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__selSexo</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__selPago</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarDatosCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Cliente.rellenarFormularioCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.Cliente.rellenarFormularioCliente">[documentos]</a>    <span class="k">def</span> <span class="nf">rellenarFormularioCliente</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Metodo que rellena los campos del formulario de cliente con los datos almacenados en el objeto cliente.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNombre</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidos</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apellidos</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinEdad</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaAlta</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fechaAlta</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDireccion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">direccion</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbProvincia</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">Cliente</span><span class="o">.</span><span class="n">provincias</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">provincia</span><span class="p">))</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">==</span> <span class="s1">&#39;Hombre&#39;</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtMasculino</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtFemenino</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTransferencia</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;Transferencia&quot;</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTarjeta</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;Tarjeta&quot;</span><span class="p">))</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkEfectivo</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="s2">&quot;Efectivo&quot;</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error rellenarFormularioCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Cliente.datosValidos"><a class="viewcode-back" href="../src/cCliente.html#cCliente.Cliente.datosValidos">[documentos]</a>    <span class="k">def</span> <span class="nf">datosValidos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que comprueba la validez de los datos almacenados en el objeto cliente.</span>
+
+<span class="sd">        :return: Retorna si los datos son validos para dar de alta o modificar un cliente.</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Metodo que comprueba que ningun dato este vacio en el objeto cliente.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fechaAlta</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direccion</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">provincia</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="n">provincias</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Álava&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Albacete &#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Alicante &#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Almería&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Asturias&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Ávila&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Badajoz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Barcelona&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Burgos&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Cáceres&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Cádiz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Cantabria&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Castellón&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Ciudad Real&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Córdoba&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Cuenca&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Gerona&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Granada&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Guadalajara&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Guipúzcoa&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Huelva&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Huesca&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Islas Baleares &#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Jaén&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;A Coruña&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;La Rioja&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Las Palmas&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;León&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Lérida&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Lugo&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Madrid&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Málaga&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Murcia&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Navarra&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Ourense&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Palencia&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Pontevedra&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Salamanca&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Santa Cruz de Tenerife&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Segovia&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Sevilla&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Soria&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Tarragona&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Teruel&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Toledo&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Valencia&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Valladolid&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Vizcaya&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Zamora&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Zaragoza&#39;</span>
+                  <span class="p">]</span>
+
+<div class="viewcode-block" id="Cliente.comprobarDNI"><a class="viewcode-back" href="../src/cCliente.html#cCliente.Cliente.comprobarDNI">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">comprobarDNI</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que comprueba la validez de un DNI.</span>
+
+<span class="sd">        :return: Devuelve verdadero si el DNI es valido y falso si no lo es</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Comprueba si el DNI en el edit text dni es un DNI valido.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">dni</span><span class="p">:</span>
+                <span class="n">tabla</span> <span class="o">=</span> <span class="s2">&quot;TRWAGMYFDPXBNJZSQVHLCKE&quot;</span>
+                <span class="n">dig_ext</span> <span class="o">=</span> <span class="s2">&quot;XYZ&quot;</span>
+                <span class="n">reemp_dig_ext</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">}</span>
+                <span class="n">numeros</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
+
+                <span class="n">dni</span> <span class="o">=</span> <span class="n">dni</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="n">dig_control</span> <span class="o">=</span> <span class="n">dni</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+                    <span class="n">dni</span> <span class="o">=</span> <span class="n">dni</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">dni</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">dig_ext</span><span class="p">:</span>
+                        <span class="n">dni</span> <span class="o">=</span> <span class="n">dni</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">dni</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reemp_dig_ext</span><span class="p">[</span><span class="n">dni</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+
+                    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">dni</span> <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numeros</span><span class="p">])</span> <span class="ow">and</span> <span class="n">tabla</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span> <span class="o">%</span> <span class="mi">23</span><span class="p">]</span> <span class="o">==</span> <span class="n">dig_control</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error comprobarDNI: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">__selSexo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que estable el sexo en el objeto cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Almacena el valor del sexo del cliente en el objeto Cliente en base a los radio button del formulario de cliente.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtFemenino</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">=</span> <span class="s1">&#39;Mujer&#39;</span>
+            <span class="k">elif</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtMasculino</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">=</span> <span class="s1">&#39;Hombre&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sexo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error __selSexo: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__selPago</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Metodo que estable los metodos de pago en el objeto cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Construye una cadena que almacena los valores de los checkbox del formulario cliente y lo almacena en el</span>
+<span class="sd">        campo metodospago del objeto cliente</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pay</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTransferencia</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span> <span class="o">+</span> <span class="s1">&#39;|Transferencia|&#39;</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTarjeta</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span> <span class="o">+</span> <span class="s1">&#39;|Tarjeta|&#39;</span>
+            <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkEfectivo</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span> <span class="o">+</span> <span class="s1">&#39;|Efectivo|&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">formaspago</span> <span class="o">=</span> <span class="n">pay</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error __selPago: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="EventosCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente">[documentos]</a><span class="k">class</span> <span class="nc">EventosCliente</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EventosCliente.conectarEventosCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.conectarEventosCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">conectarEventosCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que conecta los eventos de la pestaña clientes y da formato a la tabla.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama a la conexion con todos los eventos relacionados con los botones y widgets de la pestaña de clientes</span>
+<span class="sd">        asi como ajustar el tamaño de las columnas de la tabla.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">editDNIChange</span><span class="p">)</span>
+
+        <span class="n">EventosCliente</span><span class="o">.</span><span class="n">comboboxCliente</span><span class="p">()</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">cargarDatosCliente</span><span class="p">)</span>
+
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnCalendario</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">calendarioCliente</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteBuscar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">buscarCliente</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteLimpiar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">limpiarCliente</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteRecargar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">recargarCliente</span><span class="p">)</span>
+
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteAlta</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">altaCliente</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteBaja</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">bajaCliente</span><span class="p">)</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">btnClienteModificar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">EventosCliente</span><span class="o">.</span><span class="n">modificarCliente</span><span class="p">)</span>
+
+        <span class="n">EventosCliente</span><span class="o">.</span><span class="n">recargarCliente</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EventosCliente.editDNIChange"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.editDNIChange">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">editDNIChange</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que comprueba la validez del DNI y carga los datos del cliente cuando el edit text de DNI cambia.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Cuando el edit text de DNI cambia:</span>
+
+<span class="sd">        Recoge el valor del DNI y comprueba que este sea valido, en caso de ser valido dibuja un check verde o una cruz</span>
+<span class="sd">        roja en caso de no ser valido.</span>
+
+<span class="sd">        Carga todos los datos del cliente en el formulario si hay un cliente con ese DNI.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">dni</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="n">cliente</span> <span class="o">=</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cliente</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">cliente</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rellenarFormularioCliente</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">Cliente</span><span class="o">.</span><span class="n">comprobarDNI</span><span class="p">():</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLabel {color: green}&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s1">&#39;QLabel {color: red}&#39;</span><span class="p">)</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error editDNIChange: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.calendarioCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.calendarioCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calendarioCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que abre una ventana de dialogo en la que seleccionar la fecha de alta del cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Llama al modulo para abrir la ventana de dialogo del calendario para seleccionar una fecha y le pasa como</span>
+<span class="sd">        argumento el edit text donde debe almacenar el valor.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogCalendario</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaAlta</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error calendarioCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.comboboxCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.comboboxCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">comboboxCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo carga los valores de las provincias en el combo box.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Carga las provincias en el combo box de la pestaña clientes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Cliente</span><span class="o">.</span><span class="n">provincias</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbProvincia</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error comboboxCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.cargarTablaClientes"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.cargarTablaClientes">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarTablaClientes</span><span class="p">(</span><span class="n">clientes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo actualiza los valores de la tabla de clientes.</span>
+
+<span class="sd">        :param clientes: Lista de clientes para cargar en la tabla</span>
+<span class="sd">        :type clientes: tuple</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Rellena la tabla de cliente con la lista de objetos cliente que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">clientes</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">cliente</span> <span class="ow">in</span> <span class="n">clientes</span><span class="p">:</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">apellidos</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">nombre</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">direccion</span><span class="p">))</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">provincia</span><span class="p">))</span>
+
+                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">setTextAlignment</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarTablaClientes: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.cargarDatosCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.cargarDatosCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cargarDatosCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que carga un cliente de la tabla en el formulario de cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Al hacer click en un cliente de la tabla recoge su dni y carga todos sus datos en el formulario de cliente y</span>
+<span class="sd">        los datos de cliente en el formulario de facturacion.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fila</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tablaClientes</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+            <span class="n">cliente</span> <span class="o">=</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">fila</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNIFacturacion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error cargarDatosCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.limpiarCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.limpiarCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">limpiarCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo limpia el formulario de cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Vacia todos los datos del formulario cliente, desmarca los checkbox y los radio button.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lblValido</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editNombre</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editApellidos</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">spinEdad</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editFechaAlta</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDireccion</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">cmbProvincia</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">grpSexo</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtMasculino</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rbtFemenino</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">grpSexo</span><span class="o">.</span><span class="n">setExclusive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTransferencia</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkTarjeta</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkEfectivo</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error limpiarCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.recargarCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.recargarCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">recargarCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que recarga la tabla de clientes.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recarga la tabla de clientes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">clientes</span> <span class="o">=</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">()</span>
+            <span class="n">EventosCliente</span><span class="o">.</span><span class="n">cargarTablaClientes</span><span class="p">(</span><span class="n">clientes</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error recargarCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.buscarCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.buscarCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo para buscar un cliente concreto en la tabla de clientes.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el dni del formulario de cliente y lo busca en la base de datos para luego pasarselo al modulo que carga</span>
+<span class="sd">        la tabla de clientes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">clientes</span> <span class="o">=</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">EventosCliente</span><span class="o">.</span><span class="n">cargarTablaClientes</span><span class="p">(</span><span class="n">clientes</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.altaCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.altaCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta un cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge los datos del formulario de cliente y los vuelca en un objeto cliente y lo envia al metodo de alta en</span>
+<span class="sd">        la base de datos.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que ya exista en la base de datos, falten</span>
+<span class="sd">        datos, el formato del DNI no sea valido o da un mensaje de confirmacion en la status bar.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cliente</span> <span class="o">=</span> <span class="n">Cliente</span><span class="p">()</span>
+            <span class="n">cliente</span><span class="o">.</span><span class="n">rellenarDatosCliente</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">cliente</span><span class="o">.</span><span class="n">comprobarDNI</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">cliente</span><span class="o">.</span><span class="n">datosValidos</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">altaClienteDB</span><span class="p">(</span><span class="n">cliente</span><span class="p">):</span>
+                        <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2"> dado de alta.&quot;</span><span class="p">)</span>
+                        <span class="n">EventosCliente</span><span class="o">.</span><span class="n">limpiarCliente</span><span class="p">()</span>
+                        <span class="n">EventosCliente</span><span class="o">.</span><span class="n">recargarCliente</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Ya existe un cliente con el DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Faltan datos&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Formato DNI no valido o vacio&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.bajaCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.bajaCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de baja un cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes</span>
+<span class="sd">        confirmacion.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de</span>
+<span class="sd">        dni, no existe ningun cliente con ese DNI o no fue posible darlo de baja.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">editDNI</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">dni</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro que desea dar de baja al cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">?&#39;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">bajaClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+                            <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> dado de baja.&#39;</span><span class="p">)</span>
+                            <span class="n">EventosCliente</span><span class="o">.</span><span class="n">limpiarCliente</span><span class="p">()</span>
+                            <span class="n">EventosCliente</span><span class="o">.</span><span class="n">recargarCliente</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No se ha podido dar de baja al cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No existe ningun cliente con el DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Introduzca un DNI para dar de baja&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error bajaCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EventosCliente.modificarCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.EventosCliente.modificarCliente">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">modificarCliente</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que modifica los datos de un cliente.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+
+<span class="sd">        Recoge el dni del formulario de cliente y lo envia al metodo de baja en la base de datos pidiendo antes</span>
+<span class="sd">        confirmacion.</span>
+
+<span class="sd">        Tambien da un mensaje de error en una ventana de dialogo en caso de que no haya ningun DNI en el edit text de</span>
+<span class="sd">        dni, no existe ningun cliente con ese DNI o no fue posible modificar sus datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cliente</span> <span class="o">=</span> <span class="n">Cliente</span><span class="p">()</span>
+            <span class="n">cliente</span><span class="o">.</span><span class="n">rellenarDatosCliente</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ConexionCliente</span><span class="o">.</span><span class="n">buscarClienteDB</span><span class="p">(</span><span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cliente</span><span class="o">.</span><span class="n">datosValidos</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogConfimacion</span><span class="p">(</span><span class="s1">&#39;¿Esta seguro que desea dar de modificar los datos del cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">?&#39;</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">ConexionCliente</span><span class="o">.</span><span class="n">modificarClienteDB</span><span class="p">(</span><span class="n">cliente</span><span class="p">):</span>
+                                <span class="n">var</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">statusbar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s1">&#39;Datos del cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> actualizados con exito.&#39;</span><span class="p">)</span>
+                                <span class="n">EventosCliente</span><span class="o">.</span><span class="n">recargarCliente</span><span class="p">()</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No se han podido modificar los datos del cliente con DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Faltan datos.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: No existe ningun cliente con el DNI </span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ventanasDialogo</span><span class="o">.</span><span class="n">EventosVentanas</span><span class="o">.</span><span class="n">abrirDialogAviso</span><span class="p">(</span><span class="s1">&#39;ERROR: Introduzca un DNI para modificar.&#39;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error modificarCliente: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ConexionCliente"><a class="viewcode-back" href="../src/cCliente.html#cCliente.ConexionCliente">[documentos]</a><span class="k">class</span> <span class="nc">ConexionCliente</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ConexionCliente.buscarClienteDB"><a class="viewcode-back" href="../src/cCliente.html#cCliente.ConexionCliente.buscarClienteDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">buscarClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo busca en la base de datos un cliente concreto o todos los clientes.</span>
+
+<span class="sd">        :param dni: DNI del cliente a buscar, si no se recibe ningun DNI o el DNI esta vacio devuelve la lista de todos los clientes</span>
+<span class="sd">        :type dni: str</span>
+
+<span class="sd">        :return: Devuelve una lista con todos los clientes o el cliente cuyo dni recibe como paramtro</span>
+<span class="sd">        :rtype: tuple</span>
+
+<span class="sd">        En caso de que el parametro contenga una cadena que no este vacia busca en la BD un cliente cuyo dni</span>
+<span class="sd">        recibe en parametros, si no se le pasa ninguno o la cadena esta vacia devolvera una lista con todos</span>
+<span class="sd">        los clientes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">clientes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+
+            <span class="n">b_dni</span> <span class="o">=</span> <span class="s1">&#39;dni&#39;</span>
+            <span class="k">if</span> <span class="n">dni</span><span class="p">:</span>
+                <span class="n">b_dni</span> <span class="o">=</span> <span class="s1">&#39;:dni&#39;</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;select dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago from clientes where dni = &#39;</span> <span class="o">+</span> <span class="n">b_dni</span> <span class="o">+</span> <span class="s1">&#39; order by apellidos, nombre&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">dni</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">while</span> <span class="n">query</span><span class="o">.</span><span class="n">next</span><span class="p">():</span>
+                    <span class="n">cliente</span> <span class="o">=</span> <span class="n">Cliente</span><span class="p">()</span>
+
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">apellidos</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">fechaAlta</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">direccion</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">provincia</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">sexo</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+                    <span class="n">cliente</span><span class="o">.</span><span class="n">formaspago</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+                    <span class="n">clientes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cliente</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">clientes</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error buscarClienteDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionCliente.altaClienteDB"><a class="viewcode-back" href="../src/cCliente.html#cCliente.ConexionCliente.altaClienteDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">altaClienteDB</span><span class="p">(</span><span class="n">cliente</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo que da de alta el cliente en la BD.</span>
+
+<span class="sd">        :param cliente: Objeto de tipo Cliente para darlo de alta</span>
+<span class="sd">        :type cliente: Cliente</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Da de alta un cliente en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;insert into clientes (dni, nombre, apellidos, edad, fechaalta, direccion, provincia, sexo, formaspago)&#39;</span>
+                          <span class="s1">&#39;VALUES (:dni, :nombre, :apellidos, :edad, :fechaalta, :direccion, :provincia, :sexo, :formaspago)&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nombre&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:apellidos&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">apellidos</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:edad&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:fechaalta&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">fechaAlta</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:direccion&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">direccion</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:provincia&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">provincia</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:sexo&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">sexo</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:formaspago&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">formaspago</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error altaClienteDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionCliente.bajaClienteDB"><a class="viewcode-back" href="../src/cCliente.html#cCliente.ConexionCliente.bajaClienteDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bajaClienteDB</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo da de baja un cliente en la BD.</span>
+
+<span class="sd">        :param dni: DNI del cliente a dar de baja</span>
+<span class="sd">        :type dni: str</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Elimina de la base de datos al cliente con el dni que recibe como parametro.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;delete from clientes where dni = :dni&#39;</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">dni</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error bajaClienteDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConexionCliente.modificarClienteDB"><a class="viewcode-back" href="../src/cCliente.html#cCliente.ConexionCliente.modificarClienteDB">[documentos]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">modificarClienteDB</span><span class="p">(</span><span class="n">cliente</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Módulo modifica los datos de un cliente en la BD.</span>
+
+<span class="sd">        :param cliente: Objeto de tipo cliente con los nuevos datos</span>
+<span class="sd">        :type cliente: Cliente</span>
+
+<span class="sd">        :return: Devuelve el resultado de la ejecucion de la sentensia sql</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        Actualiza la informacion del cliente en la base de datos.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlQuery</span><span class="p">()</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;update clientes set nombre=:nombre, apellidos=:apellidos, edad=:edad, fechaalta=:fechaalta, direccion=:direccion, provincia=:provincia, sexo=:sexo, formaspago=:formaspago where dni = :dni&#39;</span><span class="p">)</span>
+
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:dni&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">dni</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:nombre&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:apellidos&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">apellidos</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:edad&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:fechaalta&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">fechaAlta</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:direccion&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">direccion</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:provincia&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">provincia</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:sexo&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">sexo</span><span class="p">)</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">bindValue</span><span class="p">(</span><span class="s1">&#39;:formaspago&#39;</span><span class="p">,</span> <span class="n">cliente</span><span class="o">.</span><span class="n">formaspago</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error modificarClienteDB: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PROYECTODAM20_21</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Miguel Marquez Gutierrez.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
