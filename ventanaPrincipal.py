@@ -111,5 +111,4 @@ class Conexion:
                                            QtWidgets.QMessageBox.Cancel)
             return False
         else:
-            print('Conexion establecida')
             return True

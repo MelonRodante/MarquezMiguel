@@ -3046,6 +3046,7 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="actionInforme_Productos"/>
     <addaction name="separator"/>
     <addaction name="actionImprimir_factura"/>
+    <addaction name="actionFacturas_cliente"/>
    </widget>
    <widget class="QMenu" name="menuHerramientas">
     <property name="title">
@@ -3157,6 +3158,11 @@ border-color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>Importar Datos</string>
+   </property>
+  </action>
+  <action name="actionFacturas_cliente">
+   <property name="text">
+    <string>Facturas cliente</string>
    </property>
   </action>
  </widget>

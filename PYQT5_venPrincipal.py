@@ -1368,6 +1368,8 @@ class Ui_venPrincipal(object):
         icon10.addPixmap(QtGui.QPixmap(":/importardatos/importardatos.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionImportar_Datos.setIcon(icon10)
         self.actionImportar_Datos.setObjectName("actionImportar_Datos")
+        self.actionFacturas_cliente = QtWidgets.QAction(venPrincipal)
+        self.actionFacturas_cliente.setObjectName("actionFacturas_cliente")
         self.menuArchivo.addAction(self.actionAbrir)
         self.menuArchivo.addAction(self.actionImprimir)
         self.menuArchivo.addSeparator()
@@ -1376,6 +1378,7 @@ class Ui_venPrincipal(object):
         self.menuInformes.addAction(self.actionInforme_Productos)
         self.menuInformes.addSeparator()
         self.menuInformes.addAction(self.actionImprimir_factura)
+        self.menuInformes.addAction(self.actionFacturas_cliente)
         self.menuHerramientas.addAction(self.actionCrear_Backup)
         self.menuHerramientas.addAction(self.actionRestaurar_Backup)
         self.menuHerramientas.addSeparator()
@@ -1495,5 +1498,6 @@ class Ui_venPrincipal(object):
         self.actionImprimir_factura.setText(_translate("venPrincipal", "Imprimir factura"))
         self.actionRestaurar_Backup.setText(_translate("venPrincipal", " Restaurar Backup"))
         self.actionImportar_Datos.setText(_translate("venPrincipal", "Importar Datos"))
+        self.actionFacturas_cliente.setText(_translate("venPrincipal", "Facturas cliente"))
 import rc_botonesInterfaz_rc
 import rc_toolbar_rc

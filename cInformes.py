@@ -13,6 +13,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
 import var
+import ventanasDialogo
 
 
 class Informes:
@@ -34,6 +35,8 @@ class Informes:
         var.ui.actionInforme_Productos.triggered.connect(Informes.informeProductos)
 
         var.ui.actionImprimir_factura.triggered.connect(Informes.informeFactura)
+
+        var.ui.actionFacturas_cliente.triggered.connect(Informes.informeFacturasCliente)
 
     @staticmethod
     def cabecera(c, textlistado):
@@ -93,7 +96,8 @@ class Informes:
     @staticmethod
     def informeClientes():
         try:
-            c = canvas.Canvas('informes/listado-clientes.pdf')
+            filename = '.\\informes/listado-clientes.pdf'
+            c = canvas.Canvas(filename)
 
             Informes.encabezadoPaginaCliente(c)
             clientes = cCliente.ConexionCliente.buscarClienteDB()
@@ -121,10 +125,7 @@ class Informes:
 
 
             c.save()
-            rootPath = ".\\informes"
-            for file in os.listdir(rootPath):
-                if file.endswith('informes/listado-clientes.pdf'):
-                    os.startfile('%s/%s' % (rootPath, file))
+            os.startfile(filename)
 
         except Exception as error:
             print('Error: %s ' % str(error))
@@ -144,7 +145,8 @@ class Informes:
     @staticmethod
     def informeProductos():
         try:
-            c = canvas.Canvas('informes/listado-productos.pdf')
+            filename = '.\\informes/listado-productos.pdf'
+            c = canvas.Canvas(filename)
 
             Informes.encabezadoPaginaProductos(c)
             productos = cProducto.ConexionProducto.buscarProductoDB()
@@ -170,11 +172,7 @@ class Informes:
                 index += 1
 
             c.save()
-            rootPath = ".\\informes"
-
-            for file in os.listdir(rootPath):
-                if file.endswith('listado-productos.pdf'):
-                    os.startfile('%s/%s' % (rootPath, file))
+            os.startfile(filename)
 
         except Exception as error:
             print('Error: %s ' % str(error))
@@ -203,66 +201,174 @@ class Informes:
     def informeFactura():
         try:
 
-            c = canvas.Canvas('informes/listado-productos.pdf')
+            if var.ui.editNFactura.text():
 
-            fac = cFactura.Factura()
-            fac.nfactura = var.ui.editNFactura.text()
-            factura = cFactura.ConexionFactura.buscarFacturaDB(fac)[0]
-            ventas = cFactura.ConexionVenta.buscarVentaDB(fac.nfactura)
+                fac = cFactura.Factura()
+                fac.nfactura = var.ui.editNFactura.text()
+                factura = cFactura.ConexionFactura.buscarFacturaDB(fac)[0]
+                ventas = cFactura.ConexionVenta.buscarVentaDB(fac.nfactura)
 
-            Informes.paginaBaseFactura(c, factura)
+                filename = '.\\informes/factura-' + str(factura.nfactura) + '.pdf'
+                c = canvas.Canvas(filename)
 
-            index = 0
-            subtotal = 0
-            datos = [['UNIDADES', 'PRODUCTO', 'PRECIO', 'SUBTOTAL']]
+                Informes.paginaBaseFactura(c, factura)
+                index = 0
+                subtotal = 0
+                datos = [['UNIDADES', 'PRODUCTO', 'PRECIO', 'SUBTOTAL']]
 
-            ts = TableStyle([
-                ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
-                ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
-                ('ALIGN', (0, 0), (3, 0), 'CENTER'),
-                ('ALIGN', (0, 1), (0, -1), 'RIGHT'),
-                ('ALIGN', (2, 1), (-1, -1), 'RIGHT'),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black)
-            ])
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                    ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
+                    ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+                    ('ALIGN', (0, 1), (0, -1), 'RIGHT'),
+                    ('ALIGN', (2, 1), (-1, -1), 'RIGHT'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ])
 
-            for venta in ventas:
-                index += 1
-                if index == 32:
-                    index = 0
-                    tabla = Table(datos, colWidths=[70, 285, 70, 70])
-                    tabla.setStyle(ts)
-                    tabla.wrapOn(c, 700, 50)
-                    tabla.drawOn(c, 50, 690 - (len(datos) * 18))
-                    datos = [['UNIDADES', 'PRODUCTO', 'PRECIO', 'SUBTOTAL']]
-                    c.showPage()
-                    Informes.paginaBaseFactura(c, factura)
-                datos.append([str(venta.unidades), venta.producto, "{:,.2f} €".format(venta.precio), "{:,.2f} €".format(venta.precio * venta.unidades)])
-                subtotal += (venta.precio * venta.unidades)
+                for venta in ventas:
+                    index += 1
+                    if index == 32:
+                        index = 0
+                        tabla = Table(datos, colWidths=[70, 285, 70, 70])
+                        tabla.setStyle(ts)
+                        tabla.wrapOn(c, 700, 50)
+                        tabla.drawOn(c, 50, 690 - (len(datos) * 18))
+                        datos = [['UNIDADES', 'PRODUCTO', 'PRECIO', 'SUBTOTAL']]
+                        c.showPage()
+                        Informes.paginaBaseFactura(c, factura)
+                    datos.append([str(venta.unidades), venta.producto, "{:,.2f} €".format(venta.precio),
+                                  "{:,.2f} €".format(venta.precio * venta.unidades)])
+                    subtotal += (venta.precio * venta.unidades)
 
-            tabla = Table(datos, colWidths=[70, 285, 70, 70])
-            tabla.setStyle(ts)
-            tabla.wrapOn(c, 700, 50)
-            tabla.drawOn(c, 50, 690 - (len(datos) * 18))
+                tabla = Table(datos, colWidths=[70, 285, 70, 70])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 690 - (len(datos) * 18))
 
-            datos = [['SUBTOTAL', 'IMPUESTOS(21%)', 'TOTAL'], ["{:,.2f} €".format(subtotal), "{:,.2f} €".format(subtotal * 0.21), "{:,.2f} €".format(subtotal * 1.21)]]
-            ts = TableStyle([
-                ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
-                ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
-                ('ALIGN', (0, 0), (3, 0), 'CENTER'),
-                ('ALIGN', (0, 1), (-1, -1), 'RIGHT'),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black)
-            ])
-            tabla = Table(datos, colWidths=[165, 165, 165])
-            tabla.setStyle(ts)
-            tabla.wrapOn(c, 700, 50)
-            tabla.drawOn(c, 50, 60)
+                datos = [['SUBTOTAL', 'IMPUESTOS(21%)', 'TOTAL'],
+                         ["{:,.2f} €".format(subtotal), "{:,.2f} €".format(subtotal * 0.21),
+                          "{:,.2f} €".format(subtotal * 1.21)]]
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                    ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
+                    ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+                    ('ALIGN', (0, 1), (-1, -1), 'RIGHT'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ])
+                tabla = Table(datos, colWidths=[165, 165, 165])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 60)
 
-            c.save()
-            rootPath = ".\\informes"
+                c.save()
+                os.startfile(filename)
 
-            for file in os.listdir(rootPath):
-                if file.endswith('listado-productos.pdf'):
-                    os.startfile('%s/%s' % (rootPath, file))
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso("Seleccione una factura para imprimir")
+
 
         except Exception as error:
             print('Error: %s ' % str(error))
+
+    @staticmethod
+    def paginaBaseFacturasCliente(c, factura):
+        Informes.cabecera(c, "FACTURAS DE CLIENTE")
+
+        c.setFont('Helvetica-Bold', size=9)
+        c.drawString(50, 710, "DNI:")
+        c.drawString(150, 710, "Cliente:")
+
+        c.setFont('Helvetica', size=9)
+        c.drawString(72, 710, factura.dni)
+        c.drawString(187, 710, factura.cliente)
+
+        Informes.drawLine(c, 697)
+        Informes.drawLine(c, 105)
+
+        Informes.pie(c, "FACTURAS CLIENTE")
+
+    @staticmethod
+    def informeFacturasCliente():
+        try:
+
+            if var.ui.editDNIFacturacion.text():
+
+                factura = cFactura.Factura()
+                factura.dni = var.ui.editDNIFacturacion.text()
+                factura.cliente = var.ui.editApellidosNombreFacturacion.text()
+                facturas = cFactura.ConexionFactura.buscarFacturaDB(factura)
+
+                filename = '.\\informes/facturas-' + factura.dni + '.pdf'
+                c = canvas.Canvas(filename)
+
+                Informes.paginaBaseFacturasCliente(c, factura)
+
+                index = 0
+                subtotal_factura = 0
+                subtotal_total = 0
+                datos = [['Nº FACTURA', 'ESTADO', 'FECHA', 'SUBTOTAL']]
+
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                    ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
+                    ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+
+                    ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                    ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+                    ('ALIGN', (3, 1), (3, -1), 'RIGHT'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ])
+
+
+                for factura in facturas:
+                    index += 1
+                    if index == 32:
+                        index = 0
+                        tabla = Table(datos, colWidths=[70, 255, 70, 100])
+                        tabla.setStyle(ts)
+                        tabla.wrapOn(c, 700, 50)
+                        tabla.drawOn(c, 50, 690 - (len(datos) * 18))
+                        datos = [['Nº FACTURA', 'ESTADO', 'FECHA', 'SUBTOTAL']]
+                        c.showPage()
+                        Informes.paginaBaseFactura(c, factura)
+
+                    subtotal_factura = Informes.calcularSubtotalFactura(factura.nfactura)
+                    subtotal_total += subtotal_factura
+                    datos.append([str(factura.nfactura), factura.estado, factura.fechafactura, "{:,.2f} €".format(subtotal_factura)])
+
+                tabla = Table(datos, colWidths=[80, 215, 100, 100])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 690 - (len(datos) * 18))
+
+                datos = [['SUBTOTAL', 'IMPUESTOS(21%)', 'TOTAL'],
+                         ["{:,.2f} €".format(subtotal_total), "{:,.2f} €".format(subtotal_total * 0.21), "{:,.2f} €".format(subtotal_total * 1.21)]]
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                    ('BACKGROUND', (0, 0), (3, 0), HexColor(0xC6CDFF)),
+                    ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+                    ('ALIGN', (0, 1), (-1, -1), 'RIGHT'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ])
+                tabla = Table(datos, colWidths=[165, 165, 165])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 60)
+
+                c.save()
+                os.startfile(filename)
+
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso("Seleccione un cliente en facturacion para imprimir sus facturas")
+
+        except Exception as error:
+            print('Error: %s ' % str(error))
+
+
+    @staticmethod
+    def calcularSubtotalFactura(nfactura):
+        subtotal = 0
+        ventas = cFactura.ConexionVenta.buscarVentaDB(nfactura)
+        for venta in ventas:
+            subtotal += venta.precio * venta.unidades
+        return subtotal

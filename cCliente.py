@@ -180,6 +180,11 @@ class Cliente:
 
     @staticmethod
     def comprobarDNI():
+        dni = var.ui.editDNI.text()
+        return Cliente.comprobarDNIValido(dni)
+
+    @staticmethod
+    def comprobarDNIValido(dni):
         """
 
         Módulo que comprueba la validez de un DNI.
@@ -191,8 +196,6 @@ class Cliente:
 
         """
         try:
-            dni = var.ui.editDNI.text()
-
             if dni:
                 tabla = "TRWAGMYFDPXBNJZSQVHLCKE"
                 dig_ext = "XYZ"
