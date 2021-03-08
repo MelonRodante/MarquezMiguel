@@ -1,0 +1,97 @@
+@staticmethod
+def encabezadoPaginaCliente(c):
+	textlistado = "LISTADO CLIENTES"
+	Informes.cabecera(c, textlistado)
+	c.setFont('Helvetica-Bold', size=9)
+	c.drawCentredString(90, 710, 'DNI')
+	c.drawCentredString(180, 710, 'APELLIDOS')
+	c.drawCentredString(295, 710, 'NOMBRE')
+	c.drawCentredString(400, 710, 'PROVINCIA')
+	c.drawCentredString(500, 710, 'FECHA ALTA')
+	Informes.drawLine(c, 697)
+	Informes.pie(c, textlistado)
+
+@staticmethod
+def informeClientes():
+	try:
+		filename = '.\\informes/listado-clientes.pdf'
+		c = canvas.Canvas(filename)
+
+		Informes.encabezadoPaginaCliente(c)
+		clientes = cCliente.ConexionCliente.buscarClienteDB()
+
+		index = 0
+		i = 80
+		j = 680
+
+		for cliente in clientes:
+			if index == 35:
+				c.showPage()
+				Informes.encabezadoPaginaCliente(c)
+				j = 680
+				index = 0
+
+			c.setFont('Helvetica', size=9)
+			c.drawCentredString(i + 10, j, cliente.dni)
+			c.drawString(i + 65, j, cliente.apellidos)
+			c.drawString(i + 190, j, cliente.nombre)
+			c.drawCentredString(i + 320, j, cliente.provincia)
+			c.drawCentredString(i + 420, j, cliente.fechaAlta)
+
+			j -= 18
+			index += 1
+
+
+		c.save()
+		os.startfile(filename)
+
+	except Exception as error:
+		print('Error informeClientes: %s ' % str(error))
+		
+		
+@staticmethod
+def encabezadoPaginaProductos(c):
+	textlistado = "LISTADO PRODUCTOS"
+	Informes.cabecera(c, textlistado)
+	c.setFont('Helvetica-Bold', size=9)
+	c.drawCentredString(80, 710, 'CODIGO')
+	c.drawCentredString(240, 710, 'PRODUCTO')
+	c.drawCentredString(400, 710, 'STOCK')
+	c.drawCentredString(500, 710, 'PRECIO')
+	Informes.drawLine(c, 697)
+	Informes.pie(c, textlistado)
+
+@staticmethod
+def informeProductos():
+	try:
+		filename = '.\\informes/listado-productos.pdf'
+		c = canvas.Canvas(filename)
+
+		Informes.encabezadoPaginaProductos(c)
+		productos = cProducto.ConexionProducto.buscarProductoDB()
+
+		index = 0
+		i = 80
+		j = 680
+
+		for producto in productos:
+			if index == 35:
+				c.showPage()
+				Informes.encabezadoPaginaProductos(c)
+				j = 680
+				index = 0
+
+			c.setFont('Helvetica', size=9)
+			c.drawCentredString(i, j, str(producto.codigoProducto))
+			c.drawString(i + 50, j, producto.producto)
+			c.drawCentredString(i + 320, j, str(producto.stock))
+			c.drawRightString(i + 445, j, "{:,.2f} €".format(producto.precio))
+
+			j -= 18
+			index += 1
+
+		c.save()
+		os.startfile(filename)
+
+	except Exception as error:
+		print('Error informeProductos: %s ' % str(error))
