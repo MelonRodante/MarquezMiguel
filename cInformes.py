@@ -90,48 +90,55 @@ class Informes:
     @staticmethod
     def informeClientes():
         try:
-            filename = '.\\informes/listado-clientes.pdf'
-            c = canvas.Canvas(filename)
 
-            Informes.encabezadoPaginaCliente(c)
             clientes = cCliente.ConexionCliente.buscarClienteDB()
 
-            index = 0
-            datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
+            if len(clientes) > 0:
 
-            ts = TableStyle([
-                ('FONTNAME', (0, 0), (4, 0), 'Helvetica-Bold'),
-                ('ALIGN', (0, 0), (4, 0), 'CENTER'),
-                ('LINEBELOW', (0, 0), (4, 0), 1, colors.black),
-                ('ALIGN', (0, 1), (0, -1), 'CENTER'),
-                ('ALIGN', (3, 1), (4, -1), 'CENTER')
-            ])
+                filename = '.\\informes/listado-clientes.pdf'
+                c = canvas.Canvas(filename)
 
-            for cliente in clientes:
-                index += 1
-                if index == 37:
-                    index = 0
-                    tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
-                    tabla.setStyle(ts)
-                    tabla.wrapOn(c, 700, 50)
-                    tabla.drawOn(c, 50, 730 - (len(datos) * 18))
-                    datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
-                    c.showPage()
-                    Informes.encabezadoPaginaCliente(c)
+                Informes.encabezadoPaginaCliente(c)
 
-                datos.append([cliente.dni,
-                              cliente.apellidos,
-                              cliente.nombre,
-                              cliente.provincia,
-                              cliente.fechaAlta])
 
-            tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
-            tabla.setStyle(ts)
-            tabla.wrapOn(c, 700, 50)
-            tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                index = 0
+                datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
 
-            c.save()
-            os.startfile(filename)
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (4, 0), 'Helvetica-Bold'),
+                    ('ALIGN', (0, 0), (4, 0), 'CENTER'),
+                    ('LINEBELOW', (0, 0), (4, 0), 1, colors.black),
+                    ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                    ('ALIGN', (3, 1), (4, -1), 'CENTER')
+                ])
+
+                for cliente in clientes:
+                    index += 1
+                    if index == 37:
+                        index = 0
+                        tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
+                        tabla.setStyle(ts)
+                        tabla.wrapOn(c, 700, 50)
+                        tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                        datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
+                        c.showPage()
+                        Informes.encabezadoPaginaCliente(c)
+
+                    datos.append([cliente.dni,
+                                  cliente.apellidos,
+                                  cliente.nombre,
+                                  cliente.provincia,
+                                  cliente.fechaAlta])
+
+                tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+
+                c.save()
+                os.startfile(filename)
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso("No se puede hacer un informe de clientes sin clientes")
 
         except Exception as error:
             print('Error informeClientes: %s ' % str(error))
@@ -145,48 +152,54 @@ class Informes:
     @staticmethod
     def informeProductos():
         try:
-            filename = '.\\informes/listado-productos.pdf'
-            c = canvas.Canvas(filename)
 
-            Informes.encabezadoPaginaProductos(c)
             productos = cProducto.ConexionProducto.buscarProductoDB()
 
-            index = 0
-            datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
+            if len(productos) > 0:
 
-            ts = TableStyle([
-                ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
-                ('ALIGN', (0, 0), (3, 0), 'CENTER'),
-                ('LINEBELOW', (0, 0), (3, 0), 1, colors.black),
-                ('ALIGN', (0, 1), (0, -1), 'CENTER'),
-                ('ALIGN', (2, 1), (2, -1), 'CENTER'),
-                ('ALIGN', (3, 1), (3, -1), 'RIGHT')
-            ])
+                filename = '.\\informes/listado-productos.pdf'
+                c = canvas.Canvas(filename)
 
-            for producto in productos:
-                index += 1
-                if index == 37:
-                    index = 0
-                    tabla = Table(datos, colWidths=[80, 255, 80, 80])
-                    tabla.setStyle(ts)
-                    tabla.wrapOn(c, 700, 50)
-                    tabla.drawOn(c, 50, 730 - (len(datos) * 18))
-                    datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
-                    c.showPage()
-                    Informes.encabezadoPaginaCliente(c)
+                Informes.encabezadoPaginaProductos(c)
 
-                datos.append([str(producto.codigoProducto),
-                              producto.producto,
-                              str(producto.stock),
-                              "{:,.2f} €   ".format(producto.precio)])
+                index = 0
+                datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
 
-            tabla = Table(datos, colWidths=[80, 255, 80, 80])
-            tabla.setStyle(ts)
-            tabla.wrapOn(c, 700, 50)
-            tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                    ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+                    ('LINEBELOW', (0, 0), (3, 0), 1, colors.black),
+                    ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                    ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+                    ('ALIGN', (3, 1), (3, -1), 'RIGHT')
+                ])
 
-            c.save()
-            os.startfile(filename)
+                for producto in productos:
+                    index += 1
+                    if index == 37:
+                        index = 0
+                        tabla = Table(datos, colWidths=[80, 255, 80, 80])
+                        tabla.setStyle(ts)
+                        tabla.wrapOn(c, 700, 50)
+                        tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                        datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
+                        c.showPage()
+                        Informes.encabezadoPaginaCliente(c)
+
+                    datos.append([str(producto.codigoProducto),
+                                  producto.producto,
+                                  str(producto.stock),
+                                  "{:,.2f} €   ".format(producto.precio)])
+
+                tabla = Table(datos, colWidths=[80, 255, 80, 80])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+
+                c.save()
+                os.startfile(filename)
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso("No se puede hacer un informe de productos sin productos")
 
         except Exception as error:
             print('Error informeProductos: %s ' % str(error))
