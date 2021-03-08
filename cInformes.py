@@ -61,6 +61,7 @@ class Informes:
         c.drawString(50, 755, texttlfo)
 
         Informes.drawLine(c, 745)
+        c.setFont('Helvetica-Bold', size=10)
         c.drawCentredString(A4[0] / 2, 734, textlistado)
         Informes.drawLine(c, 730)
 
@@ -84,13 +85,6 @@ class Informes:
     def encabezadoPaginaCliente(c):
         textlistado = "LISTADO CLIENTES"
         Informes.cabecera(c, textlistado)
-        c.setFont('Helvetica-Bold', size=9)
-        c.drawCentredString(90, 710, 'DNI')
-        c.drawCentredString(180, 710, 'APELLIDOS')
-        c.drawCentredString(295, 710, 'NOMBRE')
-        c.drawCentredString(400, 710, 'PROVINCIA')
-        c.drawCentredString(500, 710, 'FECHA ALTA')
-        Informes.drawLine(c, 697)
         Informes.pie(c, textlistado)
 
     @staticmethod
@@ -103,26 +97,38 @@ class Informes:
             clientes = cCliente.ConexionCliente.buscarClienteDB()
 
             index = 0
-            i = 80
-            j = 680
+            datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
+
+            ts = TableStyle([
+                ('FONTNAME', (0, 0), (4, 0), 'Helvetica-Bold'),
+                ('ALIGN', (0, 0), (4, 0), 'CENTER'),
+                ('LINEBELOW', (0, 0), (4, 0), 1, colors.black),
+                ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                ('ALIGN', (3, 1), (4, -1), 'CENTER')
+            ])
 
             for cliente in clientes:
-                if index == 35:
+                index += 1
+                if index == 37:
+                    index = 0
+                    tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
+                    tabla.setStyle(ts)
+                    tabla.wrapOn(c, 700, 50)
+                    tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                    datos = [['DNI', 'APELLIDOS', 'NOMBRE', 'PROVINCIA', 'FECHA ALTA']]
                     c.showPage()
                     Informes.encabezadoPaginaCliente(c)
-                    j = 680
-                    index = 0
 
-                c.setFont('Helvetica', size=9)
-                c.drawCentredString(i + 10, j, cliente.dni)
-                c.drawString(i + 65, j, cliente.apellidos)
-                c.drawString(i + 190, j, cliente.nombre)
-                c.drawCentredString(i + 320, j, cliente.provincia)
-                c.drawCentredString(i + 420, j, cliente.fechaAlta)
+                datos.append([cliente.dni,
+                              cliente.apellidos,
+                              cliente.nombre,
+                              cliente.provincia,
+                              cliente.fechaAlta])
 
-                j -= 18
-                index += 1
-
+            tabla = Table(datos, colWidths=[65, 145, 100, 105, 80])
+            tabla.setStyle(ts)
+            tabla.wrapOn(c, 700, 50)
+            tabla.drawOn(c, 50, 730 - (len(datos) * 18))
 
             c.save()
             os.startfile(filename)
@@ -134,12 +140,6 @@ class Informes:
     def encabezadoPaginaProductos(c):
         textlistado = "LISTADO PRODUCTOS"
         Informes.cabecera(c, textlistado)
-        c.setFont('Helvetica-Bold', size=9)
-        c.drawCentredString(80, 710, 'CODIGO')
-        c.drawCentredString(240, 710, 'PRODUCTO')
-        c.drawCentredString(400, 710, 'STOCK')
-        c.drawCentredString(500, 710, 'PRECIO')
-        Informes.drawLine(c, 697)
         Informes.pie(c, textlistado)
 
     @staticmethod
@@ -152,24 +152,38 @@ class Informes:
             productos = cProducto.ConexionProducto.buscarProductoDB()
 
             index = 0
-            i = 80
-            j = 680
+            datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
+
+            ts = TableStyle([
+                ('FONTNAME', (0, 0), (3, 0), 'Helvetica-Bold'),
+                ('ALIGN', (0, 0), (3, 0), 'CENTER'),
+                ('LINEBELOW', (0, 0), (3, 0), 1, colors.black),
+                ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+                ('ALIGN', (3, 1), (3, -1), 'RIGHT')
+            ])
 
             for producto in productos:
-                if index == 35:
-                    c.showPage()
-                    Informes.encabezadoPaginaProductos(c)
-                    j = 680
-                    index = 0
-
-                c.setFont('Helvetica', size=9)
-                c.drawCentredString(i, j, str(producto.codigoProducto))
-                c.drawString(i + 50, j, producto.producto)
-                c.drawCentredString(i + 320, j, str(producto.stock))
-                c.drawRightString(i + 445, j, "{:,.2f} €".format(producto.precio))
-
-                j -= 18
                 index += 1
+                if index == 37:
+                    index = 0
+                    tabla = Table(datos, colWidths=[80, 255, 80, 80])
+                    tabla.setStyle(ts)
+                    tabla.wrapOn(c, 700, 50)
+                    tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                    datos = [['CODIGO', 'PRODUCTO', 'STOCK', 'PRECIO']]
+                    c.showPage()
+                    Informes.encabezadoPaginaCliente(c)
+
+                datos.append([str(producto.codigoProducto),
+                              producto.producto,
+                              str(producto.stock),
+                              "{:,.2f} €   ".format(producto.precio)])
+
+            tabla = Table(datos, colWidths=[80, 255, 80, 80])
+            tabla.setStyle(ts)
+            tabla.wrapOn(c, 700, 50)
+            tabla.drawOn(c, 50, 730 - (len(datos) * 18))
 
             c.save()
             os.startfile(filename)
@@ -237,7 +251,9 @@ class Informes:
                             datos = [['UNIDADES', 'PRODUCTO', 'PRECIO', 'SUBTOTAL']]
                             c.showPage()
                             Informes.paginaBaseFactura(c, factura)
-                        datos.append([str(venta.unidades), venta.producto, "{:,.2f} €".format(venta.precio),
+                        datos.append([str(venta.unidades),
+                                      venta.producto,
+                                      "{:,.2f} €".format(venta.precio),
                                       "{:,.2f} €".format(venta.precio * venta.unidades)])
                         subtotal += (venta.precio * venta.unidades)
 
@@ -366,7 +382,6 @@ class Informes:
 
         except Exception as error:
             print('Error informeFacturasCliente: %s ' % str(error))
-
 
     @staticmethod
     def calcularSubtotalFactura(nfactura):

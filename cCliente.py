@@ -164,7 +164,7 @@ class Cliente:
                   'Palencia',
                   'Pontevedra',
                   'Salamanca',
-                  'Santa Cruz de Tenerife',
+                  'ST Cruz de Tenerife',
                   'Segovia',
                   'Sevilla',
                   'Soria',
