@@ -12,6 +12,7 @@ from datetime import datetime
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
+import provider
 import var
 import ventanasDialogo
 
@@ -33,6 +34,8 @@ class Informes:
         var.ui.actionInforme_Clientes.triggered.connect(Informes.informeClientes)
 
         var.ui.actionInforme_Productos.triggered.connect(Informes.informeProductos)
+
+        var.ui.actionInforme_Proveedores.triggered.connect(Informes.informeProveedores)
 
         var.ui.actionImprimir_factura.triggered.connect(Informes.informeFactura)
 
@@ -203,6 +206,66 @@ class Informes:
 
         except Exception as error:
             print('Error informeProductos: %s ' % str(error))
+
+    @staticmethod
+    def encabezadoPaginaProveedores(c):
+        textlistado = "LISTADO PROVEEDORES"
+        Informes.cabecera(c, textlistado)
+        Informes.pie(c, textlistado)
+
+    @staticmethod
+    def informeProveedores():
+        try:
+
+            proveedores = provider.ConexionProveedor.buscarProveedorDB(orden='nombre')
+
+            if len(proveedores) > 0:
+
+                filename = '.\\informes/listado-proveedores.pdf'
+                c = canvas.Canvas(filename)
+
+                Informes.encabezadoPaginaProveedores(c)
+
+                index = 0
+                datos = [['CODIGO', 'NOMBRE', 'TELEFONO']]
+
+                ts = TableStyle([
+                    ('FONTNAME', (0, 0), (2, 0), 'Helvetica-Bold'),
+                    ('ALIGN', (0, 0), (2, 0), 'CENTER'),
+                    ('LINEBELOW', (0, 0), (2, 0), 1, colors.black),
+                    ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+                    ('ALIGN', (2, 1), (2, -1), 'CENTER')
+                ])
+
+                for proveedor in proveedores:
+                    index += 1
+                    if index == 37:
+                        index = 0
+                        tabla = Table(datos, colWidths=[80, 335, 80])
+                        tabla.setStyle(ts)
+                        tabla.wrapOn(c, 700, 50)
+                        tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+                        datos = [['CODIGO', 'NOMBRE', 'TELEFONO']]
+                        c.showPage()
+                        Informes.encabezadoPaginaCliente(c)
+
+                    datos.append([str(proveedor.codigo),
+                                  proveedor.nombre,
+                                  proveedor.telefono])
+
+                tabla = Table(datos, colWidths=[80, 335, 80])
+                tabla.setStyle(ts)
+                tabla.wrapOn(c, 700, 50)
+                tabla.drawOn(c, 50, 730 - (len(datos) * 18))
+
+                c.save()
+                os.startfile(filename)
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso(
+                    "No se puede hacer un informe de proveedores sin proveedores")
+
+        except Exception as error:
+            print('Error informeProveedores: %s ' % str(error))
 
     @staticmethod
     def paginaBaseFactura(c, factura):

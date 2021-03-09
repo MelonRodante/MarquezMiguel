@@ -112,6 +112,7 @@ class EventosFactura:
         var.ui.editFechaFactura.textChanged.connect(EventosFactura.limpiarEditNFactura)
 
         EventosFactura.comboboxFactura()
+        EventosFactura.comboboxDescuento()
 
         var.ui.cmbTipoFacturas.currentIndexChanged.connect(EventosFactura.cargarTablaFactura)
 
@@ -141,6 +142,8 @@ class EventosFactura:
         var.ui.btnFacturacionRecargar.clicked.connect(EventosFactura.recargarFactura)
 
         EventosVenta.conectarEventosVenta()
+
+        var.ui.btnDescuento.clicked.connect(EventosFactura.hacerDescuento)
 
         EventosFactura.recargarFactura()
 
@@ -407,6 +410,8 @@ class EventosFactura:
             var.ui.editIVA.setText("")
             var.ui.editTotal.setText("")
 
+            var.ui.cmbDescuento.setCurrentIndex(0)
+
         except Exception as error:
             print('Error limpiarFactura: %s' % str(error))
 
@@ -599,6 +604,39 @@ class EventosFactura:
 
         except Exception as error:
             print('Error altaFactura: %s' % str(error))
+
+    @staticmethod
+    def comboboxDescuento():
+        try:
+            for i in ['0 %', '5 %', '10 %', '15 %']:
+                var.ui.cmbDescuento.addItem(i)
+        except Exception as error:
+            print('Error comboboxDescuento: %s' % str(error))
+
+    @staticmethod
+    def hacerDescuento():
+        try:
+            if var.ui.editNFactura.text():
+                cmbIndex = var.ui.cmbDescuento.currentIndex()
+
+                if cmbIndex == 0:
+                    descuento = 0
+                elif cmbIndex == 1:
+                    descuento = 5
+                elif cmbIndex == 2:
+                    descuento = 10
+                elif cmbIndex == 3:
+                    descuento = 15
+                else:
+                    descuento = 0
+
+                EventosVenta.updateTotalesFactura(descuento=descuento)
+                if descuento > 0:
+                    var.ui.statusbar.showMessage('Aplicado un ' + str(descuento) + '% de descuento')
+            else:
+                ventanasDialogo.EventosVentanas.abrirDialogAviso("Seleccione una factura para hacer descuento")
+        except Exception as error:
+            print('Error hacerDescuento: %s' % str(error))
 
 
 class ConexionFactura:
@@ -946,7 +984,7 @@ class EventosVenta:
             print('Error precio_cantidadChange: %s' % str(error))
 
     @staticmethod
-    def updateTotalesFactura():
+    def updateTotalesFactura(descuento=0):
         """
 
         Módulo actualiza los valores de subtotal, impuestos y total de la factura.
@@ -961,6 +999,9 @@ class EventosVenta:
             subtotal = 0
             for row in range(var.ui.tablaVentas.rowCount()):
                 subtotal += float(var.ui.tablaVentas.item(row, 3).text()[:-3].replace(",", ""))
+
+            if descuento != 0:
+                subtotal = subtotal - (subtotal * (descuento / 100))
 
             iva = subtotal * 0.21
 

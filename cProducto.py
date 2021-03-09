@@ -111,6 +111,8 @@ class EventosProducto:
         var.ui.btnProductoModificar.clicked.connect(EventosProducto.modificarProducto)
         var.ui.btnProductoBaja.clicked.connect(EventosProducto.bajaProducto)
 
+        var.ui.btnStockBajo.clicked.connect(EventosProducto.buscarStockBajo)
+
         EventosProducto.recargarProducto()
 
     @staticmethod
@@ -335,7 +337,7 @@ class EventosProducto:
         try:
             option = QtWidgets.QFileDialog.Options()
             filename = QtWidgets.QFileDialog().getOpenFileName(None, 'Importar productos', '', '*.xls;;All Files', options=option)
-            if filename != '':
+            if filename[0] != '':
                 if ventanasDialogo.EventosVentanas.abrirDialogConfimacion("¿Esta seguro de que desea importar los datos del archivo?"):
                     documento = xlrd.open_workbook(filename[0]).sheet_by_index(0)
 
@@ -378,6 +380,16 @@ class EventosProducto:
 
         except Exception as error:
             print('Error importarDatos: %s' % str(error))
+            ventanasDialogo.EventosVentanas.abrirDialogAviso('No ha sido posible importar el archivo, revise el formato del mismo')
+
+    @staticmethod
+    def buscarStockBajo():
+        try:
+            stockbajo = var.ui.spinStockBajo.value()
+            productos = ConexionProducto.buscarStockBajoDB(stockbajo)
+            EventosProducto.cargarTablaProductos(productos)
+        except Exception as error:
+            print('Error buscarStockBajo: %s' % str(error))
 
 
 class ConexionProducto:
@@ -509,4 +521,30 @@ class ConexionProducto:
 
         except Exception as error:
             print('Error modificarProducto: %s' % str(error))
+
+    @staticmethod
+    def buscarStockBajoDB(stockbajo):
+        try:
+            productos = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigoproducto, producto, stock, precio from productos where stock < ' + str(stockbajo))
+            query.bindValue(':stockbajo', stockbajo)
+
+            if query.exec_():
+                while query.next():
+                    p = Producto()
+
+                    p.codigoProducto = query.value(0)
+                    p.producto = query.value(1)
+                    p.stock = query.value(2)
+                    p.precio = query.value(3)
+
+                    productos.append(p)
+
+                return productos
+            else:
+                return []
+
+        except Exception as error:
+            print('Error buscarStockBajoDB: %s' % str(error))
 

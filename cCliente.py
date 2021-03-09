@@ -292,7 +292,6 @@ class EventosCliente:
 
         var.ui.tablaClientes.clicked.connect(EventosCliente.cargarDatosCliente)
 
-
         var.ui.btnCalendario.clicked.connect(EventosCliente.calendarioCliente)
 
         var.ui.btnClienteBuscar.clicked.connect(EventosCliente.buscarCliente)

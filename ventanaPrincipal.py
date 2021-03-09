@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QProgressBar
 
 import cInformes
+import provider
 import var
 
 import cCliente
@@ -62,6 +63,9 @@ class VentanaPrincipal(QtWidgets.QMainWindow):
 
         ''' Conexion Eventos Facturas '''
         cFactura.EventosFactura.conectarEventosFactura()
+
+        ''' Conexion Eventos Proveedores '''
+        provider.EventosProveedor.conectarEventosProveedor()
 
         ''' Conexion Eventos Informes '''
         cInformes.Informes.conectarEventosFactura()
