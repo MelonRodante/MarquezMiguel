@@ -38,6 +38,9 @@ class Proveedor:
         else:
             return True
 
+    def telefonoValido(self):
+        return len(self.telefono) == 12
+
 
 class EventosProveedor:
 
@@ -158,13 +161,16 @@ class EventosProveedor:
             proveedor.rellenarDatosProveedor()
 
             if proveedor.datosValidos():
-                if ConexionProveedor.altaProveedorDB(proveedor):
-                    var.ui.statusbar.showMessage("Proveedor \'" + proveedor.nombre + "\' dado de alta.")
-                    EventosProveedor.limpiarProveedor()
-                    EventosProveedor.recargarProveedor()
+                if proveedor.telefonoValido():
+                    if ConexionProveedor.altaProveedorDB(proveedor):
+                        var.ui.statusbar.showMessage("Proveedor \'" + proveedor.nombre + "\' dado de alta.")
+                        EventosProveedor.limpiarProveedor()
+                        EventosProveedor.recargarProveedor()
+                    else:
+                        ventanasDialogo.EventosVentanas.abrirDialogAviso(
+                            "ERROR: Ya existe un proveedor con el nombre \'" + proveedor.nombre + "\'.")
                 else:
-                    ventanasDialogo.EventosVentanas.abrirDialogAviso(
-                        "ERROR: Ya existe un proveedor con el nombre \'" + proveedor.nombre + "\'.")
+                    ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: El telefono debe tener 9 digitos")
             else:
                 ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: Faltan datos")
 
@@ -200,17 +206,20 @@ class EventosProveedor:
 
             if proveedor.codigo:
                 if proveedor.datosValidos():
-                    if len(ConexionProveedor.buscarProveedorDB(codigo=proveedor.codigo)) != 0:
-                        if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea modificar los datos del proveedor con codigo \'' + proveedor.codigo + '\'?'):
-                            if ConexionProveedor.modificarProveedorDB(proveedor):
-                                var.ui.statusbar.showMessage('Proveedor con codigo \'' + proveedor.codigo + '\' actualizado con exito.')
-                                EventosProveedor.recargarProveedor()
-                            else:
-                                ventanasDialogo.EventosVentanas.abrirDialogAviso(
-                                    'ERROR: No se han podido modificar los datos del proveedor con codigo \'' + proveedor.codigo + '\'.')
+                    if proveedor.telefonoValido():
+                        if len(ConexionProveedor.buscarProveedorDB(codigo=proveedor.codigo)) != 0:
+                            if ventanasDialogo.EventosVentanas.abrirDialogConfimacion('¿Esta seguro que desea modificar los datos del proveedor con codigo \'' + proveedor.codigo + '\'?'):
+                                if ConexionProveedor.modificarProveedorDB(proveedor):
+                                    var.ui.statusbar.showMessage('Proveedor con codigo \'' + proveedor.codigo + '\' actualizado con exito.')
+                                    EventosProveedor.recargarProveedor()
+                                else:
+                                    ventanasDialogo.EventosVentanas.abrirDialogAviso(
+                                        'ERROR: No se han podido modificar los datos del proveedor con codigo \'' + proveedor.codigo + '\'.')
+                        else:
+                            ventanasDialogo.EventosVentanas.abrirDialogAviso(
+                                'ERROR: No existe ningun producto llamado \'' + proveedor.codigo + '\'.')
                     else:
-                        ventanasDialogo.EventosVentanas.abrirDialogAviso(
-                            'ERROR: No existe ningun producto llamado \'' + proveedor.codigo + '\'.')
+                        ventanasDialogo.EventosVentanas.abrirDialogAviso("ERROR: El telefono debe tener 9 digitos")
                 else:
                     ventanasDialogo.EventosVentanas.abrirDialogAviso('ERROR: Faltan datos.')
             else:

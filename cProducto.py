@@ -339,6 +339,9 @@ class EventosProducto:
             filename = QtWidgets.QFileDialog().getOpenFileName(None, 'Importar productos', '', '*.xls;;All Files', options=option)
             if filename[0] != '':
                 if ventanasDialogo.EventosVentanas.abrirDialogConfimacion("¿Esta seguro de que desea importar los datos del archivo?"):
+
+                    var.ui.panel.setCurrentIndex(2)
+
                     documento = xlrd.open_workbook(filename[0]).sheet_by_index(0)
 
                     var.ui.statusbar.showMessage("Importando datos...")
